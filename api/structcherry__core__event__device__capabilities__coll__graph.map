@@ -1,0 +1,5 @@
+<map id="cherry_core_event_device_capabilities" name="cherry_core_event_device_capabilities">
+<area shape="rect" id="Node000001" title="UWBS capability container reported by the peer during device discovery; only the CCC capabilities mem..." alt="" coords="5,102,179,143"/>
+<area shape="rect" id="Node000002" href="$structcherry__ccc__capabilities.html" title="Device CCC/Aliro capability set advertised to the peer." alt="" coords="13,5,171,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,45,95,102,89,101,90,48"/>
+</map>

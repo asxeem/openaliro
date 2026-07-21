@@ -1,0 +1,21 @@
+<map id="modules/woz_uwb/src/driver/uwb_isr.c" name="modules/woz_uwb/src/driver/uwb_isr.c">
+<area shape="rect" id="Node000001" title="— DW3000 interrupt&#45;callback registration (implementation)." alt="" coords="172,5,323,46"/>
+<area shape="rect" id="Node000002" href="$uwb__isr_8h.html" title="— DW3000 interrupt&#45;callback registration (public surface)." alt="" coords="5,94,82,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,49,90,90,88,86,198,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="143,168,208,193"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,48,170,68,147,95,143,110,145,125,159,156,154,155,140,126,138,109,142,93,166,64,200,45"/>
+<area shape="rect" id="Node000004" href="$woz__port_8h_source.html" title=" " alt="" coords="157,94,242,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="238,45,217,82,213,79,234,48"/>
+<area shape="rect" id="Node000006" href="$woz__log_8h_source.html" title=" " alt="" coords="325,168,405,193"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="285,44,316,65,342,92,356,122,364,153,359,151,351,124,337,96,312,69,284,49"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="403,94,532,120"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="303,44,422,88,417,89,302,49"/>
+<area shape="rect" id="Node000008" href="$trace_8h.html" title="— Structured [WOZ_TRACE] emit helpers, gated on CONFIG_WOZ_E2E_TRACE." alt="" coords="266,94,328,120"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="261,44,284,81,279,80,259,49"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="198,118,186,155,182,151,193,121"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="232,168,300,193"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="212,117,247,156,242,156,209,122"/>
+<area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="279,120,210,162,208,157,274,121"/>
+<area shape="poly" id="edge9_Node000008_Node000005" title=" " alt="" coords="294,118,279,155,275,151,290,121"/>
+<area shape="poly" id="edge11_Node000008_Node000006" title=" " alt="" coords="309,117,346,157,340,156,307,122"/>
+</map>

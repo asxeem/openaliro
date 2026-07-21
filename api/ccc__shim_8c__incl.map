@@ -1,0 +1,19 @@
+<map id="modules/woz_uwb/src/ccc/ccc_shim.c" name="modules/woz_uwb/src/ccc/ccc_shim.c">
+<area shape="rect" id="Node000001" title="— CCC STS substitution core (implementation)." alt="" coords="178,5,329,46"/>
+<area shape="rect" id="Node000002" href="$ccc__shim_8h.html" title="— map a per&#45;frame STS index to the (dURSK, STS&#45;V) pair the DW3000 STS engine loads." alt="" coords="110,94,199,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="227,48,183,86,180,82,231,45"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="222,94,284,120"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="254,44,256,79,251,77,252,49"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="308,94,372,120"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="275,44,318,83,313,83,274,49"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,168,80,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="134,122,76,161,73,157,137,118"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="114,241,182,267"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="153,118,145,168,146,227,141,225,140,167,150,122"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="221,241,285,267"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="185,118,219,137,234,150,246,166,257,196,258,227,254,224,251,197,241,169,230,154,215,141,185,123"/>
+<area shape="rect" id="Node000006" href="$ccc__kdf_8h.html" title="UWB ranging key schedule + SP0 frame crypto (CONFIG_WOZ_ALIRO)." alt="" coords="154,168,232,193"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="162,117,182,154,177,154,160,122"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="188,192,165,230,162,226,183,195"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="204,191,236,230,231,229,202,196"/>
+</map>

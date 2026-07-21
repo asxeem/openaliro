@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ESP32-S3 Aliro port — gotchas and observations</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="esp32-gotchas">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><b>ESP32-S3 Aliro port — gotchas and observations</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Guide</div><h1>ESP32-S3 Aliro port — gotchas and observations</h1></div></header>
+<div class="mid">
+<main class="doc reading">
+<p>Hard-won, non-obvious findings from porting the Aliro UWB door-lock reader to ESP32-S3 (ESP-IDF + esp-matter + NimBLE + DWM3000EVB). Each entry is a trap actually hit on the bench: what it looks like, why it bites, and how to avoid or apply it.</p>
+<p>Ports live under <a href="https://github-asxeem/asxeem/openaliro/blob/main/ports/esp32-idf"><code>ports/esp32-idf</code></a> (reader / crypto / BLE components and the standalone bring-up app) and <a href="https://github-asxeem/asxeem/openaliro/blob/main/ports/esp32-matter"><code>ports/esp32-matter</code></a> (the Matter door-lock app that hosts the reader). The ranging engine is <code>modules/woz_uwb</code>, shared byte-for-byte with the nRF5340 build.</p>
+<p>&gt; Verification convention below: <strong>VERIFIED</strong> = confirmed on silicon or byte-exact &gt; against the reference binary/KAT; <strong>BENCH-GATED</strong> = built + host-tested but not yet &gt; confirmed against a live iPhone.</p>
+<p>---</p>
+<h2>1. Toolchain, build &amp; flash</h2>
+<h3>1.1 <code>make flash</code> aborts with <code>awk: towc: multibyte conversion failure</code></h3>
+<p><strong>VERIFIED.</strong> The Makefile classifies USB serial ports by piping <code>ioreg -l -w0</code> through <code>awk</code>. Some attached USB device ships a non-UTF-8 string descriptor; under a UTF-8 locale <code>awk</code> aborts mid-stream (<code>towc</code> conversion), which kills <strong>both</strong> port detection and the SEGGER/J-Link safety guard — so <code>make flash</code> fails with &quot;no ESP serial port found&quot; even though the board is plugged in.</p>
+<ul><li><strong>Fix:</strong> prefix the <code>awk</code> invocation with <code>LC_ALL=C</code> (byte-wise, locale-independent).</li><li><strong>Subtlety:</strong> <code>LC_ALL=C ioreg | awk …</code> does <strong>not</strong> work — the env prefix applies only</li></ul>
+<p>to the first command in the pipeline. It must be <code>ioreg | LC_ALL=C awk …</code>.</p>
+<ul><li>Applied at both <code>awk</code> sites in <code>ports/esp32-matter/Makefile</code> (the RESOLVE_PORT table</li></ul>
+<p>build and the <code>ports</code> target).</p>
+<h3>1.2 Never flash the SEGGER/J-Link (nRF) port</h3>
+<p><strong>VERIFIED.</strong> With both an nRF5340DK and the ESP32-S3 attached, port auto-detection can see the J-Link (SEGGER, USB vendor <code>0x1366</code>). Flashing esptool to it is wrong and can disrupt the nRF. The Makefile refuses that vendor and only auto-selects the ESP devkit&#x27;s bridges — WCH CH343/CH9102 (<code>0x1A86</code>) or Espressif native USB (<code>0x303A</code>), both <code>/dev/cu.usbmodem…</code>. <code>ioreg</code> reports vendor ids in decimal, which is why the Makefile compares against <code>4966</code> / <code>6790</code> / <code>12346</code>. Keep the guard; don&#x27;t bypass it.</p>
+<h3>1.3 <code>make flash</code> port-holder guard</h3>
+<p><code>make flash</code> refuses if another process holds the port (a stuck <code>monitor</code>), with a clear message. Override with <code>FORCE=1</code> only after confirming no other session owns the port. (commit <code>8ce132a</code>)</p>
+<h3>1.4 Host tests are the target&#x27;s proof</h3>
+<p>The crypto core (<code>aliro_hash.c</code>) compiles <strong>host == target</strong> so host KATs pin target behaviour. Run <code>ports/esp32-idf/test/run.sh</code> before believing any crypto change. A compact AES-256-GCM host double (<code>aliro_prim_host.c</code>) lets the KATs run without PSA. Build success is not proof — the wire/crypto bugs below all built cleanly. The shared <code>modules/woz_uwb</code> logic has a second host harness, <code>tests/host/run.sh</code> (558 tests), which compiles the shim <strong>without</strong> <code>ESP_PLATFORM</code> — that is the proof an ESP-only guard didn&#x27;t regress the nRF path.</p>
+<p>---</p>
+<h2>2. Hardware bring-up</h2>
+<h3>2.1 DWM3000 EVB power jumper (the multi-day one)</h3>
+<p><strong>VERIFIED.</strong> DW3000 SPI comms silently failed until the EVB power jumper was set correctly. Symptom before: no valid device ID / responder never listens. After: <code>start_ aliro()=0</code>, responder listening, a 36-byte RX frame arrives. If DW3000 bring-up looks dead, check the <strong>board power-select jumper first</strong> — it is not a software problem.</p>
+<h3>2.2 Probe the DW3000 at boot, never from the BLE-host callback at M4</h3>
+<p><strong>VERIFIED (regression) → BENCH-GATED (fix).</strong> The standalone <code>esp32-idf</code> port probes the DW3000 at boot (<code>app_responder_start()</code> in <code>main.c</code>). The <code>esp32-matter</code> port dropped that, so the first DW3000 touch happened at M4 — inside the NimBLE host callback (<code>aliro_ranging_feed → engine → woz_uwb_start_aliro → dwt_probe</code>). There <code>dwt_probe</code> returns <code>-1</code> (radio init <code>-5</code>): no prior bring-up + a shallow callback stack. Symptoms: <code>dwt_probe failed: -1</code>, then on reconnect <code>spi_bus_initialize: SPI bus already initialized</code>.</p>
+<ul><li><strong>Fix:</strong> bring the radio up once in the clean reader-startup task. <code>aliro_ranging_init</code></li></ul>
+<p>does a throwaway <code>woz_uwb_start_aliro</code> (zero URSK) + <code>woz_uwb_stop</code>; <code>uwb_min</code>&#x27;s <code>g_radio_ready</code> latches, so M4&#x27;s <code>ccc_prepoll_listen</code> skips the probe and only re-applies the negotiated channel.</p>
+<ul><li><strong>Corollary bug:</strong> <code>dw3000_spi_init</code> re-added SPI devices on a second call (leaking the</li></ul>
+<p>old handles) — made idempotent (<code>return 0</code> if already up). The boot probe means M4 never re-enters <code>dw3000_hw_init</code> anyway, so the &quot;already initialized&quot; path is avoided.</p>
+<ul><li><strong>Rule:</strong> heavy SDK bring-up (<code>dwt_probe</code> / <code>dwt_initialise</code>, OTP reads) belongs in a</li></ul>
+<p>dedicated startup task with a real stack, not a protocol-event callback.</p>
+<h3>2.3 Onboard WS2812 status LED is on GPIO48</h3>
+<p><strong>VERIFIED.</strong> The ESP32-S3 dev board&#x27;s addressable status LED is GPIO48 (single WS2812), used for bolt-state indication. (commits <code>ad9a63b</code>, <code>ed38895</code>)</p>
+<p>---</p>
+<h2>3. BLE / NimBLE coexistence with Matter</h2>
+<h3>3.1 The reader must &quot;attach&quot; to Matter&#x27;s NimBLE host, not spin up its own</h3>
+<p><strong>VERIFIED.</strong> esp-matter already owns the NimBLE host for commissioning. A second BLE stack instance crashes / reinit-loops. The Aliro reader runs in <strong>attach mode</strong>: it coexists on Matter&#x27;s host rather than initialising its own. (commits <code>67234fa</code>, <code>996a8d5</code> — the latter fixed a reader-reinit crash loop by keeping BLE up.)</p>
+<h3>3.2 Keep BLE advertising up across reader restarts</h3>
+<p>Tearing BLE down/up around reader lifecycle caused crashes. The reader keeps the GAP advertising alive and re-arms the session instead of cycling the stack. (commit <code>996a8d5</code>)</p>
+<h3>3.3 The Aliro transaction must stay on the nimble_host task</h3>
+<p><strong>VERIFIED.</strong> Driving the Aliro APDU exchange from another task races the host. The whole credential-auth + ranging lifecycle (create / feed / teardown + the engine&#x27;s transmit &amp; event callbacks) runs <strong>synchronously on the BLE-host task</strong>, so no locking is needed there. Provisioning state shared with the REPL task (<code>s_trust</code>, <code>s_last_cred</code>) is the one thing guarded by a FreeRTOS mutex. (commit <code>04bd8cc</code>)</p>
+<h3>3.4 Advertising service data</h3>
+<p>The reader advertises the Aliro 0xFFF2 service with a dynamic tag for phone approach-connect. Note the separate <code>DYNAMIC_TAG</code> staleness trap: approach-unlock dies when the clock is valid but far behind real time (advertisement expiry tag), fixed on the nRF side by disabling the dynamic tag — watch for the analogue here. (commit <code>5a4e6c4</code>)</p>
+<p>---</p>
+<h2>4. Aliro credential-auth crypto &amp; key schedule</h2>
+<p>These were resolved by decompiling <code>libaliro_ble.a</code> (Cortex-M33) and cross-checking a readable reference <code>crypto.cpp</code>, then pinning with host KATs. <strong>Clean-room: facts only, no decompiled source enters the repo.</strong></p>
+<h3>4.1 GCM per-direction counters start at <strong>1</strong>, not 0</h3>
+<p><strong>VERIFIED (byte-exact KAT + silicon).</strong> Aliro §8.3.1 starts both per-direction secure- channel counters at 1 (HomeKey starts at 0 — do not copy HomeKey here). The first inbound decrypt (AUTH1Response) uses device_counter = 1. Starting at 0 fails the GCM tag cleanly. <code>aliro_secchan_init</code> sets both counters to 1.</p>
+<h3>4.2 GCM nonce layout</h3>
+<p><code>nonce = 8-byte big-endian direction (0 = reader-seal, 1 = device-open) || 4-byte big-endian per-direction counter</code>. Separate, non-wrapping counters per direction.</p>
+<h3>4.3 The salt&#x27;s two &quot;unresolved&quot; sub-fields (§8.3.1.13)</h3>
+<p><strong>VERIFIED.</strong> The AUTH1 tag only decrypts once the session salt is exact:</p>
+<ul><li>salt field 1 = <strong><code>reader_group_identifier_key.x</code> = pub(signingKey).x</strong> — this is the</li></ul>
+<p>reader&#x27;s *signing* public key X, <strong>not</strong> the device ephemeral key (that was the bug). Derived via <code>aliro_ec_p256_pub_from_priv</code>; refreshed on identity load and on both Matter provisioning paths.</p>
+<ul><li>salt item 4 = <strong>interface byte</strong> (<code>0xC3</code> BLE / <code>0x5E</code> NFC).</li><li>salt item 10 = the phone&#x27;s <strong><code>0xA5</code> SELECT-response proprietary-info TLV</strong>, captured</li></ul>
+<p>from its op-0x05 message; CSA v1.0 default <code>a5 08 80 02 0000 5c 02 0100</code>.</p>
+<h3>4.4 Key-block layout (one HKDF expand → 160 bytes)</h3>
+<p><code>Z = SHA-256(ecdh_shared(32) || 0x00000001 || txid(16))</code>; then <code>block160 = HKDF-SHA256(salt=CreateSalt transcript, IKM=Z, info=devicePubX(32), L=160)</code>. Offsets in the block: <code>ExpeditedSKReader@0</code>, <code>ExpeditedSKDevice@32</code>, <code>StepUpSK@64</code>, <strong><code>BleSK@96</code></strong>, <strong><code>URSK@128</code></strong>. Because it is one expand, <strong>if auth works (ExpeditedSK@0 is right) the URSK@128 is byte-identical on both sides</strong> — a fact that ruled out a lot of false leads during ranging debug.</p>
+<h3>4.5 HKDF salt-vs-info binding is not in the blob</h3>
+<p>The one derivation detail the decompiled blob did not settle (which argument is salt vs info) came from <strong>readable</strong> reference source: <code>DeriveKey</code> = PSA HKDF with <code>INPUT_SALT=salt</code>, <code>INPUT_SECRET=Z</code>, <code>INPUT_INFO=info</code>. When the binary is ambiguous, look for a readable reference before guessing.</p>
+<h3>4.6 APDU / wire codec specifics</h3>
+<p>ISO7816 case-4 short form wraps AUTH0/AUTH1/EXCHANGE. Opcodes: <strong>AUTH0=0x80, AUTH1=0x81, EXCHANGE=0xC9</strong>. The ECDSA transcript uses usage separators <code>kReaderUsage=415d9569</code> / <code>kUserDeviceUsage=4e887b4c</code>. The L2CAP envelope is the 4-byte header <code>[type &amp; 0x3F][opcode][len_be16]</code>. EXCHANGE payload for the ranging flow is bare <code>98 00</code> (URSK-ready, empty TLV) — <strong>VERIFIED</strong> the reference passes an empty <code>optional&lt;ReaderStatus&gt;</code> here, so no <code>0x97</code> status tag.</p>
+<h3>4.7 The credential-auth §14 KAT is member-confidential</h3>
+<p>A host KAT reproduces the Aliro 1.0 §14 worked example byte-exact (salt, Kdh, ExpeditedSKReader, BleSK, URSK, the split). It lives in <strong>scratchpad only and is never committed</strong> — the §14 vectors are CSA member-Confidential. Same for the BleSK message KAT.</p>
+<p>---</p>
+<h2>5. Ranging transport (post-auth M1–M4) — the deep ones</h2>
+<p>The reference reader relied on the <strong>closed <code>libaliro</code> stack</strong> to seal/open ranging SDUs *below* the open glue. Phase 3 replaced that stack, so every one of these had to be reimplemented from scratch — and each was a separate live-iPhone failure.</p>
+<h3>5.1 Ranging SDUs ride a SEPARATE GCM channel from the AP channel</h3>
+<p><strong>VERIFIED (spec §11.8 + silicon).</strong> Proto-1/2/3 ranging SDUs do <strong>not</strong> use the credential-auth (AP) secure channel. They use their own AES-256-GCM channel:</p>
+<ul><li>Keys <code>BleSKReader</code> / <code>BleSKDevice</code> = `HKDF-SHA256(ikm = BleSK@96, info =</li></ul>
+<p>&quot;BleSKReader&quot;/&quot;BleSKDevice&quot;, salt = reader_supported_versions || user_device_selected_version)<code> = </code>01000100` for v1.0-only.</p>
+<ul><li><strong>Fresh</strong> per-direction counters starting at <strong>1</strong> (not continued from auth).</li><li>Feeding a proto-0 EXCHANGE response raw to the ranging engine yields `protocol 0</li></ul>
+<p>unsupported` (byte 0 = the 0x00 envelope type) — a classic symptom of missing the channel split.</p>
+<h3>5.2 Ranging SDU framing — AAD carries the PLAINTEXT length</h3>
+<p><strong>VERIFIED (host KAT 15/15).</strong> Wire form: <code>[proto][id][(len_plain + 16)_be16][ciphertext || 16-byte tag]</code>, and the GCM **AAD is the 4-byte header with the *plaintext* length<strong> <code>[proto][id][len_plain_be16]</code>, </strong>not** the wire length. Getting the AAD length field wrong is the single highest-risk mistake here; it fails the tag with no other signal. Implemented in <code>aliro_msg_seal</code> / <code>aliro_msg_open</code>.</p>
+<h3>5.3 The missing step: Reader-Status-Access-Protocol-Completed</h3>
+<p><strong>VERIFIED against the reference binary.</strong> After EXCHANGE success the reader <strong>must</strong> send Reader-Status-AP-Completed (proto-2 id-3, BleSK-sealed) or the device stalls ~1.8 s and disconnects (reason 531). Payload = <code>02 03 00 04 00 02 20 00</code> (TLV: attr-id 0, len 2, value <code>[cap = 0x20][ReaderState = 0x00 Secured]</code>). Disassembly of <code>CompleteAccessProtocolState::Run → BleTpCompleted</code> confirmed these exact bytes, including ReaderState = 0x00.</p>
+<h3>5.4 <code>00 02 00 00</code> is EXCHANGE SUCCESS, not a ranging cue</h3>
+<p>The <code>00 02 00 00</code> body that comes back on the EXCHANGE response is §8.3.3.5.5 success (len <code>0x0002</code>, error <code>0x0000</code>). It is not a signal to start ranging; don&#x27;t hand it to the engine.</p>
+<h3>5.5 THE session-id trap: it is derived from the AUTH0 TXID, not chosen</h3>
+<p><strong>VERIFIED by disassembly.</strong> The ranging session-id is <strong>not</strong> the reader&#x27;s free choice. The device computes it from the 16-byte AUTH0 transaction id it received:</p>
+<pre><code>GenerateCryptoMaterials()  →  fills AccessProtocolCrypto[0..16] with a random TXID
+GetSessionId()             =  rev(this[0xc])  =  big-endian(txid[12..15])</code></pre>
+<p>The device indexes its URSK by that session-id. Advertise a hardcoded session-id in M1 and the device replies with <strong>GeneralError URSK_Unavailable (code 3)</strong> at M1 and disconnects — it has no URSK for the session you named, even though the URSK *value* matches. Fix: M1&#x27;s session-id must be <code>(txid[12]&lt;&lt;24)|(txid[13]&lt;&lt;16)|(txid[14]&lt;&lt;8)| txid[15]</code>. This was the final blocker after auth + transport were correct.</p>
+<h3>5.6 M1 carries no URSK crypto — so <code>URSK_Unavailable</code> ≠ wrong URSK value</h3>
+<p>M1 (proto-1 id-0) contains only config attributes (config-id, pulse-shape, channel, session-id). It carries no URSK-derived material, so a <code>URSK_Unavailable</code> at M1 means the device has <strong>no URSK installed for that session</strong> (see 5.5), never a URSK value mismatch — a value mismatch would surface later at M2/M3/M4 STS. This distinction saved a lot of misdirected debugging.</p>
+<h3>5.7 Device-initiated M1</h3>
+<p>The engine emits M1 when the phone sends its Initiate-Ranging-Session (proto-2 id-1, attr INIT_RANGING = 0x00), matching the observed iPhone. Do <strong>not</strong> eagerly send M1 on StartRangingSession. (<code>aliro_uwb_msg.c:1164</code>)</p>
+<h3>5.8 Counter chain across the ranging handshake</h3>
+<p>Reader-direction (enc): AP-Completed = 1, M1 = 2, M3 = 3. Device-direction (dec): the phone&#x27;s first BleSK message (a proto-3 config) = 1, Initiate-Ranging = 2, its event/M2 = 3 … Each side increments per message it *sends* on the BleSK channel, including the proto-3 config the phone leads with.</p>
+<h3>5.9 proto-3 SupplementaryService is ignorable</h3>
+<p>The phone leads ranging with a proto-3 SupplementaryService config blob. <strong>VERIFIED</strong> the reference&#x27;s ranging engine (same Qorvo code) also returns &quot;protocol 3 unsupported&quot; for it — both reference and port ignore it. It is not a step we skip; don&#x27;t chase it.</p>
+<h3>5.10 THE Wallet animation gate: send Reader-Status-Changed on grant (step 23)</h3>
+<p><strong>VERIFIED byte-exact (disassembly + live iPhone).</strong> Driving the bolt is not enough: iOS plays the Wallet unlock animation only when the reader tells the phone it granted access over the BleSK channel — the &quot;Reader Status Changed&quot; message, Aliro transaction step 23 (the grant-phase sibling of 5.3&#x27;s AP-Completed). Without it the port unlocked the bolt locally, Matter saw the state change and posted a Matter *accessory* notification, but the Wallet never animated. The phone&#x27;s own computed distance is <strong>not</strong> the gate.</p>
+<p>Payload (proto-2 id-2, BleSK-sealed) = <code>02 02 00 04 00 02 04 01</code> — one State Attribute (attr-id 0, len 2) = <code>[OperationSource = 0x04 (this device, BLE+UWB Aliro flow), ReaderState = 0x01 Unsecured]</code>; relock is identical with ReaderState = 0x00 Secured. Disassembly of <code>AliroStack::SendReaderStatusChangedMessage → BleTpReaderStatusChanged</code> confirmed these exact bytes. The 65-byte access-credential public key is <strong>not</strong> serialized — the library takes it only to select which connection to notify, then drops it.</p>
+<p>Send Unsecured on grant, Secured on relock, from the proximity relock task; post it onto the BLE-host task so it serializes with the other BleSK seals (counter stays monotonic). (commit <code>ba612c8</code>)</p>
+<p>---</p>
+<h2>6. UWB DS-TWR ranging engine — the real-time layer</h2>
+<p>Once M1–M4 negotiate the session, the actual double-sided two-way ranging runs on the DW3000: the phone drives Pre-POLL → POLL → (our) Response → Final → Final_Data every ~192 ms block, and the responder must arm each frame inside a ~2 ms slot. <strong>This layer is shared with the nRF5340 port (<code>modules/woz_uwb</code>), where it already worked — so nothing here is a logic bug. Every trap below is the ESP32 being a slower, jitterier real-time target than the nRF, and the fixes claw back the microseconds nRF gets for free.</strong> All <strong>VERIFIED on silicon</strong>: continuous positive DIST every round and the phone unlocks the door.</p>
+<h3>6.1 The arm-latency-vs-2ms-slot budget is the whole game</h3>
+<p>Reactive arming fights a fixed deadline: <code>CCC_RX_SLOT_HI32 − CCC_RX_POLL_LEAD</code> (= 459000 hi32 units = <strong>1836 µs</strong>; the hi32/<code>dsys</code> unit is 4 ns, so <code>/250 = µs</code>). If the Pre-POLL→arm path exceeds it, the delayed RX never opens and the POLL is lost (<code>ARM FAIL … LATE</code>). On nRF this is trivial; on ESP every µs of SPI and dispatch counts, which is why 6.2–6.7 exist.</p>
+<h3>6.2 DW3000 SPI: disable DMA (the biggest single win)</h3>
+<p><strong>VERIFIED.</strong> A boot micro-benchmark (32 back-to-back DEV_ID reads) measured <strong>~84 µs/transaction</strong> with <code>SPI_DMA_CH_AUTO</code>; holding the bus lock only saved ~15 µs, so the rest is the per-transaction DMA-descriptor + <code>esp_cache_msync</code> path. For the small STS/register writes on the arm critical path that setup dwarfs the bit-time. Fix: init the bus <strong><code>SPI_DMA_DISABLED</code></strong> so ≤64-byte transfers use the CPU data registers directly, and chunk anything larger into ≤64-byte bursts under one CS-low window (the DW3000 streams sequentially). Only the DW3000 is on SPI2 (the status LED is on RMT), so this is safe. This is what carried the chain to a sustained lock. (commit <code>d9051c8</code>)</p>
+<ul><li>Clock is <strong>not</strong> the lever: 2 MHz vs 8 MHz was ~75 vs 84 µs — the ~6 µs of bit-time is</li></ul>
+<p>lost in ~70 µs of fixed overhead.</p>
+<h3>6.3 An SP3-ND Final completes with RXFR|CIADONE, not RXFCG</h3>
+<p><strong>VERIFIED.</strong> The POLL is an SP3 STS frame carrying FCS (completes <code>st=0x6700</code>, has RXFCG=0x4000). The <strong>Final is SP3-ND (STS only, no PHR/payload)</strong> — it completes <code>st=0xa7b0</code> with RXFR|CIADONE and <strong>no RXFCG</strong>. Any Final-detect that waits on RXFCG hangs forever; watch CIADONE(0x400). A synchronous busy-wait for the Final *inside* the POLL callback also fails: the SP3-ND completion lands after the handler returns, and the spin wedged the receiver / tripped the watchdog. Capture the Final in its own async callback.</p>
+<h3>6.4 &quot;Negative distance&quot; was cross-round mixing, NOT antenna delay</h3>
+<p><strong>VERIFIED — a multi-run red herring.</strong> t2/t3/t6 (POLL-RX / Response-TX / Final-RX) are single globals. On ESP the phone&#x27;s SP0 Final_Data lands only after the *next* round has overwritten t2/t3, so recomputing the DS-TWR intervals in <code>final_data_decode</code> mixed this round&#x27;s t6 with the next round&#x27;s t3 → km-scale garbage, or a <strong>plausible-looking but wrong negative distance that still passed the STS gate</strong>. The <code>-783 mm</code> / <code>-333 mm</code> readings looked exactly like an uncalibrated antenna delay and sent us chasing calibration. Fix: snapshot <code>reply1 = t3−t2</code>, <code>round2 = t6−t3</code> at Final capture (same round), consume once (<code>g_final_round_valid</code>). With correct pairing the distances are <strong>positive and realistic with no antenna calibration at all</strong> (~0 mm at contact, ~21 cm for a phone at ~21 cm). ESP-guarded so the nRF path keeps its original recompute-from-live-globals (nRF processes Final_Data before the overwrite). (commit <code>d9051c8</code>) <strong>Lesson: a constant-looking offset that passes your integrity gate can be a data-pairing bug, not a physical calibration.</strong></p>
+<h3>6.5 THE Final_Data trap: blocking <code>printk</code> in the hot path starves the ISR task</h3>
+<p><strong>VERIFIED — the last blocker before the door opened.</strong> <code>DIAGK</code> → <code>printk</code>, which is <strong>blocking</strong> on ESP. <code>POLL result</code> + <code>FINAL result</code> printed <strong>every round</strong> (~185 chars); at 115200 that cannot drain inside the ~6 ms burst of per-round callbacks, so the DW3000 ISR task (which runs <code>dwt_isr</code> + the callbacks) backs up. One cause, two symptoms:</p>
+<ul><li>The <strong>Final callback dispatches late</strong> → the SP0 revert re-opens RX *after* the phone&#x27;s</li></ul>
+<p>Final_Data slot (~1 slot ≈ 2 ms behind the Final) → Final_Data never caught → <strong>no distance ever computed</strong>, even though POLL/Response/Final were flawless.</p>
+<ul><li>The sustained backlog <strong>trips the task watchdog</strong> → spontaneous reset mid-session.</li></ul>
+<p>Fix: throttle <code>POLL result</code> and <code>FINAL result</code> to the first <code>CCC_RX_PREPOLL_LOG</code> (16) rounds so the steady state is print-free (PREPOLL and RESP-txdone were already gated). Moving a print *within* a callback cannot help — the callback itself was firing late. <strong>A per-round blocking log in a 2-ms-deadline path is a real-time bug, not just noise.</strong> (commit <code>677cfd1</code>)</p>
+<h3>6.6 Time-critical FIRST: revert to SP0 before the (throttled) print</h3>
+<p>The Final handler reverts SP3→SP0 (<code>revert_to_sp0_listen</code>) to catch the Final_Data; do it <strong>before</strong> the diagnostic print, mirroring the POLL handler which arms the Response before its stsq read + printk. (Redundant once 6.5 throttles the print, but the correct ordering and cheap insurance.) (commit <code>677cfd1</code>)</p>
+<h3>6.7 STS key cache — the dURSK is per ranging CYCLE</h3>
+<p><strong>VERIFIED.</strong> The STS key (dURSK) is constant across a whole ranging cycle (POLL, Response, Final, and every block in the cycle share it), but each arm re-wrote all four STS_KEY registers (~258 µs, ~40 % of the arm). Cache the loaded dURSK and skip <code>dwt_configurestskey</code> when unchanged; the registers persist across the per-frame IV/loadiv/mode reprogramming. Helps the Response/Final arms (same-cycle key = cache hit); the POLL arm&#x27;s key changes per block so it misses. ESP-guarded. (commit <code>d9051c8</code>)</p>
+<h3>6.8 Auto-relock: a fixed timer fights approach-unlock — drive relock from proximity</h3>
+<p><code>create_auto_relock_time(door_lock_cluster, 5)</code> made the bolt relock 5 s after an unlock, so a successful approach-unlock re-locked while the phone was still right there. A fixed timer is fundamentally wrong for approach-unlock: you cannot both &quot;relock after N s&quot; and &quot;stay unlocked while the peer is present.&quot; Fix: set <strong><code>AutoRelockTime = 0</code></strong> — CHIP&#x27;s <code>DoorLockServer</code> skips scheduling when it is 0 (<code>VerifyOrReturnError(0 != autoRelockTime, true)</code>) — and drive relock from proximity in <code>aliro_reader_task</code>: unlock at <code>&lt;= ALIRO_UNLOCK_RANGE_CM</code> (100 cm), hold while present, relock when the peer moves past <code>ALIRO_RELOCK_RANGE_CM</code> (150 cm — hysteresis stops boundary flapping) or the ranging session drops. Re-unlock within one session now works too (the old code debounced until disconnect). Not a ranging fault; a lock-policy design choice.</p>
+<h3>6.9 ESP vs nRF: the logic is shared and proven; ESP is the real-time port</h3>
+<p>The whole Aliro/CCC/DS-TWR stack in <code>modules/woz_uwb</code> is compiled by <strong>both</strong> the nRF5340 Aliro app and this ESP port. When ESP misbehaved, the bug was never in that shared logic (the nRF proves it) — it was ESP&#x27;s slower SPI + jitterier callback dispatch. Two consequences worth remembering: (a) lean on the nRF reference to confirm intent before re-deriving on hardware; (b) any ESP-only tweak to the shared file must be <code>#if defined(ESP_PLATFORM)</code>-guarded so the nRF build keeps the original path — the snapshot (6.4) and STS-key cache (6.7) are both guarded, verified by the host suite (<code>tests/host/run.sh</code>, 558/558) compiling the file *without* <code>ESP_PLATFORM</code>. (commit <code>d9051c8</code>)</p>
+<p>---</p>
+<h2>7. Reader state-machine &amp; diagnostics</h2>
+<h3>7.1 The GeneralError short-circuit must not fire during ranging</h3>
+<p><strong>VERIFIED.</strong> The reader had a blanket rule: a proto-2 / id-0 Notification-Event mid-auth is a device GeneralError, so read <code>payload[2]</code> as the code. During <code>PH_ESTABLISHED</code> those events are <strong>BleSK-encrypted</strong>, so <code>payload[2]</code> is a ciphertext byte — the reader was reporting <code>GeneralError 0x28</code> one run and <code>0xf6</code> the next (random ciphertext) and killing the session before decrypting the real event. Guard the short-circuit to pre-ranging phases; in <code>PH_ESTABLISHED</code> always BleSK-open + dump + feed the engine. This is what finally surfaced the real <code>general error 3</code>. (<code>aliro_reader.c</code> ~line 583)</p>
+<h3>7.2 Read the *decrypted* error, and log it</h3>
+<p>General-error codes: <code>0 UNKNOWN, 1 RESOURCE_UNAVAILABLE, 2 WRONG_PARAMS, 3 URSK_UNAVAILABLE</code>. <code>WRONG_PARAMS (2)</code> points at M1 attribute values; <code>URSK_UNAVAILABLE (3)</code> points at the session-id / URSK-install path (§5). The codes are only meaningful once the SDU is opened.</p>
+<p>---</p>
+<h2>8. Provisioning &amp; identity</h2>
+<h3>8.1 A per-boot random reader key changes the reader&#x27;s identity every reboot</h3>
+<p><strong>VERIFIED.</strong> The reader originally generated a random dev P-256 key at boot, so its reader-id (and therefore the salt&#x27;s reader_group_key) changed each power cycle — the phone&#x27;s stored credential no longer matched. Fixed by a <strong>fixed, non-secret dev identity</strong> loaded from NVS (<code>aliro_prov</code> namespace, key <code>blob</code>): reader-id = signing pub.X. (commit <code>ca937e2</code>)</p>
+<h3>8.2 DEV identity is dev-open + loud, not a bypass</h3>
+<p>With a DEV identity and no trust anchors, the reader accepts the presented credential <strong>and logs a warning</strong>; it is an interim seam for real issuer-chain validation, not a silent allow. Bench commands: <code>aliro-prov</code> (show id / trust / last cred), <code>aliro-trust</code> (persist the last-presented credential key). Phase-4 Matter <code>SetAliroReaderConfig</code> writes the same blob.</p>
+<h3>8.3 Zephyr-reserved NVS id wiped external NVS (cross-port cousin)</h3>
+<p>On the nRF side, a rollback unique-id mirror at Zephyr-reserved NVS id <code>0xFFFF</code> wiped external NVS every boot (fixed <code>0xFFFF → 0xFFFE</code>). If ESP32 external-NVS credentials ever vanish across reboot, suspect an id collision with a reserved slot.</p>
+<p>---</p>
+<h2>9. Reverse-engineering methodology (for the next unknown)</h2>
+<ul><li><strong>The reference binaries are ground truth.</strong> `workspace/ncs-door-lock-and-access-</li></ul>
+<p>control/lib/aliro/bin/debug/cortex-m33/libaliro{,_ble}.a` are <strong>debug</strong> builds with symbols. Prefer the debug archive.</p>
+<ul><li><strong>macOS <code>ar</code> cannot read GNU long-name (<code>//</code>) members.</strong> Use a small Python GNU-ar</li></ul>
+<p>parser (<code>elftools</code> + a manual <code>//</code> long-name table) to extract objects; the BSD <code>ar x</code> silently yields empty files.</p>
+<ul><li><strong>Disassemble Thumb with capstone</strong>, masking the low bit of <code>st_value</code> (Thumb symbols</li></ul>
+<p>are odd-valued) before computing the section offset, or you disassemble one byte off and get garbage.</p>
+<ul><li><strong>Log strings pin intent fast.</strong> <code>.rodata</code> format strings (e.g. &quot;BLE completed, state:</li></ul>
+<p>%s, capabilities: %s&quot;) revealed the AP-Completed field layout before disassembling the builder.</p>
+<ul><li><strong>Verify, don&#x27;t assume.</strong> The winning move for the session-id bug was disassembling</li></ul>
+<p><code>GetSessionId</code> / <code>GenerateCryptoMaterials</code> directly rather than trusting the summary. Every reader→phone message was checked byte-for-byte against the reference; only one (the session-id) actually differed.</p>
+<p>---</p>
+<h2>10. Current status — approach-unlock works end to end</h2>
+<ul><li><strong>VERIFIED on a live iPhone (2026-07-20):</strong> the full Aliro approach-unlock — the Wallet</li></ul>
+<p>unlock animation plays as you walk up, then relocks on departure. The final gate was the reader→phone Reader-Status-Changed grant message (5.10); before it the bolt moved and Matter reported it, but the Wallet stayed silent.</p>
+<ul><li><strong>VERIFIED on silicon (full path):</strong> credential-auth (discovery / L2CAP CoC / AUTH0 /</li></ul>
+<p>AUTH1 decrypt / device-signature / credential-trust / URSK) → M1–M4 ranging setup → <strong>live DS-TWR</strong>: continuous positive DIST every round, tracking the phone (d ~6–45 cm at arm&#x27;s length, growing as it withdraws), then <code>Aliro trusted range NN cm (&lt;= 100): unlocking</code> and auto-relock. No watchdog resets. Against a live iPhone.</p>
+<ul><li><strong>No antenna calibration was needed</strong> — see 6.4; the earlier &quot;negative distance&quot; was a</li></ul>
+<p>cross-round pairing bug, not a physical offset.</p>
+<ul><li><strong>Open polish (non-blocking):</strong> per-round DIST jitter (the AccessManager already</li></ul>
+<p>medians/filters it enough to unlock cleanly); auto-relock time (6.8); the phone&#x27;s <code>general error 0</code> at end-of-session is post-unlock and benign.</p>
+<h3>Commit map (newest first)</h3>
+<table><thead><tr><th>Commit</th><th>What</th></tr></thead><tbody><tr><td><code>cf0c73d</code></td><td>document the Reader-Status-Changed grant (message 23) gotcha</td></tr><tr><td><code>ba612c8</code></td><td>tell the phone the grant so the Wallet unlock animation plays (§5.10)</td></tr><tr><td><code>7b892b6</code></td><td>land the DS-TWR RESPONSE on the phone&#x27;s negotiated slot</td></tr><tr><td><code>6ba874b</code></td><td>capture DS-TWR ranging bring-up gotchas (unlock working)</td></tr><tr><td><code>677cfd1</code></td><td>throttle hot-path ranging logs so DS-TWR closes and unlocks (§6.5, §6.6)</td></tr><tr><td><code>d9051c8</code></td><td>DMA-disable SPI, fence ESP-only ranging tweaks from nRF (§6.2, §6.4, §6.7, §6.9)</td></tr><tr><td><code>1ef8946</code></td><td>real-time DS-TWR responder — POLL→Response→Final→distance on silicon</td></tr><tr><td><code>a517d71</code></td><td>DW3000 radio bring-up (boot probe + wakeup-settle) + tooling (§2.2)</td></tr><tr><td><code>84c2875</code></td><td>Aliro ranging session-id + BleSK channel — M1-M4 green on silicon (§5.1, §5.5)</td></tr><tr><td><code>f628beb</code></td><td>ranging-setup diagnostic (hold M1, decrypt post-EXCHANGE SDUs)</td></tr><tr><td><code>5f91235</code></td><td>AUTH1 secure-channel decrypt — credential-auth green on silicon</td></tr><tr><td><code>cef8255</code></td><td>correct AUTH0 phase encoding — full ECDH auth accepted</td></tr><tr><td><code>04bd8cc</code></td><td>keep the Aliro transaction on the nimble_host stack</td></tr><tr><td><code>f937f01</code></td><td>wrap Aliro auth commands in ISO7816 APDUs (AUTH0 acceptance)</td></tr><tr><td><code>69d24bb</code></td><td>Aliro reader BLE discovery + L2CAP CoC for approach-unlock</td></tr><tr><td><code>ed38895</code></td><td>host test for the bolt-state LED policy</td></tr><tr><td><code>5a4e6c4</code></td><td>Aliro 0xFFF2 advertisement + dynamic tag (phone approach-connect)</td></tr><tr><td><code>ad9a63b</code></td><td>bolt-state LED on the onboard WS2812 (GPIO48)</td></tr><tr><td><code>67234fa</code></td><td>attach-mode Aliro reader — coexist on Matter&#x27;s NimBLE host</td></tr><tr><td><code>2aea20f</code></td><td>make front door for the esp32-matter port (isolated)</td></tr><tr><td><code>996a8d5</code></td><td>interactive console + keep-BLE-up (fixes reader-reinit crash loop)</td></tr><tr><td><code>af7a3a3</code></td><td>print commissioning onboarding codes at boot</td></tr><tr><td><code>d7131d3</code></td><td>Phase 4.3 merge reader+UWB into Matter app (provision→handoff→range)</td></tr><tr><td><code>14446c8</code></td><td>Phase 4.2 Aliro reader delegate (BLE+UWB Home Key provisioning)</td></tr><tr><td><code>9eba9c9</code></td><td>Phase 4.1 esp-matter door-lock baseline (commissions to Apple Home)</td></tr><tr><td><code>19b6239</code></td><td>Phase 3.5 M1–M4 ranging-setup wiring (negotiated params)</td></tr><tr><td><code>ca937e2</code></td><td>Phase 3.4 reader provisioning seam (identity + credential trust)</td></tr></tbody></table>
+<p>Earlier Phase-3.1/3.2/3.3 crypto and auth work (key schedule, wire codec, URSK handoff) landed before this range; its gotchas are captured in §4. Everything above is merged to <code>main</code>.</p>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

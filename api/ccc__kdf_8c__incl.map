@@ -1,0 +1,13 @@
+<map id="modules/woz_uwb/src/ccc/ccc_kdf.c" name="modules/woz_uwb/src/ccc/ccc_kdf.c">
+<area shape="rect" id="Node000001" title="— UWB key schedule + SP0 Pre&#45;POLL frame codec." alt="" coords="102,5,254,46"/>
+<area shape="rect" id="Node000002" href="$ccc__kdf_8h.html" title="UWB ranging key schedule + SP0 frame crypto (CONFIG_WOZ_ALIRO)." alt="" coords="46,94,124,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,48,113,86,109,82,157,45"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="148,94,209,120"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="180,44,181,79,176,77,177,49"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="233,94,297,120"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="200,44,243,83,238,83,199,49"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,168,74,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="80,118,57,156,53,153,75,121"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="98,168,162,193"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="94,118,117,155,112,155,91,122"/>
+</map>

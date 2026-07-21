@@ -1,0 +1,5 @@
+<map id="aliro_uwb_adapter_reader_config" name="aliro_uwb_adapter_reader_config">
+<area shape="rect" id="Node000001" title="Reader&#45;side selection preferences (borrowed for the adapter&#39;s lifetime)." alt="" coords="5,117,175,158"/>
+<area shape="rect" id="Node000002" href="$structaliro__uwb__preferred__hopping__configs.html" title="Ordered hopping preferences (at least one default sequence required)." alt="" coords="23,5,157,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,60,93,117,87,116,88,63"/>
+</map>

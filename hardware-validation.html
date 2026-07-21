@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hardware validation checklist</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="hardware-validation">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><b>Hardware validation checklist</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Guide</div><h1>Hardware validation checklist</h1></div></header>
+<div class="mid">
+<main class="doc reading">
+<p>Automated CI covers the host-side core of the nRF target (KAT suite, coverage floor, ASan/UBSan). It does not build either ESP32 port, and the end-to-end product runs against a live iPhone, which CI cannot exercise at all. This checklist is the manual gate: run every applicable item before cutting a release, and record the results table in the release notes (see <a href="RELEASING.html"><code>RELEASING.md</code></a>).</p>
+<p>Two targets ship from this repository, so there are two checklists. A release covering only one target runs only that target&#x27;s rows and records the other as <code>n/a</code>.</p>
+<h2>nRF5340 DK</h2>
+<h3>Test setup</h3>
+<ul><li>nRF5340 DK with DWM3000EVB (Arduino header) and X-NUCLEO-NFC12A1, wired per</li></ul>
+<p><a href="https://github-asxeem/asxeem/openaliro/blob/main/integration/overlays/dw3000-nfc.overlay"><code>integration/overlays/dw3000-nfc.overlay</code></a>.</p>
+<ul><li>An iPhone (or Apple Watch) with the lock&#x27;s Aliro key provisioned in Wallet.</li><li>Serial console attached (<code>make term</code>) to observe logs.</li></ul>
+<h3>Checklist</h3>
+<table><thead><tr><th>ID</th><th>Procedure</th><th>Pass criterion</th></tr></thead><tbody><tr><td>HV-1</td><td><code>make test</code> on the release commit</td><td>Exit 0, all host KATs pass</td></tr><tr><td>HV-2</td><td><code>make rebuild</code> (pristine)</td><td>Exit 0, image links and fits flash</td></tr><tr><td>HV-3</td><td>Flash a <code>make selftest</code> build, boot with no phone present</td><td>Boot self-test reports pass on the console</td></tr><tr><td>HV-4</td><td>Flash the release image (<code>make flash-erase</code> for a first flash), boot</td><td>Clean boot, no errors on the console, BLE advertising starts</td></tr><tr><td>HV-5</td><td>Tap the phone on the NFC reader (Express Mode, screen off)</td><td>Lock actuates to unlocked; console logs the granted access</td></tr><tr><td>HV-6</td><td>Relock, then approach from well outside ranging distance, phone pocketed</td><td>Lock unlocks on approach with no phone interaction</td></tr><tr><td>HV-7</td><td>Walk away from the lock</td><td>Lock relocks after passing the hysteresis margin, and does not oscillate at the boundary</td></tr><tr><td>HV-8</td><td>Power-cycle the DK, wait for boot, repeat HV-5 and HV-6</td><td>Both unlock paths work without re-provisioning the key</td></tr></tbody></table>
+<h2>ESP32-S3</h2>
+<p>No NFC tap path exists on this target, so there is no equivalent of HV-5.</p>
+<h3>Test setup</h3>
+<ul><li>ESP32-S3 dev board with a DWM3000EVB wired per</li></ul>
+<p><a href="esp32-bringup.html"><code>docs/esp32-bringup.md</code></a>, including the EVB&#x27;s power-select jumper.</p>
+<ul><li>An iPhone with a key provisioned in Wallet for *this* reader identity. A key minted</li></ul>
+<p>against a different reader will not authenticate.</p>
+<ul><li>Serial console attached (<code>make monitor</code> from <code>ports/esp32-matter</code>).</li></ul>
+<h3>Checklist</h3>
+<table><thead><tr><th>ID</th><th>Procedure</th><th>Pass criterion</th></tr></thead><tbody><tr><td>EV-1</td><td><code>ports/esp32-idf/test/run.sh</code> on the release commit</td><td>Exit 0, all host suites pass</td></tr><tr><td>EV-2</td><td><code>make rebuild</code> in <code>ports/esp32-matter</code></td><td>Exit 0; <code>verify_port.sh</code> reports the link seam intact and the app fits its partition</td></tr><tr><td>EV-3</td><td><code>make flash-erase</code>, then boot</td><td>Clean boot, onboarding codes printed, no watchdog resets</td></tr><tr><td>EV-4</td><td>Commission into a home with the printed code</td><td>Commissioning completes; <code>status</code> shows the fabric</td></tr><tr><td>EV-5</td><td>Confirm a key lands in the phone&#x27;s wallet</td><td>Key appears, tied to this reader</td></tr><tr><td>EV-6</td><td><code>aliro prov</code> on the console</td><td>Reports a provisioned identity, not the dev-identity fallback warning</td></tr><tr><td>EV-7</td><td>Approach from well outside ranging distance, phone pocketed</td><td>Wallet unlock animation plays and the bolt opens, with no phone interaction</td></tr><tr><td>EV-8</td><td>Watch the console through EV-7</td><td>Continuous positive distances tracking the approach; no watchdog reset</td></tr><tr><td>EV-9</td><td>Walk away</td><td>Bolt relocks past the hysteresis margin and does not oscillate at the boundary</td></tr><tr><td>EV-10</td><td>Re-approach within the same session</td><td>Unlocks again without a reconnect</td></tr><tr><td>EV-11</td><td>Power-cycle the board, wait for boot, repeat EV-7</td><td>Unlock works without re-commissioning or re-provisioning</td></tr></tbody></table>
+<p>EV-7 is the row that matters most and the one most easily faked: the bolt moving is not a pass. The Wallet animation is the pass criterion, because that is what proves the reader told the phone it granted access rather than just actuating locally.</p>
+<h2>Recording results</h2>
+<p>Copy the relevant tables into the release notes with a Result column (<code>pass</code> / <code>fail</code> / <code>n/a</code>), plus: firmware commit hash, toolchain version (NCS, or ESP-IDF and esp-matter), board revision, phone model, and iOS version. A release ships only when every applicable row is <code>pass</code>.</p>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<map id="modules/woz_uwb/src/facade/woz_logquiet.c" name="modules/woz_uwb/src/facade/woz_logquiet.c">
+<area shape="rect" id="Node000001" title="— PRETTY&#45;gated runtime muting of benign upstream error spam." alt="" coords="112,5,268,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,102,98,127"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="161,47,85,95,82,91,156,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="122,102,259,127"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="192,45,193,87,188,85,188,48"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="283,94,409,135"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="226,44,300,86,295,87,225,49"/>
+</map>

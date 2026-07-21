@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_aliro/src/aliro_hash.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_aliro.src.aliro_hash.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_aliro/src</span><span class="sep">/</span><b>aliro_hash.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_hash.c</h1><p class="lede">Self-contained SHA-256, HMAC-SHA256, HKDF, and ANSI-X9.63 KDF implementation for the ESP32-IDF…</p><div class="metarow"><span><code>modules/woz_aliro/src/aliro_hash.c</code></span><span>11 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>Self-contained SHA-256, HMAC-SHA256, HKDF, and ANSI-X9.63 KDF implementation for the ESP32-IDF
+Aliro crypto port, with no external crypto library dependency.</p>
+<p class="chips">depends on <a href="modules.woz_aliro.src.aliro_hash.h.html"><code>modules/woz_aliro/src/aliro_hash.h</code></a></p>
+<figure class="graph-wrap"><div class="graph-shell"><pre class="mermaid">flowchart TD
+  aliro_hkdf --&gt; aliro_hkdf_expand
+  aliro_hkdf --&gt; aliro_hkdf_extract</pre></div></figure>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="ror32">
+<h3><span class="kindb" title="function">F</span><code>static uint32_t <b>ror32</b>(uint32_t x, unsigned n)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_hash.c:14</div>
+<p>Rotate a 32-bit word right by n bits.</p>
+<div class="xref">called by <code>sha256_block</code></div>
+</section>
+<section class="api-entry" id="sha256_block">
+<h3><span class="kindb" title="function">F</span><code>static void <b>sha256_block</b>(uint32_t h[8], const uint8_t p[64])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_hash.c:35</div>
+<p>Compresses one 64-byte message block into the running SHA-256 state h, per FIPS 180-4.
+h: 8-word running hash state, updated in place.
+p: 64-byte input block.</p>
+<div class="xref">called by <code>aliro_sha256_update</code> &nbsp;·&nbsp; calls <code>ror32</code></div>
+</section>
+<section class="api-entry" id="aliro_sha256_init">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_sha256_init</b>(struct aliro_sha256 *s)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_hash.c:83</div>
+<p>Initialize a streaming SHA-256 context with the FIPS 180-4 initial hash values.
+Resets total byte count and internal buffer length to zero; must be called before feeding data.</p>
+<div class="xref">called by <code>aliro_hkdf_expand</code>, <code>aliro_hmac_sha256</code>, <code>aliro_sha256</code>, <code>aliro_x963_kdf</code></div>
+</section>
+<section class="api-entry" id="aliro_sha256_update">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_sha256_update</b>(struct aliro_sha256 *s, const void *data, size_t len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_hash.c:101</div>
+<p>Feeds len bytes of data into a streaming SHA-256 context, buffering a partial block and
+compressing full 64-byte blocks as they accumulate. s: context to update; total byte count and
+internal buffer are updated in place. data: bytes to hash; may be split across multiple calls.
+len: number of bytes in data.</p>
+<div class="xref">called by <code>aliro_hkdf_expand</code>, <code>aliro_hmac_sha256</code>, <code>aliro_sha256</code>, <code>aliro_sha256_final</code>, <code>aliro_x963_kdf</code> &nbsp;·&nbsp; calls <code>sha256_block</code></div>
+</section>
+<section class="api-entry" id="aliro_sha256_final">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_sha256_final</b>(struct aliro_sha256 *s, uint8_t out[ALIRO_SHA256_LEN])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_hash.c:136</div>
+<p>Finalizes a streaming SHA-256 computation, applying FIPS 180-4 padding and the big-endian
+bit-length suffix, and writes the 32-byte digest to out. s: context to finalize; consumed by this
+call, must not be reused afterward without re-initializing. out: 32-byte buffer that receives the
+digest.</p>
+<div class="xref">called by <code>aliro_hkdf_expand</code>, <code>aliro_hmac_sha256</code>, <code>aliro_sha256</code>, <code>aliro_x963_kdf</code> &nbsp;·&nbsp; calls <code>aliro_sha256_update</code></div>
+</section>
+<section class="api-entry" id="aliro_sha256">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_sha256</b>(const void *data, size_t len, uint8_t out[ALIRO_SHA256_LEN])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_hash.c:160</div>
+<p>One-shot SHA-256.</p>
+<div class="xref">called by <code>aliro_hmac_sha256</code> &nbsp;·&nbsp; calls <code>aliro_sha256_final</code>, <code>aliro_sha256_init</code>, <code>aliro_sha256_update</code></div>
+</section>
+<section class="api-entry" id="aliro_hmac_sha256">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_hmac_sha256</b>(const uint8_t *key, size_t key_len, const void *msg, size_t msg_len, uint8_t out[ALIRO_SHA256_LEN])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_hash.c:169</div>
+<p>HMAC-SHA256 (RFC 2104). out is 32 bytes.</p>
+<div class="xref">called by <code>aliro_hkdf_extract</code> &nbsp;·&nbsp; calls <code>aliro_sha256</code>, <code>aliro_sha256_final</code>, <code>aliro_sha256_init</code>, <code>aliro_sha256_update</code></div>
+</section>
+<section class="api-entry" id="aliro_hkdf_extract">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_hkdf_extract</b>(const uint8_t *salt, size_t salt_len, const uint8_t *ikm, size_t ikm_len, uint8_t prk[ALIRO_SHA256_LEN])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_hash.c:198</div>
+<p>HKDF-SHA256 (RFC 5869).
+extract: PRK = HMAC(salt, ikm); salt==NULL uses a 32-byte zero salt.
+expand:  OKM = T(1)|T(2)|... truncated to out_len (&lt;= 255*32).
+Returns 0 on success, -1 on a bad length.</p>
+<div class="xref">called by <code>aliro_hkdf</code> &nbsp;·&nbsp; calls <code>aliro_hmac_sha256</code></div>
+</section>
+<section class="api-entry" id="aliro_hkdf_expand">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_hkdf_expand</b>(const uint8_t prk[ALIRO_SHA256_LEN], const uint8_t *info, size_t info_len, uint8_t *out, size_t out_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_hash.c:217</div>
+<p>HKDF-SHA256 expand step (RFC 5869): derives out_len bytes of output keying material from a
+pseudorandom key and context info. prk: 32-byte pseudorandom key, typically from
+aliro_hkdf_extract. info: context/application-specific info bytes, may be NULL if info_len is 0.
+info_len: length of info in bytes.
+out: buffer that receives out_len bytes of derived key material.
+out_len: number of bytes to produce; must not exceed 255 * 32 bytes (255 * ALIRO_SHA256_LEN).
+Returns 0 on success, or -1 if out_len exceeds the RFC 5869 maximum.</p>
+<div class="xref">called by <code>aliro_hkdf</code> &nbsp;·&nbsp; calls <code>aliro_sha256_final</code>, <code>aliro_sha256_init</code>, <code>aliro_sha256_update</code></div>
+</section>
+<section class="api-entry" id="aliro_hkdf">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_hkdf</b>(const uint8_t *salt, size_t salt_len, const uint8_t *ikm, size_t ikm_len, const uint8_t *info, size_t info_len, uint8_t *out, size_t out_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_hash.c:271</div>
+<p>HKDF-SHA256 (RFC 5869): extracts a pseudorandom key from salt and input keying material, then
+expands it to out_len bytes of output. salt: salt bytes for the extract step. salt_len: length of
+salt in bytes. ikm: input keying material. ikm_len: length of ikm in bytes. info:
+context/application-specific info bytes for the expand step. info_len: length of info in bytes.
+out: buffer that receives out_len bytes of derived key material.
+out_len: number of bytes to produce; must not exceed 255 * 32 bytes, per aliro_hkdf_expand.
+Returns 0 on success, or -1 if out_len exceeds the RFC 5869 maximum.</p>
+<div class="xref">calls <code>aliro_hkdf_expand</code>, <code>aliro_hkdf_extract</code></div>
+</section>
+<section class="api-entry" id="aliro_x963_kdf">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_x963_kdf</b>(const uint8_t *z, size_t z_len, const uint8_t *info, size_t info_len, uint8_t *out, size_t out_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_hash.c:280</div>
+<p>ANSI-X9.63 KDF (SEC1 v2 KDF2), SHA-256 variant:
+OKM = Hash(Z | counter_be32=1 | info) | Hash(Z | counter=2 | info) | ...
+truncated to out_len. Returns 0 on success, -1 on a bad length.</p>
+<div class="xref">calls <code>aliro_sha256_final</code>, <code>aliro_sha256_init</code>, <code>aliro_sha256_update</code></div>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<map id="modules/woz_uwb/src/driver/uwb_rxdiag.c" name="modules/woz_uwb/src/driver/uwb_rxdiag.c">
+<area shape="rect" id="Node000001" title="— Diagnostic RX/TX event tallies + ranging heartbeat." alt="" coords="415,5,567,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="215,241,279,267"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="413,27,309,31,189,41,133,50,83,61,43,77,17,96,10,108,8,120,17,146,37,170,61,191,94,212,130,227,202,247,197,248,129,233,91,217,57,195,33,174,12,148,3,120,5,106,13,92,41,72,81,56,132,44,188,36,309,26,418,25"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="503,94,596,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="506,44,534,82,529,81,505,49"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="620,94,730,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="537,44,635,87,630,88,537,49"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="754,94,892,120"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="567,42,760,89,755,90,567,48"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="916,94,1045,120"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="567,37,903,92,898,94,567,42"/>
+<area shape="rect" id="Node000007" href="$ccc__shim_8h.html" title="— map a per&#45;frame STS index to the (dURSK, STS&#45;V) pair the DW3000 STS engine loads." alt="" coords="276,94,364,120"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="446,48,361,90,359,85,451,45"/>
+<area shape="rect" id="Node000011" href="$fira__session_8h.html" title="— Range + URSK store for the CCC Pre&#45;POLL responder." alt="" coords="149,94,251,120"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="416,48,260,92,259,87,421,45"/>
+<area shape="rect" id="Node000012" href="$uwb__rxdiag_8h.html" title="— Read&#45;side accessors for the RX event tallies + log stream." alt="" coords="27,94,125,120"/>
+<area shape="poly" id="edge16_Node000001_Node000012" title=" " alt="" coords="414,44,142,96,140,91,416,39"/>
+<area shape="rect" id="Node000013" href="$woz__diag_8h.html" title="— DIAGK(): compile&#45;time gate for verbose UWB bring&#45;up diagnostics." alt="" coords="1069,94,1156,120"/>
+<area shape="poly" id="edge19_Node000001_Node000013" title=" " alt="" coords="567,31,782,54,1056,93,1051,94,782,59,567,36"/>
+<area shape="rect" id="Node000015" href="$woz__alloc_8h_source.html" title=" " alt="" coords="388,94,479,120"/>
+<area shape="poly" id="edge21_Node000001_Node000015" title=" " alt="" coords="479,45,453,83,450,79,475,48"/>
+<area shape="poly" id="edge9_Node000007_Node000002" title=" " alt="" coords="311,118,292,143,275,169,263,198,254,228,250,224,258,196,270,166,288,140,306,121"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="84,168,159,193"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="284,122,171,164,169,160,289,119"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="455,241,524,267"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="335,118,467,231,461,231,333,122"/>
+<area shape="rect" id="Node000010" href="$ccc__kdf_8h.html" title="UWB ranging key schedule + SP0 frame crypto (CONFIG_WOZ_ALIRO)." alt="" coords="284,168,362,193"/>
+<area shape="poly" id="edge10_Node000007_Node000010" title=" " alt="" coords="322,118,324,154,320,151,319,122"/>
+<area shape="poly" id="edge12_Node000010_Node000002" title=" " alt="" coords="313,193,272,233,269,228,308,195"/>
+<area shape="poly" id="edge11_Node000010_Node000009" title=" " alt="" coords="352,191,450,235,445,235,351,196"/>
+<area shape="poly" id="edge15_Node000011_Node000002" title=" " alt="" coords="206,118,241,227,236,226,202,122"/>
+<area shape="poly" id="edge14_Node000011_Node000008" title=" " alt="" coords="189,119,148,159,144,155,185,122"/>
+<area shape="poly" id="edge18_Node000012_Node000002" title=" " alt="" coords="73,117,66,155,67,175,75,192,100,216,132,233,167,243,202,251,197,251,166,249,130,238,97,221,70,195,62,176,61,155,71,122"/>
+<area shape="poly" id="edge17_Node000012_Node000008" title=" " alt="" coords="84,117,109,154,103,155,83,122"/>
+<area shape="rect" id="Node000014" href="$woz__log_8h_source.html" title=" " alt="" coords="1072,168,1152,193"/>
+<area shape="poly" id="edge20_Node000013_Node000014" title=" " alt="" coords="1114,118,1114,154,1110,150,1111,122"/>
+<area shape="poly" id="edge23_Node000015_Node000002" title=" " alt="" coords="430,119,409,157,375,195,336,221,295,240,293,235,333,217,372,191,405,154,426,122"/>
+<area shape="poly" id="edge22_Node000015_Node000009" title=" " alt="" coords="480,117,543,139,570,152,586,166,591,177,592,188,581,207,561,224,537,237,535,232,558,219,577,204,586,187,586,178,582,169,567,156,541,144,479,123"/>
+<area shape="rect" id="Node000016" href="$woz__port_8h_source.html" title=" " alt="" coords="487,168,572,193"/>
+<area shape="poly" id="edge24_Node000015_Node000016" title=" " alt="" coords="451,118,504,159,499,158,449,123"/>
+<area shape="poly" id="edge26_Node000016_Node000002" title=" " alt="" coords="489,193,295,243,294,238,484,193"/>
+<area shape="poly" id="edge25_Node000016_Node000009" title=" " alt="" coords="525,192,505,230,502,226,521,195"/>
+</map>

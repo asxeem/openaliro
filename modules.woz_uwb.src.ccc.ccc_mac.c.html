@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_uwb/src/ccc/ccc_mac.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_uwb.src.ccc.ccc_mac.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_uwb/src/ccc</span><span class="sep">/</span><b>ccc_mac.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">ccc_mac.c</h1><p class="lede">@file ccc_mac.c — UWB MAC: hopping sequence, SP0 frame codec, ranging schedule.</p><div class="metarow"><span><code>modules/woz_uwb/src/ccc/ccc_mac.c</code></span><span>19 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>@file ccc_mac.c — UWB MAC: hopping sequence, SP0 frame codec, ranging schedule.</p>
+<p class="chips">depends on <a href="modules.woz_uwb.src.ccc.ccc_mac.h.html"><code>modules/woz_uwb/src/ccc/ccc_mac.h</code></a></p>
+<figure class="graph-wrap"><div class="graph-shell"><pre class="mermaid">flowchart TD
+  ccc_block_round --&gt; ccc_hop_round_index</pre></div></figure>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="ccc_hop_round_index">
+<h3><span class="kindb" title="function">F</span><code>uint16_t <b>ccc_hop_round_index</b>(uint32_t block_index, uint32_t hop_key_rw, uint32_t n_round)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:18</div>
+<p>Default hopping round index S(i) in [0, n_round) for a ranging block.</p>
+<dl class="params"><dt><code>block_index</code></dt><dd>Block index i.</dd><dt><code>hop_key_rw</code></dt><dd>HOP_Key_RW value keying the hop calculation.</dd><dt><code>n_round</code></dt><dd>Total number of ranging rounds.</dd><dt>returns</dt><dd>Round index in [0, n_round).</dd></dl>
+<div class="xref">called by <code>ccc_block_round</code>, <code>ccc_initiator_next_hop</code></div>
+</section>
+<section class="api-entry" id="put_le16">
+<h3><span class="kindb" title="function">F</span><code>static void <b>put_le16</b>(uint8_t *p, uint16_t v)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:40</div>
+<p>Store a uint16 little-endian.</p>
+<div class="xref">called by <code>ccc_build_mhr</code>, <code>ccc_final_data_pack</code>, <code>ccc_pre_poll_pack</code></div>
+</section>
+<section class="api-entry" id="put_le32">
+<h3><span class="kindb" title="function">F</span><code>static void <b>put_le32</b>(uint8_t *p, uint32_t v)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:47</div>
+<p>Store a uint32 little-endian.</p>
+<div class="xref">called by <code>ccc_build_mhr</code>, <code>ccc_final_data_pack</code>, <code>ccc_pre_poll_pack</code></div>
+</section>
+<section class="api-entry" id="get_le16">
+<h3><span class="kindb" title="function">F</span><code>static uint16_t <b>get_le16</b>(const uint8_t *p)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:56</div>
+<p>Load a uint16 little-endian.</p>
+<div class="xref">called by <code>ccc_final_data_parse</code>, <code>ccc_parse_mhr</code>, <code>ccc_pre_poll_parse</code></div>
+</section>
+<section class="api-entry" id="get_le32">
+<h3><span class="kindb" title="function">F</span><code>static uint32_t <b>get_le32</b>(const uint8_t *p)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:62</div>
+<p>Load a uint32 little-endian.</p>
+<div class="xref">called by <code>ccc_final_data_parse</code>, <code>ccc_parse_mhr</code>, <code>ccc_pre_poll_parse</code></div>
+</section>
+<section class="api-entry" id="mhr_vendor_oui_ok">
+<h3><span class="kindb" title="function">F</span><code>static bool <b>mhr_vendor_oui_ok</b>(const uint8_t *p)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:69</div>
+<p>True if the 3-byte little-endian OUI at p is the CCC or Aliro OUI (both accepted).</p>
+<div class="xref">called by <code>ccc_parse_mhr</code></div>
+</section>
+<section class="api-entry" id="ccc_build_mhr">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_build_mhr</b>(const struct ccc_mhr_fields *f, uint8_t out[CCC_MHR_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:82</div>
+<p>Build the 23-byte SP0 MHR little-endian on the wire.</p>
+<dl class="params"><dt><code>f</code></dt><dd>MHR fields (destination address, frame counter, key source, message ID, payload length).</dd><dt><code>out</code></dt><dd>Output buffer of at least CCC_MHR_LEN bytes.</dd><dt>returns</dt><dd>0 on success, -EINVAL if inputs are null.</dd></dl>
+<div class="xref">calls <code>put_le16</code>, <code>put_le32</code></div>
+</section>
+<section class="api-entry" id="ccc_parse_mhr">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_parse_mhr</b>(const uint8_t in[CCC_MHR_LEN], struct ccc_mhr_fields *f)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:110</div>
+<p>Parse and validate a 23-byte SP0 MHR, extracting variable fields.</p>
+<dl class="params"><dt><code>in</code></dt><dd>Input buffer of exactly CCC_MHR_LEN bytes.</dd><dt><code>f</code></dt><dd>Output structure to hold parsed fields (destination address, frame counter, key source, message ID, payload length).</dd><dt>returns</dt><dd>0 on success, -EINVAL on mismatch or null input.</dd></dl>
+<div class="xref">calls <code>get_le16</code>, <code>get_le32</code>, <code>mhr_vendor_oui_ok</code></div>
+</section>
+<section class="api-entry" id="ccc_pre_poll_pack">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_pre_poll_pack</b>(const struct ccc_pre_poll *p, uint8_t out[CCC_PRE_POLL_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:134</div>
+<p>Pack a Pre-POLL payload little-endian.</p>
+<dl class="params"><dt><code>p</code></dt><dd>Pre-POLL structure (session ID, STS index, ranging block, hop flag, round index).</dd><dt><code>out</code></dt><dd>Output buffer of at least CCC_PRE_POLL_LEN bytes.</dd><dt>returns</dt><dd>0 on success, -EINVAL if inputs are null.</dd></dl>
+<div class="xref">calls <code>put_le16</code>, <code>put_le32</code></div>
+</section>
+<section class="api-entry" id="ccc_pre_poll_parse">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_pre_poll_parse</b>(const uint8_t in[CCC_PRE_POLL_LEN], struct ccc_pre_poll *p)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:154</div>
+<p>Parse a 13-byte Pre-POLL payload.</p>
+<dl class="params"><dt><code>in</code></dt><dd>Input buffer of exactly CCC_PRE_POLL_LEN bytes.</dd><dt><code>p</code></dt><dd>Output structure to hold parsed fields (session ID, STS index, ranging block, hop flag, round index).</dd><dt>returns</dt><dd>0 on success, -EINVAL if inputs are null.</dd></dl>
+<div class="xref">calls <code>get_le16</code>, <code>get_le32</code></div>
+</section>
+<section class="api-entry" id="ccc_final_data_pack">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_final_data_pack</b>(const struct ccc_final_data *f, uint8_t *out, size_t cap, size_t *len)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:177</div>
+<p>Pack a Final_Data payload little-endian.</p>
+<dl class="params"><dt><code>f</code></dt><dd>Final_Data structure (session ID, ranging block, hop flag, round index, STS index, timestamp, responder list).</dd><dt><code>out</code></dt><dd>Output buffer.</dd><dt><code>cap</code></dt><dd>Capacity of output buffer.</dd><dt><code>len</code></dt><dd>Output: number of bytes written.</dd><dt>returns</dt><dd>0 on success, -EINVAL if inputs are null, responder count exceeds CCC_MAX_RESPONDERS, or buffer is too small.</dd></dl>
+<div class="xref">calls <code>put_le16</code>, <code>put_le32</code></div>
+</section>
+<section class="api-entry" id="ccc_final_data_parse">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_final_data_parse</b>(const uint8_t *in, size_t len, struct ccc_final_data *f)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:215</div>
+<p>Parse a Final_Data payload.</p>
+<dl class="params"><dt><code>in</code></dt><dd>Input buffer.</dd><dt><code>len</code></dt><dd>Length of input buffer.</dd><dt><code>f</code></dt><dd>Output structure to hold parsed fields (session ID, ranging block, hop flag, round index, STS index, timestamp, responder list).</dd><dt>returns</dt><dd>0 on success, -EINVAL if inputs are null, input length is inconsistent with responder count, or responder count exceeds CCC_MAX_RESPONDERS.</dd></dl>
+<div class="xref">calls <code>get_le16</code>, <code>get_le32</code></div>
+</section>
+<section class="api-entry" id="slot_offset">
+<h3><span class="kindb" title="function">F</span><code>static uint32_t <b>slot_offset</b>(const struct ccc_ran_params *p, enum ccc_slot slot, uint8_t responder)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:245</div>
+<p>STS-index offset of a slot within its ranging round.</p>
+<div class="xref">called by <code>ccc_slot_sts_index</code></div>
+</section>
+<section class="api-entry" id="ccc_block_round">
+<h3><span class="kindb" title="function">F</span><code>uint16_t <b>ccc_block_round</b>(const struct ccc_ran_params *p, uint32_t block)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:269</div>
+<p>The ranging round a block uses (block 0 uses round 0; continuous hopping uses S(i) for i&gt;=1).</p>
+<dl class="params"><dt><code>p</code></dt><dd>Ranging parameters.</dd><dt><code>block</code></dt><dd>Block index.</dd><dt>returns</dt><dd>Round index in [0, n_round).</dd></dl>
+<div class="xref">calls <code>ccc_hop_round_index</code></div>
+</section>
+<section class="api-entry" id="ccc_slot_sts_index">
+<h3><span class="kindb" title="function">F</span><code>uint32_t <b>ccc_slot_sts_index</b>(const struct ccc_ran_params *p, uint32_t block, uint16_t round, enum ccc_slot slot, uint8_t responder)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:288</div>
+<p>STS index for one slot of a ranging round (wraps mod 2^32).</p>
+<dl class="params"><dt><code>p</code></dt><dd>Ranging parameters.</dd><dt><code>block</code></dt><dd>Block index.</dd><dt><code>round</code></dt><dd>Round index.</dd><dt><code>slot</code></dt><dd>Slot type (POLL, Response, or Final).</dd><dt><code>responder</code></dt><dd>Responder index.</dd><dt>returns</dt><dd>STS index for the slot.</dd></dl>
+<div class="xref">calls <code>slot_offset</code></div>
+</section>
+<section class="api-entry" id="ccc_initiator_next_hop">
+<h3><span class="kindb" title="function">F</span><code>struct ccc_hop_decision <b>ccc_initiator_next_hop</b>(const struct ccc_ran_params *p, uint32_t block)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:309</div>
+<p>The initiator&#x27;s hop decision for the block after block, written into its Final_Data.</p>
+<dl class="params"><dt><code>p</code></dt><dd>Ranging parameters.</dd><dt><code>block</code></dt><dd>Block index.</dd><dt>returns</dt><dd>Hop decision (hop flag and next round index); both zero if hopping is disabled or params are null.</dd></dl>
+<div class="xref">calls <code>ccc_hop_round_index</code></div>
+</section>
+<section class="api-entry" id="ccc_ds_twr_tof">
+<h3><span class="kindb" title="function">F</span><code>uint32_t <b>ccc_ds_twr_tof</b>(const struct ccc_ds_twr *t)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:327</div>
+<p>DS-TWR one-way time-of-flight in timestamp ticks.</p>
+<dl class="params"><dt><code>t</code></dt><dd>DS-TWR intervals (round-trip and reply times at both ends).</dd><dt>returns</dt><dd>Time-of-flight in ticks, or 0 if the denominator is 0 or input is null.</dd></dl>
+</section>
+<section class="api-entry" id="ccc_responder_ds_twr">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_responder_ds_twr</b>(const struct ccc_final_data *fd, uint8_t responder, uint32_t t_reply1, uint32_t t_round2, struct ccc_ds_twr *out)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:339</div>
+<p>Assemble the DS-TWR intervals at the responder from a received Final_Data.</p>
+</section>
+<section class="api-entry" id="ccc_ursk_exhausted">
+<h3><span class="kindb" title="function">F</span><code>bool <b>ccc_ursk_exhausted</b>(const struct ccc_ran_params *p, uint32_t block)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_mac.c:355</div>
+<p>Whether the current URSK is exhausted for a ranging block (true once its highest STS index would
+exceed 2^31-1).</p>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

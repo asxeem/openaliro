@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Porting openaliro</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="porting">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><b>Porting openaliro</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Guide</div><h1>Porting openaliro</h1></div></header>
+<div class="mid">
+<main class="doc reading">
+<p>How the UWB engine moves to a new chipset, what it costs, and how to prove a port did not change the code the validated target runs.</p>
+<p>The primary target is the nRF5340 DK on NCS v3.3.0 (hardware-validated end to end). A second port, ESP32-S3 on ESP-IDF, lives in <a href="https://github-asxeem/asxeem/openaliro/blob/main/ports/esp32-idf"><code>ports/esp32-idf/</code></a>.</p>
+<h2>1. The contract</h2>
+<p>Everything the ranging engine needs from a platform is two headers in <code>modules/woz_uwb/src/facade/</code>:</p>
+<ul><li><strong><a href="https://github-asxeem/asxeem/openaliro/blob/main/modules/woz_uwb/src/facade/woz_port.h"><code>woz_port.h</code></a></strong> — eight functions:</li></ul>
+<table><thead><tr><th>Function</th><th>Meaning</th></tr></thead><tbody><tr><td><code>woz_malloc</code> / <code>woz_calloc</code> / <code>woz_free</code></td><td>heap</td></tr><tr><td><code>woz_uptime_us</code></td><td>monotonic microseconds since boot</td></tr><tr><td><code>woz_uptime_ms</code></td><td>monotonic milliseconds since boot</td></tr><tr><td><code>woz_sleep_ms</code></td><td>relinquish the CPU for at least N ms</td></tr><tr><td><code>woz_sleep_us</code></td><td>short busy-wait, microseconds (<code>deca_sleep</code>)</td></tr><tr><td><code>woz_cycle_get_32</code></td><td>free-running counter, RX-arm latency probe</td></tr></tbody></table>
+<ul><li><strong><a href="https://github-asxeem/asxeem/openaliro/blob/main/modules/woz_uwb/src/facade/woz_log.h"><code>woz_log.h</code></a></strong> — <code>LOG_ERR/WRN/INF/DBG</code>, the</li></ul>
+<p>hexdump variants, <code>LOG_MODULE_REGISTER/DECLARE</code>, and <code>woz_printf</code>.</p>
+<p>Both select a backend from <code>__ZEPHYR__</code>, <code>ESP_PLATFORM</code>, or <code>WOZ_PORT_HOST</code>, and <code>#error</code> if none is defined rather than guessing. Two further headers, <code>woz_bytes.h</code> (endian-neutral load/store) and <code>woz_util.h</code> (<code>MIN</code>/<code>MAX</code>/<code>ARRAY_SIZE</code>/<code>IS_ENABLED</code>), are pure code with no platform content at all; they are shared by every target including Zephyr.</p>
+<p><strong>Deliberately not in the contract:</strong> work queues, timers, and init hooks. Those appear only in <code>uwb_rxdiag.c</code>, <code>uwb_selftest.c</code>, <code>woz_logfmt.c</code>, <code>woz_logquiet.c</code> and <code>aliro_shell.c</code>, which are Zephyr-only by design and are in no port&#x27;s source list. The <code>k_work</code> / <code>k_sem</code> / <code>k_poll</code> surface used by <code>dw3000_spi.c</code> and <code>dw3000_hw.c</code> is likewise excluded, because every port supplies its own backend for those two files. Adding any of it would multiply the port surface for code that never runs on the ranging path.</p>
+<h2>2. What a port costs</h2>
+<p>The cost axis is the <strong>RTOS</strong>, not the chipset. Under Zephyr the SPI and GPIO layers are devicetree-abstracted, so a new Zephyr-supported SoC needs no C at all.</p>
+<table><thead><tr><th>Tier</th><th>Work</th><th>Targets</th><th>Effort</th></tr></thead><tbody><tr><td><strong>0. Board file</strong></td><td>Devicetree overlay, roughly 50 lines. No C.</td><td>nRF52840, nRF54L15, EFR32MG24, STM32WB55, any Zephyr SoC with SPI + GPIO IRQ</td><td>Hours</td></tr><tr><td><strong>1. New RTOS</strong></td><td>A branch in <code>woz_port.h</code> + <code>woz_log.h</code> (about 55 lines), plus a DW3000 SPI/GPIO/IRQ backend (about 350 lines)</td><td>ESP-IDF (<strong>done</strong>), Pico SDK (RP2350), STM32Cube + FreeRTOS, bare metal</td><td>2 to 4 days</td></tr><tr><td><strong>2. New UWB silicon</strong></td><td>A new driver under the <code>woz_uwb_facade.h</code> seam. Not a port.</td><td>Anything that is not DW3xxx</td><td>Weeks, gated on driver availability</td></tr></tbody></table>
+<p>Effort figures other than ESP-IDF are estimates from the measured line counts, not from completed ports.</p>
+<p><strong>Scope of the Tier 0 claim.</strong> It applies to the <strong>UWB engine module</strong>, which is SoC-neutral apart from one guarded block: the nRF5340 HFCLK boost in <code>woz_uwb_facade.c</code>. It does <strong>not</strong> cover the full Matter door-lock product. <code>build.sh</code> pins <code>nrf5340dk/nrf5340/cpuapp</code> and drives a sysbuild with a separate <code>ipc_radio</code> network-core image, so moving the whole application to a single-core part such as nRF52840 is a sysbuild and Matter-transport exercise well beyond a devicetree overlay. Porting the engine to a new Zephyr board is cheap; porting the product is not, and the two should not be quoted at the same price.</p>
+<p>For reference, the ESP-IDF port&#x27;s entire target-specific surface is now <code>ports/esp32-idf/components/woz_uwb/port/</code>: <code>dw3000_spi.c</code> (169), <code>dw3000_hw.c</code> (180) and <code>woz_wrap_stubs.c</code> (21). It carries no Zephyr compatibility layer.</p>
+<h2>3. Build tiers</h2>
+<ul><li><strong>Full Aliro UWB</strong> — <code>CONFIG_WOZ_UWB=y</code>, <code>WOZ_UWB_RESPONDER=y</code>, <code>WOZ_ALIRO=y</code>.</li><li><strong>Bring-up only</strong> — <code>CONFIG_WOZ_UWB=y</code> alone compiles just <code>uwb_min.c</code>.</li><li><strong>No UWB (NFC-only)</strong> — <code>CONFIG_WOZ_UWB=n</code>. The whole module is wrapped in</li></ul>
+<p><code>if(CONFIG_WOZ_UWB)</code> and contributes nothing; every external call site in <code>integration/patches/custom_impl-uwb.patch</code> is <code>#ifdef CONFIG_WOZ_ALIRO</code>, so the build links clean with no UWB silicon present.</p>
+<p>This matters more than it looks. Aliro makes NFC the mandatory transport and BLE and UWB optional, so an NFC-only lock is a legitimate certified device, and this tier removes the DWM3000EVB from the bill of materials. Note that it also uses none of the ranging engine: the NFC path needs the credential-auth layer, not <code>modules/woz_uwb</code>.</p>
+<h3>Crypto seam</h3>
+<p><code>ccc_kdf.h</code> needs one AES-ECB primitive, supplied by exactly one of:</p>
+<ul><li><code>ccc_crypto_psa.c</code> — <code>CONFIG_WOZ_CRYPTO_PSA</code> (default on nRF, backed by nrf_security).</li><li><code>ccc_crypto_mbedtls.c</code> — <code>CONFIG_WOZ_CRYPTO_MBEDTLS</code>, for SoCs without a PSA provider.</li></ul>
+<p>This is what the ESP32-S3 port uses.</p>
+<p>Both honour the same contract; pick whichever the target&#x27;s crypto stack provides.</p>
+<h3>SoC-specific seams</h3>
+<p><code>woz_uwb_facade.c</code> boosts the nRF5340 app-core HFCLK to 128 MHz for the DW3000 SPI bus, guarded by <code>CONFIG_SOC_NRF5340_CPUAPP</code>. Other SoCs clock their SPI controller independently, so it compiles to a no-op. A new target needs an equivalent only if its SPI clock is divided at boot.</p>
+<h3>Linker seam</h3>
+<p>The CCC STS substitution relies on three <code>-Wl,--wrap=dwt_*</code> flags (<code>dwt_configurestsiv</code>, <code>dwt_rxenable</code>, <code>dwt_configurestsmode</code>). Any GNU ld supports this; it is confirmed working on both <code>arm-zephyr-eabi-ld</code> and <code>xtensa-esp32s3-elf-ld</code>. A port to a non-GNU linker would need a different interception strategy.</p>
+<h2>4. Verifying a port did not change the validated target</h2>
+<p>Porting work touches shared code, so the nRF5340 image must be shown to be unaffected rather than assumed to be. The check that catches real regressions is per-object, because whole-image numbers are dominated by the Matter application and will hide a small engine change.</p>
+<pre><code>SIZE=&lt;zephyr-sdk&gt;/arm-zephyr-eabi/bin/arm-zephyr-eabi-size
+D=build/matter-aliro-door-lock-app/modules/woz_uwb/CMakeFiles/woz_uwb.dir/src
+
+./build.sh build                                  # before the change
+find $D -name &#x27;*.obj&#x27; | sort | xargs $SIZE &gt; /tmp/before.txt
+# ... make the change ...
+./build.sh build
+find $D -name &#x27;*.obj&#x27; | sort | xargs $SIZE &gt; /tmp/after.txt
+diff /tmp/before.txt /tmp/after.txt                # must be empty for a pure refactor</code></pre>
+<p>Repeat for the vendored DW3000 objects under <code>build/matter-aliro-door-lock-app/modules/dw3000/</code> if <code>deps/dw3000</code> was touched, and run <code>./tests/host/run.sh</code> (558 assertions, no toolchain or hardware needed).</p>
+<p>A byte-identical size table proves codegen is unchanged; it does not prove the port works. Only a bench run against a phone does that.</p>
+<h2>5. Vendored DW3000 and the <code>printk</code> alias</h2>
+<p><code>deps/dw3000</code> is vendor source with one local addition: DIAG tracing this project added to <code>deca_compat.c</code>, <code>deca_interface.c</code> and <code>dw3000_device.c</code> (about 18 <code>printk</code> call sites, gated on <code>CONFIG_WOZ_PRETTY_SHELL</code>). To keep those files to a one-line include change rather than rewriting vendor call sites, <code>woz_log.h</code> aliases <code>printk</code> itself on non-Zephyr targets. That alias exists only for this purpose and should be removed with the DIAG tracing.</p>
+<p><code>deca_port.c</code> is shared by all ports and uses <code>woz_sleep_ms</code> / <code>woz_sleep_us</code>; <code>dw3000_spi.c</code>, <code>dw3000_hw.c</code> and <code>dw3000_spi_trace.c</code> are Zephyr-specific and each port replaces them.</p>
+<h2>6. Known-blocked targets</h2>
+<p>Blocked on driver availability, not on engineering:</p>
+<ul><li><strong>NXP SR150</strong> — NDA/production access only.</li><li><strong>QM33 / QM35 as UWB silicon</strong> — the public <code>qm35-sdk</code> on GitLab is clonable without an</li></ul>
+<p>NDA, but it ships FiRa ranging and 360° AoA and does not mention Aliro. The Nordic and Qorvo Aliro reference application is distributed to &quot;early technology adopters&quot; on request; the terms are not public. Whether the public SDK exposes the STS key injection this engine needs is unverified. Its licence agreement was not read and may restrict redistribution.</p>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

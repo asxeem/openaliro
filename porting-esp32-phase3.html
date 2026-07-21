@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ESP32-S3 port — Phase 3: the credential auth (deriving the ranging key)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="porting-esp32-phase3">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><b>ESP32-S3 port — Phase 3: the credential auth (deriving the ranging key)</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Guide</div><h1>ESP32-S3 port — Phase 3: the credential auth (deriving the ranging key)</h1></div></header>
+<div class="mid">
+<main class="doc reading">
+<p><strong>Status: complete and hardware-validated.</strong> Every step below has since run against a live iPhone: the transaction completes, the derived ranging key is correct, and the ranging setup it feeds ends in an approach unlock. This page describes the design and why each piece exists; the traps hit proving it are in <a href="esp32-gotchas.html"><code>docs/esp32-gotchas.md</code></a> §4 and §5.</p>
+<p>Prerequisite reading: <a href="porting-esp32.html"><code>porting-esp32.md</code></a> (roadmap and retrospective) and <a href="protocol-research.html"><code>protocol-research.md</code></a> (the reverse-engineered protocol notes; this doc stays at that same disclosure level and cites no external specifications).</p>
+<h2>Where Phase 2 left off</h2>
+<p>The BLE transport and reader scaffold were already green on silicon: advertising the service (<code>0xFFF2</code>), serving the SPSM/version GATT read, bringing up the L2CAP CoC server on the SPSM, and coexisting with the UWB responder on one ESP32-S3. Components: <code>ports/esp32-idf/components/aliro_ble</code> (transport) and <code>.../aliro_reader</code> (the session/transaction scaffold, with the crypto handshake seam still stubbed).</p>
+<h2>The boundary finding (why this phase existed at all)</h2>
+<p>Phase 3 is the BLE credential-auth transaction that yields the 32-byte <strong>URSK</strong>, the ranging root (see <a href="protocol-research.html"><code>protocol-research.md</code></a> §4). Before this phase it was the one layer the project had never reimplemented:</p>
+<ul><li><strong>Already reimplemented and already ported</strong> (via <code>modules/woz_uwb</code>, compiled</li></ul>
+<p>unchanged): the entire UWB side — the ranging engine, the ranging-setup message exchange, and the STS key ladder <strong>from the URSK down</strong> (<code>ccc_derive_mupsk1/2</code>, <code>ccc_derive_mursk</code>, <code>ccc_derive_ursk_kt</code>, <code>ccc_derive_dursk/dudsk</code>, <code>ccc_derive_salted_hash</code> in <code>modules/woz_uwb/src/ccc</code>).</p>
+<ul><li><strong>The gap</strong>: Initiate Access → auth exchange → secure channel → <strong>URSK derivation</strong>. In</li></ul>
+<p>the reference design a closed vendor library handles this (<a href="protocol-research.html"><code>protocol-research.md</code></a> §9 calls it &quot;a closed protocol library&quot;), and every crypto function in this tree took the URSK as an *input* rather than deriving it.</p>
+<p>That library is an ARM binary and cannot link on the Xtensa S3. There was no way around it: a standalone ESP32 reader had to derive the URSK itself. Everything downstream of the URSK was already done, and pure UWB bench testing via the canned-URSK path in <code>main.c</code> still needs none of it.</p>
+<h2>What Phase 3 built (reverse-engineered, per protocol-research.md §4)</h2>
+<ul><li><strong>Transport / framing:</strong> L2CAP CoC (already up), one APDU per SDU.</li><li><strong>Flow:</strong> a standard path (ephemeral ECDH + mutual signatures) and a fast path off</li></ul>
+<p>a cached long-term key, both producing the 160-byte derived block with the URSK at offset 128 (<code>docs/protocol-research.md</code> §4).</p>
+<ul><li><strong>Crypto suite</strong> (all available in ESP-IDF&#x27;s mbedTLS-PSA): NIST P-256; ECDH; ECDSA</li></ul>
+<p>P-256 with SHA-256; SHA-256; AES-256-GCM; and the two-stage KDF (a single-block X9.63-style step then HKDF-SHA-256) that expands the derived block.</p>
+<ul><li><strong>Handoff:</strong> the derived URSK + the negotiated ranging parameters land on the</li></ul>
+<p>existing engine entry point <code>woz_uwb_start_aliro(cfg)</code> (<code>modules/woz_uwb/src/facade/woz_uwb_facade.h</code>): <code>session_id</code>, <code>channel</code>, <code>sync_code_index</code>, <code>slot_duration_rstu</code>, <code>block_duration_ms</code>, <code>slot_per_round</code>, <code>sts_index0</code>, <code>uwb_time_us</code>, <code>ursk[32]</code>.</p>
+<h3>Provisioning dependency</h3>
+<p>Auth cannot complete without a provisioned identity: a reader identifier, a reader P-256 key pair, the reader-group key material, and the credential-issuer public keys that validate the phone&#x27;s credential. Without a reader identity and issuer keys matching a credential already in the phone&#x27;s wallet, no handshake completes, however correct the code. Phase 4 supplies these over Matter; step 3.4 below supplies a fixed dev identity so the transaction is drivable at a bench before that.</p>
+<h2>Phase 3 steps</h2>
+<p>Each step below is implemented, host-KAT&#x27;d where it is host-testable, and confirmed on silicon against a live phone.</p>
+<ul><li><strong>3.1 — the key schedule.</strong> <code>aliro_crypto</code></li></ul>
+<p>(<code>ports/esp32-idf/components/aliro_crypto</code>): a portable SHA-256 / HMAC / HKDF / X9.63-KDF core (compiled identically on host and target) plus an mbedTLS-PSA backend for AES-256-GCM and P-256 ECDH/ECDSA. On top of that, the key schedule:</p>
+<ul><li>stage 1 <code>Z = SHA-256( ecdh_shared(32) ‖ 0x00000001 ‖ txid(16) )</code> (single-block</li></ul>
+<p>X9.63), then stage 2 <code>block160 = HKDF-SHA256(salt = transcript, IKM = Z, info = devicePubX(32), L = 160)</code>, with the <strong>URSK = block[128:160]</strong> and the two directional session keys split from the low segments;</p>
+<ul><li>the <code>Kpersistent</code> / cryptogram-key single-block derivations (same HKDF, different</li></ul>
+<p>salt / label);</p>
+<ul><li>the AES-256-GCM secure channel: 12-byte nonce = 8-byte big-endian direction</li></ul>
+<p>(0 = seal, 1 = open) ‖ 4-byte big-endian per-direction counter, separate non-wrapping counters.</p>
+<p>Host KATs (<code>ports/esp32-idf/test/test_aliro_crypto.c</code>, in <code>run.sh</code>) pass against FIPS-180-4, RFC 4231, RFC 5869, a GCM spec vector, and cross-check the schedule wiring; the whole component also builds and links into the firmware.</p>
+<p>The salt transcript (<code>aliro_salt_build</code>) was the last provisional piece and is now resolved: the two open sub-fields turned out to be the reader&#x27;s *signing* public key X (not the device ephemeral key — that was the bug) and an interface byte distinguishing BLE from NFC. See the gotchas log §4.3. The AUTH1 tag does not decrypt until the salt is byte-exact, so a green AUTH1 is the proof.</p>
+<ul><li><strong>3.2 — the wire codec.</strong> <code>aliro_apdu</code></li></ul>
+<p>(<code>modules/woz_aliro/src/aliro_apdu.{c,h}</code>): single-byte-tag BER-TLV plus the AUTH0/AUTH1 command builders, the ECDSA authentication-data transcript (the exact signed bytes, with the reader/device usage domain separators), the AUTH0/AUTH1 response parsers, the EXCHANGE command + the zero-length <code>98 00</code> URSK-ready trigger, and the 4-byte L2CAP envelope (<code>[type&amp;0x3F][opcode][len_be16]</code>). Host KAT: <code>test/test_aliro_apdu.c</code> in <code>run.sh</code>. <code>aliro_reader</code> now drives the transaction (AUTH0 → AUTH1 → EXCHANGE), running ECDH + the key schedule to derive the URSK, replying via <code>aliro_ble_send</code>, with heavy diagnostic logging.</p>
+<ul><li><strong>3.3 — superseded by 3.5.</strong> On a completed handshake the</li></ul>
+<p>reader originally started the responder with <strong>canned</strong> ranging parameters (<code>woz_uwb_start_aliro</code>). 3.5 replaces that canned hand-off with the real M1-M4 negotiation, so the params are now negotiated with the peer rather than fixed.</p>
+<ul><li><strong>3.4 — the provisioning seam.</strong> The provisioning seam</li></ul>
+<p>(<code>modules/woz_aliro/src/aliro_prov.c</code> + <code>modules/woz_aliro/include/aliro_prov.h</code>, with the storage backend in <code>ports/esp32-idf/components/aliro_reader/aliro_prov_nvs.c</code>): the reader identity (a stable reader identifier + P-256 signing key) and a credential <strong>trust store</strong>, NVS-backed with a clearly-marked, fixed <strong>dev identity</strong> fallback so the transaction is drivable at bench before Phase-4 Matter provisioning writes a real identity. Split like <code>aliro_crypto</code>: the dev default + blob (de)serialisation + trust logic are portable and host-KAT&#x27;d (<code>test/test_aliro_prov.c</code> in <code>run.sh</code>); the NVS load/store is target-only. The reader now loads identity+trust at start (replacing the per-boot random dev key, which changed the reader identity every reboot), signs with the provisioned key, and gates on a trust check after verifying the device signature: a raw-key allowlist (the interim seam where real issuer-chain validation plugs in), with a dev-open policy (accept + loud warning) only while the dev identity has no anchors. Two bench console commands drive it: <code>aliro-prov</code> (show identity + trust store + last-presented credential) and <code>aliro-trust</code> (persist the last-presented credential key as trusted). Phase-4 Matter <code>SetAliroReaderConfig</code> writes the same NVS blob to supply a real identity + issuer trust.</p>
+<ul><li><strong>3.5 — the ranging setup.</strong> The post-auth Aliro UWB</li></ul>
+<p>ranging-setup (<strong>M1-M4</strong>), wiring the reader to the engine&#x27;s reader adapter/session (<code>modules/woz_uwb/src/aliro</code> <code>aliro_uwb_adapter</code> + <code>aliro_uwb_session</code>), which were compiled into the ESP32 image but had <strong>no caller</strong>. New <code>modules/woz_aliro/src/aliro_ranging.{c,h}</code>: on a completed credential-auth it creates a reader session bound to the derived URSK, emits <strong>M1</strong> over the L2CAP channel, routes inbound <strong>M2/M4</strong> into <code>aliro_uwb_session_message_handle</code>, and lets the engine negotiate the parameters and start the DW3000 responder itself (<code>cherry_ccc_shim</code> maps the CCC session-start onto <code>woz_uwb_start_aliro</code>, so the reader no longer calls it directly and the canned <code>k_ranging</code> table is gone). The engine&#x27;s transmit callback frames straight to <code>aliro_ble_send</code>; the whole lifecycle (create/feed/teardown + the transmit/event callbacks) is synchronous on the BLE-host task, and the DW3000 is single-session. The <code>woz_uwb</code> component now exposes <code>aliro/include</code> (the <code>aliro_uwb_adapter/</code> + <code>cherry/</code> headers) publicly for the reader. This is a real engine-integration, not host-testable: it compiles and links now, and only fully verifies against a phone at bench.</p>
+<h2>What verification actually means here</h2>
+<p>Three different kinds of evidence back this phase, and they are not interchangeable:</p>
+<ul><li><strong>Host KATs</strong> (<code>ports/esp32-idf/test/run.sh</code>) pin the key schedule against published</li></ul>
+<p>vectors, the wire codec byte-for-byte, and the provisioning logic. The crypto core compiles host-identical to target, which is what lets a host result say anything about on-target behavior.</p>
+<ul><li><strong><code>verify_port.sh</code></strong> proves the firmware builds and links with the STS substitution</li></ul>
+<p>seam intact.</p>
+<ul><li><strong>A live iPhone</strong> is the only thing that proves interop, and it is the bar this phase</li></ul>
+<p>now clears. Everything before that bar built and linked cleanly while still being wrong: the salt transcript, the GCM counter start, the ranging channel split, and the session id were each a clean build that a phone rejected. Build success proves nothing about this layer.</p>
+<p>Phase 4 supplies the missing piece for a real deployment. Until a controller writes a reader identity through <code>SetAliroReaderConfig</code>, the reader runs on its fixed dev identity with a dev-open trust policy: it accepts the presented credential and logs a warning. That is a bench seam, not a security control.</p>
+<p>The heavy diagnostic logging at each step is deliberate — it is what made the bring-up tractable. Note that on the ranging hot path it later had to be throttled, because a blocking log line inside a 2 ms deadline is itself a real-time bug.</p>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

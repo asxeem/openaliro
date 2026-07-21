@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Releasing</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="RELEASING">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><b>Releasing</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Guide</div><h1>Releasing</h1></div></header>
+<div class="mid">
+<main class="doc reading">
+<p>How to cut a release. Versions follow SemVer (<code>vMAJOR.MINOR.PATCH</code>); pre-1.0, a minor bump means new capability and a patch bump means fixes only.</p>
+<h2>Preconditions</h2>
+<p>1. <code>main</code> is green on all four CI workflows (host-tests, sanitizers, patch-drift, tooling). 2. The working tree is clean and on the release commit. 3. The <a href="hardware-validation.html">hardware validation checklist</a> passes on that commit, with the results table filled in.</p>
+<h2>Steps</h2>
+<p>1. <strong>Changelog.</strong> Move the <code>[Unreleased]</code> content in <code>CHANGELOG.md</code> under a new <code>## [X.Y.Z] - YYYY-MM-DD</code> heading, leave an empty <code>[Unreleased]</code> section, and update the link references at the bottom. Commit. 2. <strong>Tag.</strong> <code>git tag -a vX.Y.Z -m &quot;vX.Y.Z&quot;</code> on that commit, then push the branch and the tag. 3. <strong>Artifact.</strong> Build pristine from the tagged commit: <code>make rebuild</code>. Take <code>build/merged.hex</code> and compute its checksum: <code>shasum -a 256 build/merged.hex &gt; merged.hex.sha256</code>. 4. <strong>GitHub release.</strong> Create a release from the tag. The notes contain, in order: the changelog section for this version, the hardware validation results tables (with firmware commit, toolchain versions, phone model, iOS version), and flashing instructions (<code>nrfjprog</code>/<code>west flash</code> of <code>merged.hex</code> needs a full-erase first flash, same as <code>make flash-erase</code>). Attach <code>merged.hex</code> and <code>merged.hex.sha256</code>.</p>
+<h2>Documentation</h2>
+<p><code>make docs</code> renders the site into <code>site/</code> (gitignored). It has two halves:</p>
+<ul><li>The <strong>reference tree</strong> (<code>site/api/</code>) is built by Doxygen from <code>docs/Doxyfile</code>. It needs</li></ul>
+<p><code>doxygen</code> and <code>graphviz</code> and nothing else, so it builds anywhere.</p>
+<ul><li>The <strong>subsystem tree, guides and site shell</strong> come from a page generator kept outside</li></ul>
+<p>this repository. <code>docs.sh</code> invokes it through an executable hook at <code>tools/docs_generate.local</code>, which is gitignored; override the path with <code>PAGE_GEN</code>. The hook takes one argument, <code>build</code> or <code>check</code>.</p>
+<p>Without that hook <code>make docs</code> still succeeds and builds the reference tree over the committed <code>docs/</code> tree, so a contributor never needs it. Regenerating <code>docs/</code> does.</p>
+<h2>Notes</h2>
+<ul><li>The artifact is built locally, not in CI: the NCS toolchain and workspace fetch</li></ul>
+<p>(~6.5 GB) make a CI build slow and disk-tight on stock runners. If that changes, a tag-triggered build workflow can replace step 3.</p>
+<ul><li>The prebuilt hex targets the default configuration (nRF5340 DK, DW3110, ST25R300).</li></ul>
+<p>Other configurations (<code>CHIP=dw3720</code>) build from source.</p>
+<ul><li>No ESP32 binary is attached. That build depends on an ESP-IDF and esp-matter pair that</li></ul>
+<p>this repository does not pin, so a prebuilt image would not be reproducible from the tag alone. Build it from <code>ports/esp32-matter</code> and record the two toolchain versions in the release notes alongside the ESP32 validation table.</p>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_uwb/src/ccc/cherry_ccc_shim.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_uwb.src.ccc.cherry_ccc_shim.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_uwb/src/ccc</span><span class="sep">/</span><b>cherry_ccc_shim.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">cherry_ccc_shim.c</h1><p class="lede">@file cherry_ccc_shim.c — cherry_ccc_* seam (Aliro responder) implemented over the lock-native…</p><div class="metarow"><span><code>modules/woz_uwb/src/ccc/cherry_ccc_shim.c</code></span><span>22 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>@file cherry_ccc_shim.c — cherry_ccc_* seam (Aliro responder) implemented over the lock-native
+FiRa MAC; maps each call onto woz_uwb_facade.</p>
+<p class="chips">depends on <a href="modules.woz_uwb.src.aliro.include.cherry.cherry.h.html"><code>modules/woz_uwb/src/aliro/include/cherry/cherry.h</code></a>, <a href="modules.woz_uwb.src.aliro.include.cherry.cherry_ccc.h.html"><code>modules/woz_uwb/src/aliro/include/cherry/cherry_ccc.h</code></a>, <a href="modules.woz_uwb.src.aliro.include.cherry.cherry_session.h.html"><code>modules/woz_uwb/src/aliro/include/cherry/cherry_session.h</code></a>, <a href="modules.woz_uwb.src.ccc.aliro_round_config.h.html"><code>modules/woz_uwb/src/ccc/aliro_round_config.h</code></a>, <a href="modules.woz_uwb.src.facade.woz_alloc.h.html"><code>modules/woz_uwb/src/facade/woz_alloc.h</code></a>, <a href="modules.woz_uwb.src.facade.woz_log.h.html"><code>modules/woz_uwb/src/facade/woz_log.h</code></a>, <a href="modules.woz_uwb.src.facade.woz_util.h.html"><code>modules/woz_uwb/src/facade/woz_util.h</code></a>, <a href="modules.woz_uwb.src.facade.woz_uwb_facade.h.html"><code>modules/woz_uwb/src/facade/woz_uwb_facade.h</code></a></p>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="cherry">
+<h3><span class="kindb" title="class">C</span><code>struct <b>cherry</b></code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:27</div>
+<p>Opaque Cherry context holder.</p>
+<dl class="params"><dt><code>core_cb</code></dt><dd>Core callback (never invoked: no UCI).</dd><dt><code>user_data</code></dt><dd>Client data from cherry_create().</dd></dl>
+</section>
+<section class="api-entry" id="cherry_session">
+<h3><span class="kindb" title="class">C</span><code>struct <b>cherry_session</b></code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:37</div>
+<p>Base session object; first member of cherry_ccc_session for up-casting.</p>
+<dl class="params"><dt><code>cb</code></dt><dd>CCC notification callback from create.</dd><dt><code>user_data</code></dt><dd>Client data (the aliro_uwb_session).</dd></dl>
+</section>
+<section class="api-entry" id="cherry_ccc_session">
+<h3><span class="kindb" title="class">C</span><code>struct <b>cherry_ccc_session</b></code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:50</div>
+<p>CCC ranging session bound to FiRa MAC.</p>
+<dl class="params"><dt><code>base</code></dt><dd>MUST be first member for up-casting.</dd><dt><code>config</code></dt><dd>Borrowed pointer to adapter&#x27;s negotiated params, valid until destroy.</dd><dt><code>ursk</code></dt><dd>Provisioned-STS root key (16 bytes).</dd><dt><code>have_ursk</code></dt><dd>True if URSK has been stashed via set_ursk.</dd><dt><code>state</code></dt><dd>Last emitted session state (INIT, IDLE, ACTIVE, or DEINIT).</dd></dl>
+</section>
+<section class="api-entry" id="to_ccc">
+<h3><span class="kindb" title="function">F</span><code>static inline struct cherry_ccc_session *<b>to_ccc</b>(struct cherry_session *base)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:60</div>
+<p>Up-cast a base session pointer (base is the first member).</p>
+<div class="xref">called by <code>cherry_session_destroy</code>, <code>cherry_session_start</code>, <code>cherry_session_stop</code></div>
+</section>
+<section class="api-entry" id="emit_status">
+<h3><span class="kindb" title="function">F</span><code>static void <b>emit_status</b>(struct cherry_ccc_session *s, enum cherry_ccc_session_state st)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:70</div>
+<p>Allocate and dispatch a SESSION_STATUS event to the CCC callback.</p>
+<dl class="params"><dt><code>s</code></dt><dd>CCC session.</dd><dt><code>st</code></dt><dd>State to report (INIT, IDLE, ACTIVE, or DEINIT).</dd></dl>
+<div class="xref">called by <code>cherry_session_destroy</code>, <code>cherry_session_start</code>, <code>cherry_session_stop</code></div>
+</section>
+<section class="api-entry" id="emit_error">
+<h3><span class="kindb" title="function">F</span><code>static void <b>emit_error</b>(struct cherry_ccc_session *s, enum cherry_err err)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:95</div>
+<p>Allocate + dispatch a SESSION_ERROR event to the CCC callback.</p>
+<div class="xref">called by <code>cherry_session_start</code></div>
+</section>
+<section class="api-entry" id="cherry_create">
+<h3><span class="kindb" title="function">F</span><code>struct cherry *<b>cherry_create</b>(const char *device, cherry_core_cb_t core_cb, void *user_data)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:126</div>
+<p>Allocate and initialize a Cherry context with the given core callback and user data.</p>
+<dl class="params"><dt><code>device</code></dt><dd>Device parameter (unused).</dd><dt><code>core_cb</code></dt><dd>Core callback (never invoked).</dd><dt><code>user_data</code></dt><dd>User data to store in the context.</dd><dt>returns</dt><dd>Cherry context pointer, or null if allocation fails.</dd></dl>
+</section>
+<section class="api-entry" id="cherry_destroy_sync">
+<h3><span class="kindb" title="function">F</span><code>void <b>cherry_destroy_sync</b>(struct cherry *ctx)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:142</div>
+<p>Deallocate a Cherry context; null input is safely ignored.</p>
+</section>
+<section class="api-entry" id="cherry_ccc_session_create_aliro_responder">
+<h3><span class="kindb" title="function">F</span><code><b>cherry_ccc_session_create_aliro_responder</b></code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:157</div>
+<p>Allocate and initialize an Aliro responder CCC session.</p>
+<dl class="params"><dt><code>ctx</code></dt><dd>Cherry context (unused).</dd><dt><code>callback</code></dt><dd>CCC notification callback.</dd><dt><code>user_data</code></dt><dd>User context to pass to callback.</dd><dt><code>config</code></dt><dd>Session configuration (channel, session ID, STS index, timing, slot geometry).</dd><dt>returns</dt><dd>Session pointer, or null if callback is null, config is null, or allocation fails.</dd></dl>
+</section>
+<section class="api-entry" id="cherry_ccc_session_to_base">
+<h3><span class="kindb" title="function">F</span><code>struct cherry_session *<b>cherry_ccc_session_to_base</b>(struct cherry_ccc_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:185</div>
+<p>Cast a CCC session pointer to its embedded base session structure.</p>
+<dl class="params"><dt><code>session</code></dt><dd>CCC session.</dd><dt>returns</dt><dd>Base session pointer, or null if session is null.</dd></dl>
+</section>
+<section class="api-entry" id="cherry_session_get_user_data">
+<h3><span class="kindb" title="function">F</span><code>void *<b>cherry_session_get_user_data</b>(struct cherry_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:195</div>
+<p>Retrieve the user data pointer stored in the base session.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Base session.</dd><dt>returns</dt><dd>User data pointer, or null if session is null.</dd></dl>
+</section>
+<section class="api-entry" id="cherry_session_destroy">
+<h3><span class="kindb" title="function">F</span><code>void <b>cherry_session_destroy</b>(struct cherry_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:204</div>
+<p>Stop the UWB radio, emit a DEINIT status event, and deallocate the session.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Base session; null or invalid input is safely ignored.</dd></dl>
+<div class="xref">calls <code>emit_status</code>, <code>to_ccc</code></div>
+</section>
+<section class="api-entry" id="cherry_session_start">
+<h3><span class="kindb" title="function">F</span><code>enum cherry_err <b>cherry_session_start</b>(struct cherry_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:227</div>
+<p>Start an Aliro UWB session by building a RangingConfiguration byte array from session config, calling woz_uwb_start_aliro, and emitting IDLE then ACTIVE status events.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Base session.</dd><dt>returns</dt><dd>CHERRY_ERR_INVALID_PARAMETER if session or config is null; CHERRY_ERR_SESSION_CONFIG if URSK is not set; CHERRY_ERR_SESSION_INIT if UWB start fails; otherwise CHERRY_ERR_NONE.</dd></dl>
+<div class="xref">calls <code>emit_error</code>, <code>emit_status</code>, <code>to_ccc</code></div>
+</section>
+<section class="api-entry" id="cherry_session_stop">
+<h3><span class="kindb" title="function">F</span><code>enum cherry_err <b>cherry_session_stop</b>(struct cherry_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:308</div>
+<p>Stop the UWB radio and emit an IDLE status event.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Base session.</dd><dt>returns</dt><dd>CHERRY_ERR_INVALID_PARAMETER if session is null or invalid, otherwise CHERRY_ERR_NONE.</dd></dl>
+<div class="xref">calls <code>emit_status</code>, <code>to_ccc</code></div>
+</section>
+<section class="api-entry" id="cherry_ccc_session_set_ursk">
+<h3><span class="kindb" title="function">F</span><code>enum cherry_err <b>cherry_ccc_session_set_ursk</b>(struct cherry_ccc_session *session, const uint8_t *ursk)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:328</div>
+<p>Copy the URSK into the session and mark it as present.</p>
+<dl class="params"><dt><code>session</code></dt><dd>CCC session.</dd><dt><code>ursk</code></dt><dd>16-byte Unique Responder Session Key.</dd><dt>returns</dt><dd>CHERRY_ERR_INVALID_PARAMETER if session or ursk is null, otherwise CHERRY_ERR_NONE.</dd></dl>
+</section>
+<section class="api-entry" id="cherry_ccc_session_set_protocol_version">
+<h3><span class="kindb" title="function">F</span><code>enum cherry_err <b>cherry_ccc_session_set_protocol_version</b>(struct cherry_ccc_session *session, uint16_t selected_protocol_version)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:344</div>
+<p>Validate that the session exists; selected protocol version is accepted but ignored.</p>
+<dl class="params"><dt><code>session</code></dt><dd>CCC session.</dd><dt><code>selected_protocol_version</code></dt><dd>Protocol version (ignored).</dd><dt>returns</dt><dd>CHERRY_ERR_INVALID_PARAMETER if session is null, otherwise CHERRY_ERR_NONE.</dd></dl>
+</section>
+<section class="api-entry" id="cherry_ccc_session_set_sts_index">
+<h3><span class="kindb" title="function">F</span><code>enum cherry_err <b>cherry_ccc_session_set_sts_index</b>(struct cherry_ccc_session *session, uint32_t sts_index)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:357</div>
+<p>Store the STS index on the session config.</p>
+<dl class="params"><dt><code>session</code></dt><dd>CCC session.</dd><dt><code>sts_index</code></dt><dd>STS index value.</dd><dt>returns</dt><dd>CHERRY_ERR_INVALID_PARAMETER if session or its config is null, otherwise CHERRY_ERR_NONE.</dd></dl>
+</section>
+<section class="api-entry" id="cherry_ccc_session_set_initiation_time">
+<h3><span class="kindb" title="function">F</span><code>enum cherry_err <b>cherry_ccc_session_set_initiation_time</b>(struct cherry_ccc_session *session, uint64_t initiation_time_us)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:373</div>
+<p>Store the UWB initiation timestamp in microseconds on the session config.</p>
+<dl class="params"><dt><code>session</code></dt><dd>CCC session.</dd><dt><code>initiation_time_us</code></dt><dd>Initiation timestamp in microseconds.</dd><dt>returns</dt><dd>CHERRY_ERR_INVALID_PARAMETER if session or its config is null, otherwise CHERRY_ERR_NONE.</dd></dl>
+</section>
+<section class="api-entry" id="cherry_ccc_session_set_round2_antennas">
+<h3><span class="kindb" title="function">F</span><code>enum cherry_err <b>cherry_ccc_session_set_round2_antennas</b>(struct cherry_ccc_session *session, uint8_t tx_antenna_set, uint8_t rx_antenna_set)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:391</div>
+<p>Validate that the session exists; TX and RX antenna set parameters are accepted but ignored.</p>
+<dl class="params"><dt><code>session</code></dt><dd>CCC session.</dd><dt><code>tx_antenna_set</code></dt><dd>TX antenna set (ignored).</dd><dt><code>rx_antenna_set</code></dt><dd>RX antenna set (ignored).</dd><dt>returns</dt><dd>CHERRY_ERR_INVALID_PARAMETER if session is null, otherwise CHERRY_ERR_NONE.</dd></dl>
+</section>
+<section class="api-entry" id="cherry_session_set_antennas">
+<h3><span class="kindb" title="function">F</span><code>enum cherry_err <b>cherry_session_set_antennas</b>(struct cherry_session *session, uint8_t tx_antenna_set, uint8_t rx_antenna_set)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:408</div>
+<p>Validate that the session exists; TX and RX antenna set parameters are accepted but ignored.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Base session.</dd><dt><code>tx_antenna_set</code></dt><dd>TX antenna set (ignored).</dd><dt><code>rx_antenna_set</code></dt><dd>RX antenna set (ignored).</dd><dt>returns</dt><dd>CHERRY_ERR_INVALID_PARAMETER if session is null, otherwise CHERRY_ERR_NONE.</dd></dl>
+</section>
+<section class="api-entry" id="cherry_session_set_diagnostics">
+<h3><span class="kindb" title="function">F</span><code>enum cherry_err <b>cherry_session_set_diagnostics</b>(struct cherry_session *session, struct cherry_common_diag_cfg config, bool controlee_only)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:420</div>
+<p>Validate that the session exists; the diagnostics settings are accepted but ignored.</p>
+<dl class="params"><dt>returns</dt><dd>CHERRY_ERR_INVALID_PARAMETER if session is null, otherwise CHERRY_ERR_NONE.</dd></dl>
+</section>
+<section class="api-entry" id="cherry_ccc_event_free">
+<h3><span class="kindb" title="function">F</span><code>void <b>cherry_ccc_event_free</b>(struct cherry_ccc_event *event)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/cherry_ccc_shim.c:434</div>
+<p>Free a CCC event and its payload; null input is safely ignored.</p>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

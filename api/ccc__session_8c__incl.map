@@ -1,0 +1,20 @@
+<map id="modules/woz_uwb/src/ccc/ccc_session.c" name="modules/woz_uwb/src/ccc/ccc_session.c">
+<area shape="rect" id="Node000001" title="— Aliro/CCC ranging seam implementation." alt="" coords="36,5,187,46"/>
+<area shape="rect" id="Node000002" href="$ccc__session_8h.html" title="— Aliro/CCC ranging seam: map an Aliro session&#39;s URSK + M1&#45;M4 setup to ccc_ran_params." alt="" coords="5,94,111,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,49,77,82,72,80,99,44"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="135,94,197,120"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="125,44,152,81,146,81,125,49"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="14,315,78,341"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="60,120,50,300,45,299,55,120"/>
+<area shape="rect" id="Node000004" href="$ccc__mac_8h.html" title="— CCC UWB MAC layer: ranging&#45;round scheduling, SP0 frame codec, DS&#45;TWR." alt="" coords="78,168,163,193"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="68,117,102,155,97,156,68,123"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="106,196,91,217,74,243,62,272,54,301,49,299,56,270,69,240,87,213,110,192"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="84,241,158,267"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="122,191,123,226,118,225,119,196"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="224,315,292,341"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="163,183,193,190,223,200,251,217,274,240,280,255,281,271,273,303,269,300,276,271,275,256,269,243,248,221,221,205,192,195,164,189"/>
+<area shape="rect" id="Node000007" href="$ccc__kdf_8h.html" title="UWB ranging key schedule + SP0 frame crypto (CONFIG_WOZ_ALIRO)." alt="" coords="182,241,260,267"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="138,191,194,231,189,233,137,197"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="192,270,91,311,89,306,190,265"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="228,265,247,302,242,300,225,270"/>
+</map>

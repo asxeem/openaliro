@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_uwb/src/shell/aliro_shell.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_uwb.src.shell.aliro_shell.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_uwb/src/shell</span><span class="sep">/</span><b>aliro_shell.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_shell.c</h1><p class="lede">@file aliro_shell.c — <code>aliro</code> UART shell command: colored console over the UWB engine.</p><div class="metarow"><span><code>modules/woz_uwb/src/shell/aliro_shell.c</code></span><span>10 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>@file aliro_shell.c — <code>aliro</code> UART shell command: colored console over the UWB engine.</p>
+<p class="chips">depends on <a href="modules.woz_uwb.src.ccc.ccc_shim.h.html"><code>modules/woz_uwb/src/ccc/ccc_shim.h</code></a>, <a href="modules.woz_uwb.src.driver.uwb_min.h.html"><code>modules/woz_uwb/src/driver/uwb_min.h</code></a>, <a href="modules.woz_uwb.src.driver.uwb_rxdiag.h.html"><code>modules/woz_uwb/src/driver/uwb_rxdiag.h</code></a>, <a href="modules.woz_uwb.src.fira.fira_session.h.html"><code>modules/woz_uwb/src/fira/fira_session.h</code></a></p>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="hdr">
+<h3><span class="kindb" title="function">F</span><code>static void <b>hdr</b>(const struct shell *sh, const char *title)</code></h3>
+<div class="src">modules/woz_uwb/src/shell/aliro_shell.c:30</div>
+<p>Section header: green &quot;aliro · &lt;title&gt;&quot; over a dim rule.</p>
+<div class="xref">called by <code>cmd_chip</code>, <code>cmd_range</code>, <code>cmd_rx</code>, <code>cmd_selftest</code>, <code>cmd_status</code>, <code>cmd_version</code></div>
+</section>
+<section class="api-entry" id="cmd_chip">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_chip</b>(const struct shell *sh, size_t argc, char **argv)</code></h3>
+<div class="src">modules/woz_uwb/src/shell/aliro_shell.c:48</div>
+<p>Read and display the DW3110 DEV_ID register; verify chip identification.</p>
+<dl class="params"><dt><code>sh</code></dt><dd>Shell context.</dd><dt><code>argc</code></dt><dd>Argument count (unused).</dd><dt><code>argv</code></dt><dd>Argument vector (unused).</dd><dt>returns</dt><dd>0 on success; nonzero SPI error code on read failure.</dd></dl>
+<div class="xref">calls <code>hdr</code></div>
+</section>
+<section class="api-entry" id="cmd_rx">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_rx</b>(const struct shell *sh, size_t argc, char **argv)</code></h3>
+<div class="src">modules/woz_uwb/src/shell/aliro_shell.c:74</div>
+<p>Display RX/TX frame tally and error counters.</p>
+<dl class="params"><dt><code>sh</code></dt><dd>Shell context.</dd><dt><code>argc</code></dt><dd>Argument count (unused).</dd><dt><code>argv</code></dt><dd>Argument vector (unused).</dd><dt>returns</dt><dd>0 on success.</dd></dl>
+<div class="xref">calls <code>hdr</code></div>
+</section>
+<section class="api-entry" id="cmd_range">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_range</b>(const struct shell *sh, size_t argc, char **argv)</code></h3>
+<div class="src">modules/woz_uwb/src/shell/aliro_shell.c:98</div>
+<p>Display the last valid DS-TWR distance measurement and metadata.</p>
+<dl class="params"><dt><code>sh</code></dt><dd>Shell context.</dd><dt><code>argc</code></dt><dd>Argument count (unused).</dd><dt><code>argv</code></dt><dd>Argument vector (unused).</dd><dt>returns</dt><dd>0 on success.</dd></dl>
+<div class="xref">calls <code>hdr</code></div>
+</section>
+<section class="api-entry" id="cmd_selftest">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_selftest</b>(const struct shell *sh, size_t argc, char **argv)</code></h3>
+<div class="src">modules/woz_uwb/src/shell/aliro_shell.c:133</div>
+<p>Run radio TX/RX self-test and display results.</p>
+<dl class="params"><dt><code>sh</code></dt><dd>Shell context.</dd><dt><code>argc</code></dt><dd>Argument count (unused).</dd><dt><code>argv</code></dt><dd>Argument vector (unused).</dd><dt>returns</dt><dd>0 on success; nonzero error code if self-test fails.</dd></dl>
+<div class="xref">calls <code>hdr</code></div>
+</section>
+<section class="api-entry" id="cmd_log">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_log</b>(const struct shell *sh, size_t argc, char **argv)</code></h3>
+<div class="src">modules/woz_uwb/src/shell/aliro_shell.c:162</div>
+<p>Enable, disable, or query the ranging heartbeat log output stream.</p>
+<dl class="params"><dt><code>sh</code></dt><dd>Shell context.</dd><dt><code>argc</code></dt><dd>Argument count; if ≥2, argv[1] must be &quot;on&quot; or &quot;off&quot;.</dd><dt><code>argv</code></dt><dd>Command arguments; argv[1] optionally specifies &quot;on&quot; or &quot;off&quot;.</dd><dt>returns</dt><dd>0 on success; -EINVAL if argv[1] is neither &quot;on&quot; nor &quot;off&quot;.</dd></dl>
+</section>
+<section class="api-entry" id="cmd_frames">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_frames</b>(const struct shell *sh, size_t argc, char **argv)</code></h3>
+<div class="src">modules/woz_uwb/src/shell/aliro_shell.c:186</div>
+<p>Enable, disable, or query the per-block distance stream output.</p>
+<dl class="params"><dt><code>sh</code></dt><dd>Shell context.</dd><dt><code>argc</code></dt><dd>Argument count; if ≥2, argv[1] must be &quot;on&quot; or &quot;off&quot;.</dd><dt><code>argv</code></dt><dd>Command arguments; argv[1] optionally specifies &quot;on&quot; or &quot;off&quot;.</dd><dt>returns</dt><dd>0 on success; -EINVAL if argv[1] is neither &quot;on&quot; nor &quot;off&quot;.</dd></dl>
+</section>
+<section class="api-entry" id="cmd_version">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_version</b>(const struct shell *sh, size_t argc, char **argv)</code></h3>
+<div class="src">modules/woz_uwb/src/shell/aliro_shell.c:211</div>
+<p>Display the build commit SHA.</p>
+<dl class="params"><dt><code>sh</code></dt><dd>Shell context.</dd><dt><code>argc</code></dt><dd>Argument count (unused).</dd><dt><code>argv</code></dt><dd>Argument vector (unused).</dd><dt>returns</dt><dd>0 on success.</dd></dl>
+<div class="xref">calls <code>hdr</code></div>
+</section>
+<section class="api-entry" id="cmd_status">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_status</b>(const struct shell *sh, size_t argc, char **argv)</code></h3>
+<div class="src">modules/woz_uwb/src/shell/aliro_shell.c:229</div>
+<p>Display all system status: chip ID, CCC bind state, URSK provisioning, last range, RX tally, and stream state.</p>
+<dl class="params"><dt><code>sh</code></dt><dd>Shell context.</dd><dt><code>argc</code></dt><dd>Argument count (unused).</dd><dt><code>argv</code></dt><dd>Argument vector (unused).</dd><dt>returns</dt><dd>0 on success.</dd></dl>
+<div class="xref">calls <code>hdr</code></div>
+</section>
+<section class="api-entry" id="cmd_aliro">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_aliro</b>(const struct shell *sh, size_t argc, char **argv)</code></h3>
+<div class="src">modules/woz_uwb/src/shell/aliro_shell.c:291</div>
+<p>Print aliro shell command help and list all available subcommands.</p>
+<dl class="params"><dt><code>sh</code></dt><dd>Shell context.</dd><dt><code>argc</code></dt><dd>Argument count; if &gt;1, returns error for unknown subcommand.</dd><dt><code>argv</code></dt><dd>Argument vector; argv[1] if present must be empty or help request.</dd><dt>returns</dt><dd>0 on success; -EINVAL if argc &gt;1.</dd></dl>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<map id="aliro_ble_config" name="aliro_ble_config">
+<area shape="rect" id="Node000001" title="Reader configuration." alt="" coords="87,102,199,128"/>
+<area shape="rect" id="Node000002" href="$structaliro__ble__features.html" title="Aliro BLE&#45;UWB supported&#45;features flags (advertised in the READ char, and parsed from the device WRITE..." alt="" coords="5,5,129,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,41,136,101,131,102,85,45"/>
+<area shape="rect" id="Node000003" href="$structaliro__ble__callbacks.html" title="Transport callbacks into the app / Phase&#45;3 Aliro handler." alt="" coords="153,5,285,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="204,42,177,80,155,104,152,100,173,76,199,45"/>
+</map>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ports/esp32-idf/main/app_shell.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="ports.esp32-idf.main.app_shell.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>ports/esp32-idf/main</span><span class="sep">/</span><b>app_shell.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">app_shell.c</h1><p class="lede">ESP32-IDF console shell for the standalone Aliro UWB responder bench app: registers status, range, aliro-start/stop, pro…</p><div class="metarow"><span><code>ports/esp32-idf/main/app_shell.c</code></span><span>14 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>ESP32-IDF console shell for the standalone Aliro UWB responder bench app: registers status, range, aliro-start/stop, provisioning, trust, and clear commands and runs the linenoise-based REPL.</p>
+<p class="chips">depends on <a href="ports.esp32-idf.main.app_shell.h.html"><code>ports/esp32-idf/main/app_shell.h</code></a></p>
+<figure class="graph-wrap"><div class="graph-shell"><pre class="mermaid">flowchart TD
+  app_responder_start --&gt; lock_init</pre></div></figure>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="col">
+<h3><span class="kindb" title="function">F</span><code>static const char *<b>col</b>(const char *c)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:30</div>
+<p>Returns the given ANSI color code, or an empty string when linenoise is in dumb-terminal mode.</p>
+<div class="xref">called by <code>cmd_status</code>, <code>print_banner</code></div>
+</section>
+<section class="api-entry" id="print_banner">
+<h3><span class="kindb" title="function">F</span><code>static void <b>print_banner</b>(void)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:36</div>
+<p>Prints the shell&#x27;s startup banner: app name, version, IDF version, and a one-line usage hint.</p>
+<div class="xref">called by <code>app_shell_start</code> &nbsp;·&nbsp; calls <code>col</code></div>
+</section>
+<section class="api-entry" id="lock_init">
+<h3><span class="kindb" title="function">F</span><code>static void <b>lock_init</b>(void)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:75</div>
+<p>Lazily creates the s_lock mutex on first call; subsequent calls are a no-op. Not thread-safe against concurrent first calls.</p>
+<div class="xref">called by <code>app_responder_start</code>, <code>app_responder_stop</code></div>
+</section>
+<section class="api-entry" id="app_responder_start">
+<h3><span class="kindb" title="function">F</span><code>int <b>app_responder_start</b>(void)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:82</div>
+<p>Start the demo CCC DS-TWR responder (canned URSK/cfg). Serialized by mutex.
+Returns 0 on success, 1 if already running, negative on facade failure.</p>
+<div class="xref">called by <code>cmd_aliro_start</code> &nbsp;·&nbsp; calls <code>lock_init</code></div>
+</section>
+<section class="api-entry" id="app_responder_stop">
+<h3><span class="kindb" title="function">F</span><code>void <b>app_responder_stop</b>(void)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:99</div>
+<p>Stop the demo responder and unbind the CCC shim. No-op if already stopped.</p>
+<div class="xref">called by <code>cmd_aliro_stop</code> &nbsp;·&nbsp; calls <code>lock_init</code></div>
+</section>
+<section class="api-entry" id="app_responder_up">
+<h3><span class="kindb" title="function">F</span><code>bool <b>app_responder_up</b>(void)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:110</div>
+<p>True while the demo responder is up.</p>
+<div class="xref">called by <code>cmd_status</code></div>
+</section>
+<section class="api-entry" id="cmd_status">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_status</b>(int argc, char **argv)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:121</div>
+<p>Shell command handler: prints the demo responder&#x27;s up/down status and the last measured and last trusted UWB ranges in cm, or &quot;none&quot; if unavailable. Always returns 0.</p>
+<div class="xref">calls <code>app_responder_up</code>, <code>col</code></div>
+</section>
+<section class="api-entry" id="cmd_range">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_range</b>(int argc, char **argv)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:142</div>
+<p>Shell command handler: prints the last measured UWB range in cm via woz_uwb_last_range_cm, or &quot;no range yet&quot; if none is available. Always returns 0.</p>
+</section>
+<section class="api-entry" id="cmd_aliro_start">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_aliro_start</b>(int argc, char **argv)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:156</div>
+<p>Shell command handler: starts the Aliro UWB responder via app_responder_start. Prints &quot;busy&quot; if a responder is already running (rc == 1), otherwise reports ok/FAILED with the return code. Always returns 0 to the shell.</p>
+<div class="xref">calls <code>app_responder_start</code></div>
+</section>
+<section class="api-entry" id="cmd_aliro_stop">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_aliro_stop</b>(int argc, char **argv)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:170</div>
+<p>Shell command handler: stops the Aliro UWB responder via app_responder_stop and prints confirmation. Always returns 0.</p>
+<div class="xref">calls <code>app_responder_stop</code></div>
+</section>
+<section class="api-entry" id="cmd_aliro_prov">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_aliro_prov</b>(int argc, char **argv)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:180</div>
+<p>Shell command handler: prints the current Aliro reader provisioning state. Always returns 0.</p>
+</section>
+<section class="api-entry" id="cmd_clear">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_clear</b>(int argc, char **argv)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:189</div>
+<p>Shell command handler: clears the terminal screen via linenoiseClearScreen. Always returns 0.</p>
+</section>
+<section class="api-entry" id="cmd_aliro_trust">
+<h3><span class="kindb" title="function">F</span><code>static int <b>cmd_aliro_trust</b>(int argc, char **argv)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:198</div>
+<p>Shell command handler: trusts the last-presented Aliro credential and persists it to NVS via aliro_reader_trust_last. Prints success, &quot;nothing to add&quot; (no credential presented or already trusted, rc == 1), or failure (trust store full or NVS error, other nonzero rc). Always returns 0 to the shell.</p>
+</section>
+<section class="api-entry" id="app_shell_start">
+<h3><span class="kindb" title="function">F</span><code>void <b>app_shell_start</b>(void)</code></h3>
+<div class="src">ports/esp32-idf/main/app_shell.c:215</div>
+<p>Register commands and start the UART console REPL (own task).</p>
+<div class="xref">calls <code>print_banner</code></div>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_uwb/src/aliro/aliro_uwb_msg.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_uwb.src.aliro.aliro_uwb_msg.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_uwb/src/aliro</span><span class="sep">/</span><b>aliro_uwb_msg.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_uwb_msg.c</h1><p class="lede">@file aliro_uwb_msg.c — setup/notification message codec.</p><div class="metarow"><span><code>modules/woz_uwb/src/aliro/aliro_uwb_msg.c</code></span><span>39 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>@file aliro_uwb_msg.c — setup/notification message codec.</p>
+<p class="chips">depends on <a href="modules.woz_uwb.src.aliro.aliro_uwb_msg.h.html"><code>modules/woz_uwb/src/aliro/aliro_uwb_msg.h</code></a>, <a href="modules.woz_uwb.src.aliro.aliro_uwb_msg_builder.h.html"><code>modules/woz_uwb/src/aliro/aliro_uwb_msg_builder.h</code></a>, <a href="modules.woz_uwb.src.aliro.aliro_uwb_msg_parser.h.html"><code>modules/woz_uwb/src/aliro/aliro_uwb_msg_parser.h</code></a>, <a href="modules.woz_uwb.src.aliro.aliro_uwb_msg_spec.h.html"><code>modules/woz_uwb/src/aliro/aliro_uwb_msg_spec.h</code></a>, <a href="modules.woz_uwb.src.aliro.include.aliro_uwb_adapter.aliro_uwb_adapter.h.html"><code>modules/woz_uwb/src/aliro/include/aliro_uwb_adapter/aliro_uwb_adapter.h</code></a>, <a href="modules.woz_uwb.src.ccc.aliro_round_config.h.html"><code>modules/woz_uwb/src/ccc/aliro_round_config.h</code></a>, <a href="modules.woz_uwb.src.facade.woz_alloc.h.html"><code>modules/woz_uwb/src/facade/woz_alloc.h</code></a>, <a href="modules.woz_uwb.src.facade.woz_log.h.html"><code>modules/woz_uwb/src/facade/woz_log.h</code></a>, <a href="modules.woz_uwb.src.facade.woz_util.h.html"><code>modules/woz_uwb/src/facade/woz_util.h</code></a></p>
+<figure class="graph-wrap"><div class="graph-shell"><pre class="mermaid">flowchart TD
+  aliro_uwb_msg_build_general_error --&gt; aliro_uwb_msg_free</pre></div></figure>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="aliro_uwb_msg_free">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_uwb_msg_free</b>(struct aliro_uwb_message *message)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:64</div>
+<p>Releases a message allocated by this layer&#x27;s message builders.</p>
+<div class="xref">called by <code>aliro_uwb_msg_build_general_error</code>, <code>aliro_uwb_msg_build_m1</code>, <code>aliro_uwb_msg_build_m3</code>, <code>aliro_uwb_msg_build_suspend_response</code>, <code>aliro_uwb_msg_build_suspend_resume_request</code></div>
+</section>
+<section class="api-entry" id="aliro_uwb_msg_build_m1">
+<h3><span class="kindb" title="function">F</span><code>struct aliro_uwb_message *<b>aliro_uwb_msg_build_m1</b>(struct aliro_uwb_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:77</div>
+<p>Builds the M1 ranging-session-setup message advertising configuration IDs, pulse-shape combos, channel bitmask, and session ID.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose Aliro capabilities and session ID populate the message.</dd><dt>returns</dt><dd>Newly allocated M1 message, or NULL if builder init or attribute encoding fails.</dd></dl>
+<div class="xref">calls <code>aliro_uwb_msg_free</code></div>
+</section>
+<section class="api-entry" id="aliro_uwb_msg_build_m3">
+<h3><span class="kindb" title="function">F</span><code>static struct aliro_uwb_message *<b>aliro_uwb_msg_build_m3</b>(struct aliro_uwb_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:126</div>
+<p>Builds the M3 ranging-parameters message, deriving RAN multiplier and chaps-per-slot from the M2-negotiated durations and committing the reader&#x27;s MAC mode.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose negotiated M2 config and reader settings populate the M3 attributes.</dd><dt>returns</dt><dd>Newly allocated M3 message, or NULL if builder init or attribute encoding fails.</dd></dl>
+<div class="xref">called by <code>handle_m2</code> &nbsp;·&nbsp; calls <code>aliro_uwb_msg_free</code></div>
+</section>
+<section class="api-entry" id="aliro_uwb_msg_build_suspend_resume_request">
+<h3><span class="kindb" title="function">F</span><code><b>aliro_uwb_msg_build_suspend_resume_request</b></code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:200</div>
+<p>Builds a suspend or resume request message carrying the session identifier.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose session ID is encoded into the message.</dd><dt><code>suspend</code></dt><dd>True to build a suspend request, false to build a resume request.</dd><dt>returns</dt><dd>Newly allocated request message, or NULL if builder init or attribute encoding fails.</dd></dl>
+<div class="xref">calls <code>aliro_uwb_msg_free</code></div>
+</section>
+<section class="api-entry" id="aliro_uwb_msg_build_suspend_response">
+<h3><span class="kindb" title="function">F</span><code><b>aliro_uwb_msg_build_suspend_response</b></code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:235</div>
+<p>Builds a suspend-response message carrying an accept or reject status.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Unused; reserved for a consistent builder signature.</dd><dt><code>status</code></dt><dd>Response status; must be ALIRO_UWB_RANGING_SERVICE_STATUS_ACCEPT or ALIRO_UWB_RANGING_SERVICE_STATUS_REJECT.</dd><dt>returns</dt><dd>Newly allocated suspend-response message, or NULL if status is invalid, or if builder init or attribute encoding fails.</dd></dl>
+<div class="xref">called by <code>handle_suspend_request</code> &nbsp;·&nbsp; calls <code>aliro_uwb_msg_free</code></div>
+</section>
+<section class="api-entry" id="aliro_uwb_msg_build_general_error">
+<h3><span class="kindb" title="function">F</span><code>struct aliro_uwb_message *<b>aliro_uwb_msg_build_general_error</b>(struct aliro_uwb_session *session, uint8_t error_code)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:274</div>
+<p>Builds an Aliro general-error notification message carrying the given error code.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Unused; reserved for a consistent builder signature.</dd><dt><code>error_code</code></dt><dd>Error code to encode in the general-error notification attribute.</dd><dt>returns</dt><dd>Newly allocated notification message, or NULL if builder init or attribute encoding fails.</dd></dl>
+<div class="xref">calls <code>aliro_uwb_msg_free</code></div>
+</section>
+<section class="api-entry" id="aliro_uwb_msg_protocol_header">
+<h3><span class="kindb" title="function">F</span><code>uint8_t <b>aliro_uwb_msg_protocol_header</b>(const uint8_t *bytes)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:308</div>
+<p>Extracts the protocol type from byte 0 of an Aliro message header.</p>
+<dl class="params"><dt><code>bytes</code></dt><dd>Pointer to the start of the raw message bytes.</dd><dt>returns</dt><dd>The protocol type byte.</dd></dl>
+</section>
+<section class="api-entry" id="aliro_uwb_msg_message_id">
+<h3><span class="kindb" title="function">F</span><code>uint8_t <b>aliro_uwb_msg_message_id</b>(const uint8_t *bytes)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:319</div>
+<p>Extracts the message type ID from byte 1 of an Aliro message header, used to dispatch M1-M4 setup and ranging messages during parsing.</p>
+<dl class="params"><dt><code>bytes</code></dt><dd>Pointer to the start of the raw message bytes.</dd><dt>returns</dt><dd>The message ID byte.</dd></dl>
+<div class="xref">called by <code>aliro_uwb_msg_process_notification</code>, <code>aliro_uwb_msg_process_ranging</code>, <code>aliro_uwb_msg_process_supplementary</code></div>
+</section>
+<section class="api-entry" id="aliro_uwb_msg_payload_length">
+<h3><span class="kindb" title="function">F</span><code>uint16_t <b>aliro_uwb_msg_payload_length</b>(const uint8_t *bytes)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:330</div>
+<p>Extracts the payload length from bytes 2-3 of an Aliro message header as a 16-bit big-endian integer.</p>
+<dl class="params"><dt><code>bytes</code></dt><dd>Pointer to the start of the raw message bytes.</dd><dt>returns</dt><dd>The payload length in bytes.</dd></dl>
+<div class="xref">called by <code>aliro_uwb_msg_process_supplementary</code></div>
+</section>
+<section class="api-entry" id="parse_config_id">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_config_id</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:344</div>
+<p>Parses the UWB configuration ID attribute from M2 and stores it in the session config.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose config receives the parsed configuration ID.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_pulse_shape">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_pulse_shape</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:363</div>
+<p>Parses the pulse-shape-combo attribute from M2 and stores it in the session config.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose config receives the parsed pulse shape.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_session_id">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_session_id</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:383</div>
+<p>Parses the session-identifier attribute from M2 and verifies it matches the session&#x27;s active session ID.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose session ID is checked against the parsed value.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read, or ALIRO_UWB_ERR_INVALID_PARAMETER on a session ID mismatch.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_channel">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_channel</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:406</div>
+<p>Parses the channel bitmask attribute from M2, mapping it to channel 5 or 9 in the session config.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose config receives the resolved channel number.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read, or ALIRO_UWB_ERR_INVALID_PARAMETER for an unsupported bitmask.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_ran_multiplier">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_ran_multiplier</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:433</div>
+<p>Parses the RAN multiplier attribute from M3, selecting the larger of the peer&#x27;s value and the reader&#x27;s minimum, and computes the ranging duration in milliseconds.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose config receives the computed ranging duration.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_slot_bitmask">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_slot_bitmask</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:458</div>
+<p>Parses the slot bitmask attribute from M3, intersects it with the local capability bitmask, and maps the lowest common bit to a chaps-per-slot count to compute slot duration.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose config receives the computed slot duration.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_sync_code_bitmask">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_sync_code_bitmask</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:512</div>
+<p>Parses the sync code bitmask attribute from M2 and logs the peer&#x27;s offered bitmask; the reader retains its own capability bitmask for M3 and does not update the session config.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Unused; reserved for a consistent parser signature.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_sync_code_index">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_sync_code_index</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:533</div>
+<p>Parses the sync code index attribute from M3 and stores it in the session config.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose config receives the parsed sync code index.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or ALIRO_UWB_ERR_MSG_MALDORMED if the value cannot be read.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_hopping_bitmask">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_hopping_bitmask</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:554</div>
+<p>Parses the hopping configuration bitmask attribute from M2, intersects peer capabilities with local CCC capabilities, and selects the first mutually supported preferred hopping config.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose reader preferences are matched and whose config receives the selected hopping mode.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read or no common hopping config is found.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_sts_index0">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_sts_index0</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:604</div>
+<p>Parses the STS index 0 attribute from M2 and stores it in the session config.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose config receives the parsed STS index.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_uwb_time0">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_uwb_time0</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:623</div>
+<p>Parses the UWB time 0 attribute from M2 and stores it as the session&#x27;s initial UWB time.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose config receives the parsed UWB time.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_hop_mode_key">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_hop_mode_key</b>(struct aliro_uwb_session *session, struct aliro_uwb_msg_attribute *attr)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:643</div>
+<p>Parses the hop mode key attribute from M2 and stores the raw key bytes in the session config; unused downstream on this lock.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose config receives the parsed hop mode key.</dd><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read.</dd></dl>
+<div class="xref">called by <code>parse_session_attribute</code></div>
+</section>
+<section class="api-entry" id="parse_status">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_status</b>(struct aliro_uwb_msg_attribute *attr, uint8_t *status)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:663</div>
+<p>Parses a status attribute from a ranging message into the given output parameter.</p>
+<dl class="params"><dt><code>attr</code></dt><dd>Attribute to parse.</dd><dt><code>status</code></dt><dd>Output parameter receiving the parsed 8-bit status value.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or ALIRO_UWB_ERR_MSG_MALFORMED if the value cannot be read.</dd></dl>
+<div class="xref">called by <code>parse_ranging</code></div>
+</section>
+<section class="api-entry" id="parse_session_attribute">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_session_attribute</b>(struct aliro_uwb_msg_attribute *attr, struct aliro_uwb_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:679</div>
+<p>Dispatches a ranging-service session attribute to its type-specific parser and applies it to the session; unknown attributes are logged and ignored.</p>
+<dl class="params"><dt><code>attr</code></dt><dd>Attribute to parse and apply.</dd><dt><code>session</code></dt><dd>Session updated by the attribute-specific parser.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success or for ignored/unknown attributes, otherwise the error from the specific parser.</dd></dl>
+<div class="xref">called by <code>parse_ranging</code> &nbsp;·&nbsp; calls <code>parse_channel</code>, <code>parse_config_id</code>, <code>parse_hop_mode_key</code>, <code>parse_hopping_bitmask</code>, <code>parse_pulse_shape</code>, <code>parse_ran_multiplier</code>, <code>parse_session_id</code>, <code>parse_slot_bitmask</code></div>
+</section>
+<section class="api-entry" id="parse_ranging">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_ranging</b>(struct aliro_uwb_session *session, struct aliro_uwb_message *message, uint32_t *attr_mask, uint8_t *status)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:726</div>
+<p>Parses all ranging-service attributes in a message, applying each to the session and recording which attributes were present.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session updated by attribute-specific parsers.</dd><dt><code>message</code></dt><dd>Message whose attributes are parsed.</dd><dt><code>attr_mask</code></dt><dd>Output parameter receiving a bitmask of attribute IDs present in the message.</dd><dt><code>status</code></dt><dd>Output parameter receiving the parsed status, or ALIRO_UWB_RANGING_SERVICE_STATUS_UNKNOWN if no status attribute is present.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or the first parsing error encountered.</dd></dl>
+<div class="xref">called by <code>handle_m2</code>, <code>handle_m4</code>, <code>handle_resume_response</code>, <code>handle_suspend_request</code>, <code>handle_suspend_response</code> &nbsp;·&nbsp; calls <code>parse_session_attribute</code>, <code>parse_status</code></div>
+</section>
+<section class="api-entry" id="compute_initiation_time">
+<h3><span class="kindb" title="function">F</span><code>static void <b>compute_initiation_time</b>(struct aliro_uwb_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:759</div>
+<p>Sets the session&#x27;s ranging initiation time from its time offset, using zero if unsynchronized or adding the offset to the existing UWB time otherwise.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose config&#x27;s uwb_time_us is updated in place.</dd></dl>
+<div class="xref">called by <code>handle_m4</code>, <code>handle_resume_response</code></div>
+</section>
+<section class="api-entry" id="set_resume_params">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>set_resume_params</b>(struct aliro_uwb_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:777</div>
+<p>Sets the STS index and initiation time on the CCC session in preparation for re-arming ranging after a suspend.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session whose CCC session and Aliro config supply the resume parameters.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or ALIRO_UWB_ERR_INTERNAL if either CCC call fails.</dd></dl>
+<div class="xref">called by <code>handle_resume_response</code></div>
+</section>
+<section class="api-entry" id="handle_m2">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>handle_m2</b>(struct aliro_uwb_session *session, struct aliro_uwb_message *message)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:802</div>
+<p>Handles an inbound M2 message by validating its attributes and session state, then building and transmitting M3 and advancing to the M3_SENT state.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session receiving the M2 message.</dd><dt><code>message</code></dt><dd>Inbound M2 message to process.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or an error if parsing, attributes, state, or M3 construction fail.</dd></dl>
+<div class="xref">called by <code>aliro_uwb_msg_process_ranging</code> &nbsp;·&nbsp; calls <code>aliro_uwb_msg_build_m3</code>, <code>parse_ranging</code></div>
+</section>
+<section class="api-entry" id="handle_m4">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>handle_m4</b>(struct aliro_uwb_session *session, struct aliro_uwb_message *message)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:844</div>
+<p>Handles an inbound M4 message by validating its attributes and session state, computing the ranging initiation time, initializing the session, and advancing to the RANGING state.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session receiving the M4 message.</dd><dt><code>message</code></dt><dd>Inbound M4 message to process.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or an error if parsing, attributes, state, or session initialization fail.</dd></dl>
+<div class="xref">called by <code>aliro_uwb_msg_process_ranging</code> &nbsp;·&nbsp; calls <code>compute_initiation_time</code>, <code>parse_ranging</code></div>
+</section>
+<section class="api-entry" id="handle_suspend_request">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>handle_suspend_request</b>(struct aliro_uwb_session *session, struct aliro_uwb_message *message)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:885</div>
+<p>Handles an inbound suspend request by validating session state, stopping the session, then building and transmitting a suspend response with acceptance or rejection status.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session receiving the suspend request.</dd><dt><code>message</code></dt><dd>Inbound suspend-request message to process.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or an error if parsing, attributes, state, or response construction fail.</dd></dl>
+<div class="xref">called by <code>aliro_uwb_msg_process_ranging</code> &nbsp;·&nbsp; calls <code>aliro_uwb_msg_build_suspend_response</code>, <code>parse_ranging</code></div>
+</section>
+<section class="api-entry" id="handle_suspend_response">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>handle_suspend_response</b>(struct aliro_uwb_session *session, struct aliro_uwb_message *message)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:927</div>
+<p>Handles an inbound suspend response by validating its attributes and session state, stopping the session if accepted or returning to the RANGING state if rejected.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Session receiving the suspend response.</dd><dt><code>message</code></dt><dd>Inbound suspend-response message to process.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success, or an error if parsing, attributes, or state validation fail.</dd></dl>
+<div class="xref">called by <code>aliro_uwb_msg_process_ranging</code> &nbsp;·&nbsp; calls <code>parse_ranging</code></div>
+</section>
+<section class="api-entry" id="handle_resume_response">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>handle_resume_response</b>(struct aliro_uwb_session *session, struct aliro_uwb_message *message)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:960</div>
+<p>Handle an inbound resume response, arm timing and CCC state, and start ranging.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Aliro UWB session expected to be in RESUME_REQ_SENT state.</dd><dt><code>message</code></dt><dd>Received resume response message to validate and parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success; an error if attributes are missing, state is wrong, or resume setup/session start fails.</dd></dl>
+<div class="xref">called by <code>aliro_uwb_msg_process_ranging</code> &nbsp;·&nbsp; calls <code>compute_initiation_time</code>, <code>parse_ranging</code>, <code>set_resume_params</code></div>
+</section>
+<section class="api-entry" id="aliro_uwb_msg_process_ranging">
+<h3><span class="kindb" title="function">F</span><code>enum aliro_uwb_err <b>aliro_uwb_msg_process_ranging</b>(struct aliro_uwb_session *session, struct aliro_uwb_message *message)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:1000</div>
+<p>Dispatch an inbound ranging-phase message to its handler based on message type.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Aliro UWB session to update.</dd><dt><code>message</code></dt><dd>Received ranging message to dispatch.</dd><dt>returns</dt><dd>Handler&#x27;s result on success; ALIRO_UWB_ERR_INVALID_PARAMETER if session or message is NULL; ALIRO_UWB_ERR_MESSAGE_UNSUPPORTED for unknown message types.</dd></dl>
+<div class="xref">calls <code>aliro_uwb_msg_message_id</code>, <code>handle_m2</code>, <code>handle_m4</code>, <code>handle_resume_response</code>, <code>handle_suspend_request</code>, <code>handle_suspend_response</code></div>
+</section>
+<section class="api-entry" id="handle_init_ranging_later">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>handle_init_ranging_later</b>(struct aliro_uwb_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:1033</div>
+<p>Handle an &quot;init ranging later&quot; notification, returning the session to CREATED state.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Aliro UWB session expected to be in M1_SENT state.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success; ALIRO_UWB_ERR_INVALID_STATE if the session is not in M1_SENT.</dd></dl>
+<div class="xref">called by <code>parse_ranging_notification</code></div>
+</section>
+<section class="api-entry" id="handle_resume_later">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>handle_resume_later</b>(struct aliro_uwb_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:1050</div>
+<p>Handle a &quot;resume later&quot; notification, moving the session to SUSPENDED without re-arming ranging.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Aliro UWB session expected to be in RESUME_REQ_SENT state.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success; ALIRO_UWB_ERR_INVALID_STATE if the session is not in RESUME_REQ_SENT.</dd></dl>
+<div class="xref">called by <code>parse_ranging_notification</code></div>
+</section>
+<section class="api-entry" id="handle_ranging_suspended">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>handle_ranging_suspended</b>(struct aliro_uwb_session *session)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:1067</div>
+<p>Handle a &quot;ranging suspended&quot; notification by stopping the session and moving it to SUSPENDED.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Aliro UWB session expected to be in RANGING state.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success; ALIRO_UWB_ERR_INVALID_STATE if the session is not in RANGING; otherwise the result of stopping the session.</dd></dl>
+<div class="xref">called by <code>parse_ranging_notification</code></div>
+</section>
+<section class="api-entry" id="parse_event_notification">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_event_notification</b>(struct aliro_uwb_session *session, struct aliro_uwb_message *message)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:1084</div>
+<p>Parse an Aliro event notification message, logging busy, general-error, and reader-descriptor events.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Aliro UWB session (unused).</dd><dt><code>message</code></dt><dd>Received event notification message to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success; ALIRO_UWB_ERR_MSG_MALFORMED if a general-error attribute has the wrong length.</dd></dl>
+<div class="xref">called by <code>aliro_uwb_msg_process_notification</code></div>
+</section>
+<section class="api-entry" id="parse_ranging_notification">
+<h3><span class="kindb" title="function">F</span><code>static enum aliro_uwb_err <b>parse_ranging_notification</b>(struct aliro_uwb_session *session, struct aliro_uwb_message *message)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:1131</div>
+<p>Parse a ranging-setup notification message and dispatch each attribute to its session state handler.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Aliro UWB session to update.</dd><dt><code>message</code></dt><dd>Received ranging notification message to parse.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE on success; the first handler error encountered otherwise.</dd></dl>
+<div class="xref">called by <code>aliro_uwb_msg_process_notification</code> &nbsp;·&nbsp; calls <code>handle_init_ranging_later</code>, <code>handle_ranging_suspended</code>, <code>handle_resume_later</code></div>
+</section>
+<section class="api-entry" id="aliro_uwb_msg_process_notification">
+<h3><span class="kindb" title="function">F</span><code>enum aliro_uwb_err <b>aliro_uwb_msg_process_notification</b>(struct aliro_uwb_session *session, struct aliro_uwb_message *message)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:1178</div>
+<p>Dispatch a received notification message to its parser by message ID. Reader-status notifications are informational and ignored; unknown IDs are logged and ignored.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Aliro UWB session to update with the parsed notification&#x27;s effects.</dd><dt><code>message</code></dt><dd>Received notification message to dispatch.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE for handled, informational and unknown notifications, otherwise the error from the event or ranging parser.</dd></dl>
+<div class="xref">calls <code>aliro_uwb_msg_message_id</code>, <code>parse_event_notification</code>, <code>parse_ranging_notification</code></div>
+</section>
+<section class="api-entry" id="aliro_uwb_msg_process_supplementary">
+<h3><span class="kindb" title="function">F</span><code>enum aliro_uwb_err <b>aliro_uwb_msg_process_supplementary</b>(struct aliro_uwb_session *session, struct aliro_uwb_message *message)</code></h3>
+<div class="src">modules/woz_uwb/src/aliro/aliro_uwb_msg.c:1208</div>
+<p>Log every attribute of a Supplementary Service message (protocol 0x03). The phone sends one of these at session establishment. Nothing is modelled yet and no response is emitted, so this only surfaces the payload: the semantics are unknown and are being characterised by diffing the attributes across conditions.</p>
+<dl class="params"><dt><code>session</code></dt><dd>Aliro UWB session (unused; no state is driven from here yet).</dd><dt><code>message</code></dt><dd>Received supplementary-service message to log.</dd><dt>returns</dt><dd>ALIRO_UWB_ERR_NONE always.</dd></dl>
+<div class="xref">calls <code>aliro_uwb_msg_message_id</code>, <code>aliro_uwb_msg_payload_length</code></div>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

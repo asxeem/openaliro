@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ports/esp32-idf/components/aliro_reader/aliro_prov_nvs.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="ports.esp32-idf.components.aliro_reader.aliro_prov_nvs.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>ports/esp32-idf/components/aliro_reader</span><span class="sep">/</span><b>aliro_prov_nvs.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_prov_nvs.c</h1><p class="lede">NVS-backed persistence for Aliro reader provisioning: loads and stores the serialized reader…</p><div class="metarow"><span><code>ports/esp32-idf/components/aliro_reader/aliro_prov_nvs.c</code></span><span>3 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>NVS-backed persistence for Aliro reader provisioning: loads and stores the serialized reader
+identity and trust store built by aliro_prov.c.
+Lazily initializes NVS on first use; safe to call alongside aliro_ble&#x27;s own nvs_flash_init.</p>
+<figure class="graph-wrap"><div class="graph-shell"><pre class="mermaid">flowchart TD
+  aliro_prov_load --&gt; ensure_nvs</pre></div></figure>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="ensure_nvs">
+<h3><span class="kindb" title="function">F</span><code>static esp_err_t <b>ensure_nvs</b>(void)</code></h3>
+<div class="src">ports/esp32-idf/components/aliro_reader/aliro_prov_nvs.c:28</div>
+<p>Idempotent NVS bring-up. aliro_ble also calls nvs_flash_init() later; the
+second call returns ESP_OK, so ordering between the two is irrelevant.</p>
+<div class="xref">called by <code>aliro_prov_load</code>, <code>aliro_prov_store</code></div>
+</section>
+<section class="api-entry" id="aliro_prov_load">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_prov_load</b>(struct aliro_reader_identity *id, struct aliro_trust_store *ts)</code></h3>
+<div class="src">ports/esp32-idf/components/aliro_reader/aliro_prov_nvs.c:44</div>
+<p>Load the reader identity and trust store from NVS into id and ts.
+On any failure to init NVS, open the namespace, read the blob, or deserialize it, falls back to the
+default DEV identity (via aliro_prov_dev_default) and returns a nonzero status: 1 if no provisioning
+was ever stored (namespace or key not found), -1 on any other NVS or deserialization error. Returns 0
+on a successful load of previously stored provisioning.</p>
+<div class="xref">calls <code>ensure_nvs</code></div>
+</section>
+<section class="api-entry" id="aliro_prov_store">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_prov_store</b>(const struct aliro_reader_identity *id, const struct aliro_trust_store *ts)</code></h3>
+<div class="src">ports/esp32-idf/components/aliro_reader/aliro_prov_nvs.c:94</div>
+<p>Serialize and persist the reader identity and trust store to NVS.
+Returns 0 on success. Returns -1 if serialization overflows the blob buffer, NVS init fails, the
+namespace can&#x27;t be opened read-write, or the blob write/commit fails.</p>
+<div class="xref">calls <code>ensure_nvs</code></div>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

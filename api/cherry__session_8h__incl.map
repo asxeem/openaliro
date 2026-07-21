@@ -1,0 +1,16 @@
+<map id="modules/woz_uwb/src/aliro/include/cherry/cherry_session.h" name="modules/woz_uwb/src/aliro/include/cherry/cherry_session.h">
+<area shape="rect" id="Node000001" title="— generic base&#45;session interface." alt="" coords="60,5,211,61"/>
+<area shape="rect" id="Node000002" href="$cherry_8h.html" title="— Cherry core (context + device&#45;capabilities) interface." alt="" coords="126,109,233,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,59,169,95,164,95,149,64"/>
+<area shape="rect" id="Node000003" href="$cherry__common_8h.html" title="— diagnostics config struct and report forward decl." alt="" coords="21,183,146,208"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="129,60,94,169,89,167,125,63"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="46,256,121,282"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="101,64,53,115,29,148,11,184,8,196,11,207,27,229,48,247,43,249,23,232,6,209,3,196,6,182,24,145,48,112,102,59"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="202,256,266,282"/>
+<area shape="poly" id="edge9_Node000001_Node000005" title=" " alt="" coords="196,59,226,80,247,108,258,142,259,179,254,213,246,243,242,240,249,212,254,178,253,143,242,110,222,84,196,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="161,137,113,176,110,171,165,133"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="180,133,176,170,160,210,142,232,119,250,117,245,138,228,156,207,171,169,177,137"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="185,133,205,182,227,242,222,241,200,184,183,137"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="85,207,86,241,81,240,82,211"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="110,206,197,248,192,251,108,211"/>
+</map>

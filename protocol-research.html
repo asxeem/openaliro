@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protocol research: BLE + UWB proximity unlock</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="protocol-research">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><b>Protocol research: BLE + UWB proximity unlock</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Guide</div><h1>Protocol research: BLE + UWB proximity unlock</h1></div></header>
+<div class="mid">
+<main class="doc reading">
+<h2>Abstract</h2>
+<p>This report documents the on-air behavior of a phone-driven ultra-wideband (UWB) proximity unlock: how a phone opens a fixed reader on approach. The phone conducts the protocol exchange over Bluetooth LE, then the two run a UWB secure ranging exchange that lets the reader measure distance before it unlocks. The scope here is deliberately narrow: what reaches the air, and what must hold before ranging can begin.</p>
+<p>The work began from a specific failure: NFC tap-to-unlock worked, but the door would not open on approach. Tap working is a useful signal: it means the BLE transport, provisioning, and credentials are healthy, so the fault is UWB-specific. The fallback to NFC when UWB is disturbed is by design, which is why tap continued to work throughout the period when ranging was dead.</p>
+<p>&gt; <strong>Educational, research, and study use only.</strong> These notes exist for learning, &gt; independent research, and personal study of how BLE + UWB secure ranging systems behave &gt; on the air. They are not an invitation to bypass, defeat, or gain unauthorized access &gt; to any access control system. Only work with hardware you own or have explicit, written &gt; authorization to test. &gt; &gt; This report is not affiliated with, endorsed by, or speaking for any company, standards &gt; body, or specification owner mentioned or alluded to. All protocol specifications, &gt; standards, trademarks, product names, and other intellectual property referenced or &gt; implied remain the property of their respective owners, along with every right, &gt; license, and disclaimer attached to them.</p>
+<h2>1. System under study</h2>
+<ul><li>The <strong>phone</strong> is the UWB initiator (the side sending poll packets). It carries a U-class</li></ul>
+<p>UWB chip and runs iOS 26 or later.</p>
+<ul><li>The <strong>reader</strong> is the fixed lock, acting as the UWB responder with a single anchor. The</li></ul>
+<p>radio studied here is a bare DW3000-family part (a DW3110) on an nRF5340, with no dedicated UWB coprocessor, so the MAC, PHY, and STS are all implemented in host firmware.</p>
+<ul><li>All protocol-level traffic rides on BLE. UWB carries no application data; it is purely</li></ul>
+<p>the distance measurement. The unlock policy is entirely the reader&#x27;s decision: in the configuration studied, it unlocks at 150 cm or closer and relocks past 180 cm, giving 30 cm of hysteresis.</p>
+<h2>2. The full transaction, top to bottom</h2>
+<p>The complete exchange in order. Everything above the line is in the clear or authentication-protected; everything below is encrypted under BleSK.</p>
+<pre><code> 1     Initiate Access Protocol                          phone → reader (clear)
+ 2-9   Access/authentication exchange (AUTH0 [± cert, AUTH1])
+10-11  EXCHANGE (carries the zero-length &quot;URSK-ready&quot; trigger, tag 0x98)
+------ everything below encrypted under BleSK ---------------------------------
+12     Reader: &quot;Access Protocol Completed&quot;               reader → phone
+13     Time Sync                                         phone → reader   (section 5)
+14     (optional) Initiate Ranging Session               phone → reader
+15-18  Ranging Setup M1 / M2 / M3 / M4                   (section 6)
+       ... secure UWB ranging; distance computed at the reader ...   (section 7)
+19-22  Suspend / Resume (either side)                    (section 8)
+23     Reader Status Changed → unlock/lock decision      reader → phone</code></pre>
+<p>Once &quot;Access Protocol Completed&quot; passes, both sides drop the authentication session keys. BleSK persists, and it guards all ranging control traffic from that point on (time sync, M1-M4, suspend/resume).</p>
+<h2>3. Discovery and connection (all sniffable)</h2>
+<p>The reader beacons <code>ADV_IND</code> on LE 1M (and optionally coded S=2). The payload is service data under 16-bit UUID <code>0xFFF2</code>. The fields relevant to reverse engineering:</p>
+<ul><li>Byte 7, bit 7 is the &quot;BLE + UWB flow supported&quot; flag. This is the one bit a UWB-capable</li></ul>
+<p>build sets and a control-only build leaves at 0; if it is 0, the phone will not attempt to range. For reference, the rest of that byte: bit 6 is the BLE-only flow, bits 4:3 are notification/error, bits 2:0 are the advertisement version.</p>
+<ul><li>Byte 8 is TX power. Bytes 9-18 are a truncated reader group identifier plus a</li></ul>
+<p>sub-identifier.</p>
+<ul><li>Bytes 19-22 are the dynamic tag expiry as Unix time, or <code>0xFFFFFFFF</code> if the reader has</li></ul>
+<p>no clock. Byte 23 is reserved.</p>
+<ul><li>Bytes 24-30 are the dynamic tag itself: the first 7 octets of</li></ul>
+<p><code>AES-128(GroupResolvingKey, pad ‖ AdvA ‖ expiry)</code>.</p>
+<p>The phone scans passively and identifies its own readers by recomputing the dynamic tag with each group resolving key it holds. On a match, it sends <code>CONNECT_IND</code>. Conversely, a reader that has gone stale or been reprovisioned is effectively invisible to the phone even while advertising, because the tag no longer resolves.</p>
+<p>The GATT and L2CAP handshake proceeds as follows. The phone reads a characteristic that returns the dynamic SPSM (in <code>0x0080-0x00FF</code>), the supported protocol versions (<code>v1.0 = 0x0100</code>), and a feature bitmap (bit 0 is time sync procedure 0, bit 1 is procedure 1, bit 2 is LE coded PHY). It writes back the version and bitmap it selected. Both version values are folded into the secure channel KDF, so a version downgrade makes the two sides derive mismatched keys and the exchange fails. From there everything runs over an L2CAP connection-oriented channel on that SPSM. The reader is the GAP peripheral and GATT server, the phone is central and client, and BLE pairing is not required.</p>
+<p>For initial sniffing, the fastest sanity check is <code>0xFFF2</code> service data with byte 7 bit 7 set: it confirms the reader side of discovery is alive within seconds.</p>
+<h2>4. Authentication, and the origin of the ranging key</h2>
+<p>The phone sends *Initiate Access Protocol* in the clear, and the reader runs one of two paths:</p>
+<ul><li>The <strong>fast path</strong> is symmetric. It works from a cached long-term key, <code>Kpersistent</code>,</li></ul>
+<p>from an earlier transaction, and produces a 160-byte block of derived keys. The target key is URSK, at offset 128, 32 bytes long.</p>
+<ul><li>The <strong>standard path</strong> is ECDH: AUTH0/AUTH1 with certificates, deriving a fresh 160-byte</li></ul>
+<p>block (URSK still at offset 128) and caching a new <code>Kpersistent</code>. If the fast-path check fails, it falls through to the standard path.</p>
+<p>Two properties here are load-bearing for the whole effort:</p>
+<p>1. The URSK never goes out on the wire. Both sides derive it independently from the authentication, which cryptographically ties UWB ranging to a credential check that actually passed. It cannot be lifted from sniffed BLE traffic and injected or replayed. 2. After authentication, the reader sends an EXCHANGE command with a zero-length trigger (observed tagged <code>0x98</code>) that instructs the phone to load the URSK into its UWB chip. If the phone never sees that trigger, it responds with <code>URSK_Unavailable</code>, leaving tap-style behavior and no ranging. A build that authenticates cleanly but never emits <code>0x98</code> is the classic silent failure, and is worth learning to recognize on sight.</p>
+<p>Glossary of the labels used: <code>Kpersistent</code> is the long-term symmetric seed, <code>BleSK</code> guards the ranging control messages, <code>URSK</code> is the 32-byte ranging root above, and <code>transaction_identifier</code> is a per-transaction value both sides feed into the crypto.</p>
+<h2>5. Time sync (using a BLE event to align the UWB clocks)</h2>
+<p>A battery-powered reader cannot leave its UWB receiver on continuously, so it must know when the phone will transmit. The mechanism takes one BLE event both sides can observe and maps it into each side&#x27;s own UWB clock.</p>
+<p>The reference instant is the anchor point of a BLE connection event: the on-air boundary where the phone (central) transmits and the reader catches the first packet of the event, so both radios observe the same moment. There are two procedures for selecting the event:</p>
+<ul><li><strong>Procedure 0</strong> happens at connection. The phone timestamps the very first connection</li></ul>
+<p>event, sets <code>DeviceEventCount = 0</code>, and sends the time sync unprompted. This lands before any session key exists, so it is readable in the clear. It is the only time sync that can be snooped.</p>
+<ul><li><strong>Procedure 1</strong> is a resync. The reader initiates an <code>LE Set PHY</code> (<code>LL_PHY_REQ</code>), and</li></ul>
+<p>the event carrying the phone&#x27;s <code>LL_PHY_UPDATE_IND</code> becomes the reference. The reader uses this when it judges the phone&#x27;s clock has drifted more than about 1 ms (for example, the last sync is older than ~150 s, or there has been no valid measurement within 10 s of it).</p>
+<p>Each side reads its own UWB clock at that instant. The phone reports its value as <code>UWB_Device_Time</code>; the reader keeps its own as <code>UWBVehicleTime</code> and never transmits it. How each side maps the BLE anchor into its UWB clock is implementation-defined, which is the difficult part covered in section 9.</p>
+<p>The time sync message (phone to reader) carries: device event count (8 B), UWB device time (8 B, µs resolution, 64-bit, scoped to the session and free to start at any value), UWB device time uncertainty (1 B, log-encoded from 1 µs up to about an hour), a clock-skew available flag, device max PPM (2 B), a success field (0/1/2), and a retry delay (2 B).</p>
+<p>The math:</p>
+<pre><code>same event mapped both sides:  SyncOffset = UWB_Device_Time − UWBVehicleTime
+different events:              SyncOffset = UWB_Device_Time
+                                           + (VehicleEventCount − DeviceEventCount) × ConnectionInterval
+                                           − UWBVehicleTime
+
+reader opens block-i RX window at:
+   local_listen(i) = UWB_Time0 + i × T_Block − SyncOffset            [µs, reader UWB clock]
+                     ± ( 2^(Uncertainty/8) µs + skew·elapsed + reader mapping error )</code></pre>
+<p><code>UWB_Time0</code> is in µs (the same 64-bit counter as <code>UWB_Device_Time</code>), and <code>T_Block = N_RAN × 96 ms</code>. The phone&#x27;s clock becomes undefined if the session suspends or dies, or after 30 s with neither UWB nor BLE present. At least one successful time sync is required before M1-M4. Once the first UWB packet lands, everything resyncs in-band far tighter than BLE could manage. The BLE time sync only has to be good enough to place the listen window in roughly the right spot, and the bar there is about 1 ms.</p>
+<h2>6. Ranging setup (M1-M4)</h2>
+<p>These four messages ride the BleSK channel as ranging service messages (message IDs: M1=0, M2=1, M3=2, M4=3, suspend=4/5, resume=6/7). Either side can start the negotiation, but M1 must not be sent while a session is already live.</p>
+<table><thead><tr><th>Msg</th><th>Dir</th><th>Carries</th></tr></thead><tbody><tr><td><strong>M1</strong></td><td>R→P</td><td>UWB config id(s), pulse shape combination, channel bitmask, <strong>UWB Session Id</strong></td></tr><tr><td><strong>M2</strong></td><td>P→R</td><td>selected config/pulse/channel + SYNC code bitmask, <strong>RAN Multiplier</strong>, slot bitmask, hopping bitmask</td></tr><tr><td><strong>M3</strong></td><td>R→P</td><td>selected RAN Multiplier, <strong>Chaps per Slot</strong>, Number Responder Nodes, <strong>Slots per Round</strong> (≥ responders+4), SYNC code subset, hopping, <strong>MAC Mode</strong> (1 or 2 rounds/block + round offset)</td></tr><tr><td><strong>M4</strong></td><td>P→R</td><td><strong>STS Index0, UWB Time0</strong>, Hop Mode Key, selected SYNC code index</td></tr></tbody></table>
+<p>The key point: every negotiated parameter is load-bearing for the crypto, not just for the radio config. This set is hashed into a value referred to here as the *SaltedHash*:</p>
+<p><code>ProtocolVersion ‖ ConfigId ‖ SessionId ‖ STS_Index0 ‖ ResponderNodes ‖ RAN_Multiplier ‖ SlotsPerRound ‖ ChapsPerSlot ‖ PulseShape</code></p>
+<p>and that hash feeds the ranging key KDF. So if the two sides disagree on any of it, they derive different STS keys and never hear each other, even though the setup handshake reported &quot;success.&quot; That is the exact failure revisited in section 7 and section 10: the negotiation &quot;worked,&quot; and the radio is silent. (Aside: MAC mode set to 2 rounds per block is the mechanism used to distinguish front-of-door from back-of-door.)</p>
+<h2>7. The UWB session</h2>
+<h3>Time grid (block → round → slot)</h3>
+<p>Time is carved into blocks, rounds, and slots:</p>
+<pre><code>RSTU    = 416 / 499.2 MHz ≈ 833.33 ns
+T_Chap  = 1/3 ms = 400 RSTU
+T_Slot  = N_Chap_per_Slot  × T_Chap                (Chaps-per-Slot from M3)
+T_Round = N_Slot_per_Round × T_Slot                (Slots-per-Round from M3)
+T_Block = N_RAN × 288 × T_Chap = N_RAN × 96 ms     (RAN Multiplier from M2/M3)
+N_Round = T_Block / T_Round                        (derived)
+Ranging rate = 10.416667 / N_RAN Hz
+
+block_start(i)      = UWB_Time0 + i × T_Block
+round_start(i,s)    = block_start(i) + s × T_Round
+slot_start(i,s,n)   = round_start(i,s) + n × T_Slot
+reader_local(…)     = (any of the above) − SyncOffset      [reader UWB clock]</code></pre>
+<p>Of the <code>N_Round</code> rounds in a block, only one or two are active (that is the MAC mode), and which one is selected by the hopping sequence below.</p>
+<h3>Who transmits in which slot (DS-TWR, one to many)</h3>
+<p><code>N_Resp</code> is the number of responder nodes. The first pre-poll of a session goes out at <code>UWB_Time0</code>.</p>
+<table><thead><tr><th>Slot</th><th>Packet</th><th>Format</th><th>Sender</th></tr></thead><tbody><tr><td>0</td><td>Pre-POLL</td><td>SP0 (data)</td><td>phone: session id, <strong>encrypted <code>Poll_STS_Index</code></strong>, block <code>i</code>, <code>Hop_Flag(i)</code>, <code>Round_Idx(i)</code></td></tr><tr><td>1</td><td>POLL</td><td>SP3 (RFRAME)</td><td>phone</td></tr><tr><td>2 … N_Resp+1</td><td>Response_l</td><td>SP3</td><td>one reader anchor each</td></tr><tr><td>N_Resp+2</td><td>Final</td><td>SP3</td><td>phone</td></tr><tr><td>N_Resp+3</td><td>Final_Data</td><td>SP0</td><td>phone: encrypted Poll/Final timestamps, <code>Hop_Flag(i+1)</code>, <code>Round_Idx(i+1)</code></td></tr></tbody></table>
+<p>So Slots-per-Round must be at least <code>N_Resp + 4</code>. The SP3 frames carry only a scrambled timestamp sequence (the STS): no readable payload, and the distance falls out of RMARKER timing across poll, response, and final. The SP0 frames are the opposite: plain data (vendor OUI <code>0x4A191B</code>) wrapped in AES-CCM*. SP0 and SP3 are structurally different packets, so rebuilding a single round means switching the radio between no-STS data RX/TX and STS-only RFRAME RX/TX, and reloading the STS IV on every SP3 slot. One easy mistake: the STS index increments on every slot whether or not it is used, so a skipped slot must skip its IV too; never reuse it.</p>
+<h3>STS index and the key ladder</h3>
+<pre><code>STS_Index0 : random in [0 .. 2^30−1], pinned to block 0 / round 0 / slot 0
+STS_Index(i, s) = STS_Index0 + (i·N_Round + s) · N_Slot_per_Round     s = Round_Idx(i)
+   within a round:  Pre-POLL=base · POLL=base+1 · Response_l=base+2+l · Final=base+N_Resp+2 · Final_Data=base+N_Resp+3
+
+URSK (32 B, from section 4)
+ ├─ mUPSK1/mUPSK2   per session   → AES-CCM* ENC-MIC64 over the Pre-POLL payload (static all session)
+ └─ mURSK           per session
+     └─ URSK_KT     per active round   (keyed on that round&#x27;s Pre-POLL STS index)
+         ├─ dURSK   → generates the STS via the 802.15.4z DRBG
+         └─ dUDSK   → encrypts the Final_Data timestamps</code></pre>
+<p>The finding that made responders tractable is *pre-poll recovery*. Because <code>mUPSK1</code> comes straight off the URSK and stays static for the whole session, the responder can decrypt the very first pre-poll with no ranging-round state set up yet. Decrypt it, read <code>Poll_STS_Index</code>, subtract 1, derive <code>URSK_KT</code>, then <code>dURSK</code> and <code>dUDSK</code>, and the SP3 STS is armed for the poll that lands one slot later. Between slot 0 and slot 1 that is about 4 AES-CMAC chains of work. This was the finding that mattered most: anchor every block on the in-band pre-poll <code>Poll_STS_Index</code> rather than on the BLE time sync, and arm each slot *before* the ~2 ms KDF/decrypt cost hits. That is the change that turned &quot;setup is fine but the radio is silent&quot; into live distance reports.</p>
+<h3>Hopping (which round is active)</h3>
+<p>Fully deterministic in the block index, so both sides can compute it with no radio contact:</p>
+<pre><code>h_i = ( (((i + HOP_Key) &amp; 0xFFFF)² mod 65521) × (N_Round − O_k) ) &gt;&gt; 16      (65521 = 2^16 − 15)
+f_i = h_i + O_k                                                              (O_k = round offset, ≠ 0)</code></pre>
+<p><code>HOP_Key</code> is the hop mode key from M4 (0 means no hopping). Block 0 is always unhopped, on rounds 0 and <code>O_k</code>, and the sequence only takes over from block 1 onward. Test vector: with <code>HOP_Key = 0xCC5DD79F</code> and <code>N_Round = 80</code>, blocks 1 and 2 land on rounds 62 and 37. Three modes: none (fixed round), continuous (recompute <code>h_i</code> every block), and adaptive (stay put while things work, hop on interference; the phone announces the next block&#x27;s flag and round inside Final_Data, and a missing Final_Data is assumed to be &quot;hop&quot;). Because the whole thing is deterministic, losing a Final_Data costs nothing; both sides still land in the same next round.</p>
+<p>On the PHY side: HRP UWB high band, either channel 5 (6489.6 MHz) or channel 9 (7987.2 MHz), BPRF, with the preamble and pulse shape as negotiated in M2/M3/M4.</p>
+<h2>8. Session lifecycle and key lifetimes</h2>
+<p>Suspend and resume: either side can suspend to save power. In practice the phone usually suspends while the door sits unlocked and resumes when the reader flips from unlocked back to locked (or when the phone detects motion). A resume hands over a fresh <code>UWB_Time0</code> and <code>STS_Index0</code>, giving a new grid without redoing M1-M4, and it only works if the reader still holds a URSK that has not expired. A session paused while the door is unlocked is normal, not a bug.</p>
+<p>The URSK is dropped when any of these occur: the STS index reaches <code>2^31−1</code>, the STS index is lost, a 12-hour TTL expires (counted from the first <code>dURSK</code> derivation at M4), or the BLE link drops. After that, either side reports <code>URSK_Unavailable</code> and a fresh access transaction is required, which is cheap because it can use the fast path. This is why ranging reliably dies once the phone leaves BLE range, or after about 12 hours.</p>
+<h2>9. Open problem: pinning the reader&#x27;s clock</h2>
+<p>This is the one genuinely implementation-defined seam from section 5: how the reader maps the BLE connection-event anchor into its own UWB clock. On a split-core SoC (BLE controller on the network core, host and UWB on the app core), this cannot be done in software alone. The app core cannot read the controller&#x27;s clock or the network-core timer, and the ready-made radio-notification conversion path is fused off on this SoC family.</p>
+<p>The approach adopted is a physical bridge rather than cross-core clock math:</p>
+<pre><code>controller &quot;event-start task&quot; ──▶ network-core GPIOTE pin (one edge / conn event) ──▶ DW3110 time-latch
+BLE &quot;anchor report&quot; (event counter N, anchor_µs(N)) ──HCI/IPC──▶ app core
+correlate by connection-event counter:  DW_time(edge_N) + L  ↔  anchor_µs(N)</code></pre>
+<p><code>L</code> is a calibrated constant lead, covering radio ramp-up plus the latch offset. That pair is exactly the <code>(UWBVehicleTime, anchor)</code> the section 5 formulas require, and because the connection-event counter is a shared protocol counter, it also aligns with the phone&#x27;s <code>DeviceEventCount</code>. The DW3000 family provides <code>dwt_config_ostr_mode()</code> (one-shot timebase reset over the sync pin) as the primitive that defines the epoch. Two items remain open:</p>
+<ul><li>The anchor-report enable must live in the network-core image. Enabling it only from the</li></ul>
+<p>app side is the prime suspect for a silent failure where the events never appear.</p>
+<ul><li>The larger gap is obtaining the peer&#x27;s time sync. The phone&#x27;s <code>UWB_Device_Time</code> and</li></ul>
+<p>device event count are consumed inside a closed protocol library and never surface. The procedure 0 time sync does arrive in the clear before any session keys exist, so it can be snooped on the receive path before the library consumes it; the later BleSK-encrypted syncs cannot. Without either a snoop hook or an upstream API addition, the reader has its <code>UWBVehicleTime</code> but nothing to subtract it from.</p>
+<h2>10. Field guide: observations and their explanations</h2>
+<table><thead><tr><th>Observation</th><th>Reverse-engineered explanation</th></tr></thead><tbody><tr><td>Phone never connects over BLE</td><td>Advert missing/wrong: <code>0xFFF2</code> absent, byte 7 bit 7 clear (no UWB build), or Dynamic Tag unresolvable (stale/changed reader identity).</td></tr><tr><td>BLE connects, tap-like unlock, no ranging</td><td>No common protocol version, or the <code>0x98</code> &quot;URSK ready&quot; trigger never sent → <code>URSK_Unavailable</code>.</td></tr><tr><td>M1 sent, phone answers &quot;Setup Later&quot;</td><td>Phone-side UWB busy/unavailable; wait for *Initiate Ranging Session* before resending M1.</td></tr><tr><td>M1-M4 complete, zero distance reports</td><td>Radio path: antenna, channel 5/9, missing time sync (wrong listen window), or a parameter mismatch → different SaltedHash → different STS (section 6). Watch for *Secure Ranging Over UWB Radio Failed*.</td></tr><tr><td>Ranging stops while unlocked, resumes at lock</td><td>Conformant suspend/resume for power saving (section 8), not a bug.</td></tr><tr><td>Everything dies after BLE drop / ~12 h</td><td>URSK lifetime rules (section 8); a fresh fast-path transaction is required.</td></tr></tbody></table>
+<p>On instruments: a BLE sniffer alone yields everything through section 6 (discovery, the versions, the message IDs, suspend/resume) with no UWB gear. Resolving section 7 needs a UWB capture, or the radio&#x27;s own per-frame diagnostics, which is what separates &quot;setup negotiated but the STS is mismatched&quot; from &quot;STS lines up but there is no RF link.&quot; The single most useful question when distances vanish: is BLE still trading setup and ranging control messages while the UWB side has gone silent? If so, the problem is in the radio/parameter/STS path, not the control stack.</p>
+<h2>Credits</h2>
+<ul><li><a href="https://github.com/kormax/">@kormax</a> for ideas on ECP and UWB.</li><li><a href="https://github.com/rednblkx/">@rednblkx</a> for ideas on HomeKey.</li><li><a href="https://github.com/scottjg/">@scottjg</a> for help with UWB chipset ideas.</li></ul>
+<h2>Questions</h2>
+<p>Open an issue on the repository for corrections or questions about this research.</p>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

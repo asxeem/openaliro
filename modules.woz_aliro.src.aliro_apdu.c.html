@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_aliro/src/aliro_apdu.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_aliro.src.aliro_apdu.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_aliro/src</span><span class="sep">/</span><b>aliro_apdu.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_apdu.c</h1><p class="lede">Aliro APDU TLV codec: builds command payloads (AUTH0, AUTH1, AuthData, EXCHANGE) and parses…</p><div class="metarow"><span><code>modules/woz_aliro/src/aliro_apdu.c</code></span><span>18 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>Aliro APDU TLV codec: builds command payloads (AUTH0, AUTH1, AuthData, EXCHANGE) and parses
+response APDUs, plus BLE envelope framing/unframing and ISO7816 APDU wrap/status-word stripping.
+Provides a minimal BER-TLV writer (aliro_tlv_w_init/put/finish) used to assemble command
+payloads, and TLV/APDU parsing helpers used to extract fields from device responses.</p>
+<p class="chips">depends on <a href="modules.woz_aliro.src.aliro_apdu.h.html"><code>modules/woz_aliro/src/aliro_apdu.h</code></a></p>
+<figure class="graph-wrap"><div class="graph-shell"><pre class="mermaid">flowchart TD
+  aliro_apdu_build_auth0 --&gt; aliro_tlv_put
+  aliro_apdu_build_auth0 --&gt; aliro_tlv_put_u16
+  aliro_apdu_build_auth0 --&gt; aliro_tlv_put_u8
+  aliro_apdu_build_auth0 --&gt; aliro_tlv_w_finish
+  aliro_apdu_build_auth0 --&gt; aliro_tlv_w_init</pre></div></figure>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="aliro_tlv_w_init">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_tlv_w_init</b>(struct aliro_tlv_w *w, uint8_t *buf, size_t cap)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:23</div>
+<p>Initializes a TLV writer to append into buf, with capacity cap and no error latched.
+Must be called before any aliro_tlv_put / aliro_tlv_put_empty / w_byte calls on w.</p>
+<div class="xref">called by <code>aliro_apdu_build_auth0</code>, <code>aliro_apdu_build_auth1</code>, <code>aliro_apdu_build_authdata</code>, <code>aliro_apdu_build_exchange</code></div>
+</section>
+<section class="api-entry" id="w_byte">
+<h3><span class="kindb" title="function">F</span><code>static void <b>w_byte</b>(struct aliro_tlv_w *w, uint8_t b)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:34</div>
+<p>Appends a single byte to the TLV writer&#x27;s buffer.
+If the buffer is already full (len &gt;= cap), sets w-&gt;err and writes nothing; callers must check
+w-&gt;err after a write sequence rather than after each byte.</p>
+<div class="xref">called by <code>aliro_tlv_put</code>, <code>aliro_tlv_put_empty</code>, <code>w_len</code></div>
+</section>
+<section class="api-entry" id="w_len">
+<h3><span class="kindb" title="function">F</span><code>static void <b>w_len</b>(struct aliro_tlv_w *w, size_t len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:45</div>
+<p>Encode and append a BER-TLV length field to the writer: single byte if len &lt; 0x80, 0x81 + one
+length byte if len &lt;= 0xff, otherwise 0x82 + two big-endian length bytes.</p>
+<div class="xref">called by <code>aliro_tlv_put</code>, <code>aliro_tlv_put_empty</code> &nbsp;·&nbsp; calls <code>w_byte</code></div>
+</section>
+<section class="api-entry" id="aliro_tlv_put">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_tlv_put</b>(struct aliro_tlv_w *w, uint8_t tag, const uint8_t *val, size_t len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:60</div>
+<p>Append a complete TLV item (tag byte, encoded length, then len bytes of val) to the writer.</p>
+<div class="xref">called by <code>aliro_apdu_build_auth0</code>, <code>aliro_apdu_build_auth1</code>, <code>aliro_apdu_build_authdata</code>, <code>aliro_tlv_put_u16</code>, <code>aliro_tlv_put_u8</code> &nbsp;·&nbsp; calls <code>w_byte</code>, <code>w_len</code></div>
+</section>
+<section class="api-entry" id="aliro_tlv_put_u8">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_tlv_put_u8</b>(struct aliro_tlv_w *w, uint8_t tag, uint8_t v)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:70</div>
+<p>Append a TLV item whose value is the single byte v.</p>
+<div class="xref">called by <code>aliro_apdu_build_auth0</code>, <code>aliro_apdu_build_auth1</code> &nbsp;·&nbsp; calls <code>aliro_tlv_put</code></div>
+</section>
+<section class="api-entry" id="aliro_tlv_put_u16">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_tlv_put_u16</b>(struct aliro_tlv_w *w, uint8_t tag, uint16_t v)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:76</div>
+<p>Append a TLV item whose 2-byte value is v encoded big-endian.</p>
+<div class="xref">called by <code>aliro_apdu_build_auth0</code>, <code>aliro_apdu_build_exchange</code> &nbsp;·&nbsp; calls <code>aliro_tlv_put</code></div>
+</section>
+<section class="api-entry" id="tlv_read">
+<h3><span class="kindb" title="function">F</span><code>static int <b>tlv_read</b>(const uint8_t *buf, size_t buf_len, size_t *pos, uint8_t *tag, const uint8_t **val, size_t *val_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:101</div>
+<p>Read one item at *pos. On success advance *pos and set tag/val/len.</p>
+<div class="xref">called by <code>aliro_tlv_find</code></div>
+</section>
+<section class="api-entry" id="aliro_tlv_find">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_tlv_find</b>(const uint8_t *buf, size_t buf_len, uint8_t tag, const uint8_t **val, size_t *val_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:139</div>
+<p>Find the first item with tag; returns 0 and sets val/len, or -1 if absent.</p>
+<div class="xref">called by <code>aliro_apdu_parse_auth0_response</code>, <code>aliro_apdu_parse_auth1_response</code> &nbsp;·&nbsp; calls <code>tlv_read</code></div>
+</section>
+<section class="api-entry" id="aliro_apdu_build_auth0">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_apdu_build_auth0</b>(uint8_t exp_phase, uint8_t user_policy, uint16_t version, const uint8_t reader_eph_pub[65], const uint8_t txid[16], const uint8_t reader_id[32], uint8_t *out, size_t cap, size_t *out_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:155</div>
+<p>---- command builders (out receives the raw APDU payload, no envelope) ----</p>
+<div class="xref">calls <code>aliro_tlv_put</code>, <code>aliro_tlv_put_u16</code>, <code>aliro_tlv_put_u8</code>, <code>aliro_tlv_w_finish</code>, <code>aliro_tlv_w_init</code></div>
+</section>
+<section class="api-entry" id="aliro_apdu_build_auth1">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_apdu_build_auth1</b>(uint8_t cred_type, const uint8_t sig[64], uint8_t *out, size_t cap, size_t *out_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:178</div>
+<p>Build the AUTH1 command TLV: a 1-byte credential-type/exp-phase tag followed by the 64-byte
+ECDSA signature. Writes into out (capacity cap) and sets *out_len via aliro_tlv_w_finish.
+Returns whatever aliro_tlv_w_finish returns (0 on success, nonzero on writer overflow).</p>
+<div class="xref">calls <code>aliro_tlv_put</code>, <code>aliro_tlv_put_u8</code>, <code>aliro_tlv_w_finish</code>, <code>aliro_tlv_w_init</code></div>
+</section>
+<section class="api-entry" id="aliro_apdu_build_authdata">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_apdu_build_authdata</b>(int which, const uint8_t reader_id[32], const uint8_t device_pubx[32], const uint8_t reader_eph_pubx[32], const uint8_t txid[16], uint8_t *out, size_t cap, size_t *out_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:194</div>
+<p>Build the plaintext AuthData TLV blob used as the ECDSA signing/verification input for
+AUTH0/AUTH1. Encodes reader_id, device_pubx, reader_eph_pubx, txid, and a 4-byte usage tag
+selected by which (ALIRO_AUTH_READER vs. user/device usage), in that fixed order. Writes into out
+(capacity cap) and sets *out_len via aliro_tlv_w_finish. Returns whatever aliro_tlv_w_finish
+returns (0 on success, nonzero if the writer latched an overflow error).</p>
+<div class="xref">calls <code>aliro_tlv_put</code>, <code>aliro_tlv_w_finish</code>, <code>aliro_tlv_w_init</code></div>
+</section>
+<section class="api-entry" id="aliro_apdu_build_exchange">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_apdu_build_exchange</b>(int have_status, uint16_t reader_status, int ursk_ready, uint8_t *out, size_t cap, size_t *out_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:210</div>
+<p>EXCHANGE command plaintext (sealed by the caller before framing).</p>
+<div class="xref">calls <code>aliro_tlv_put_empty</code>, <code>aliro_tlv_put_u16</code>, <code>aliro_tlv_w_finish</code>, <code>aliro_tlv_w_init</code></div>
+</section>
+<section class="api-entry" id="aliro_apdu_wrap">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_apdu_wrap</b>(uint8_t ins, const uint8_t *tlv, size_t tlv_len, uint8_t *out, size_t cap, size_t *out_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:225</div>
+<p>Wrap a command TLV in an ISO7816 short-form APDU: &quot;80 &lt;ins&gt; 00 00 Lc &lt;tlv&gt; Le&quot;
+(Le = 0x00 =&gt; up to 256 response bytes). ins is one of ALIRO_INS_*. The result
+is the AP command payload to frame with type=ACCESS, opcode=AP_OP_COMMAND.</p>
+</section>
+<section class="api-entry" id="aliro_apdu_strip_sw">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_apdu_strip_sw</b>(const uint8_t *buf, size_t *len, uint16_t *sw)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:248</div>
+<p>Drop the trailing ISO7816 status word (SW1 SW2) from an APDU response body.
+Returns the SW via *sw (0x9000 = OK) and shortens *len, or -1 if too short.</p>
+</section>
+<section class="api-entry" id="aliro_apdu_parse_auth0_response">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_apdu_parse_auth0_response</b>(const uint8_t *buf, size_t len, struct aliro_auth0_response *r)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:266</div>
+<p>Parses an AUTH0 response APDU body, extracting the device&#x27;s ephemeral public key and optional
+cryptogram. buf/len is the APDU body with any status word already stripped. The device ephemeral
+public key (tag ALIRO_TAG_DEVICE_PUBX) is mandatory and must be exactly 65 bytes; the cryptogram
+(tag 0x9D) is optional and, if present, must be exactly 64 bytes. Returns 0 on success with *r
+populated (zero-initialized first); returns -1 if the mandatory pubkey TLV is missing or has the
+wrong length.</p>
+<div class="xref">calls <code>aliro_tlv_find</code></div>
+</section>
+<section class="api-entry" id="aliro_apdu_parse_auth1_response">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_apdu_parse_auth1_response</b>(const uint8_t *buf, size_t len, struct aliro_auth1_response *r)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:290</div>
+<p>Parses an AUTH1 response APDU body, extracting the device&#x27;s signature and optional device public
+key. buf/len is the APDU body with any status word already stripped. The device signature (tag
+ALIRO_TAG_SIG) is mandatory and must be exactly 64 bytes; the device public key (tag
+ALIRO_TAG_DEVICE_PUB) is optional and, if present, must be exactly 65 bytes. A signaling-bitmap
+item at tag 0x91 is recognized but ignored. Returns 0 on success with *r populated
+(zero-initialized first); returns -1 if the mandatory signature TLV is missing or has the wrong
+length.</p>
+<div class="xref">calls <code>aliro_tlv_find</code></div>
+</section>
+<section class="api-entry" id="aliro_ble_frame">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_ble_frame</b>(uint8_t type, uint8_t opcode, const uint8_t *payload, size_t plen, uint8_t *out, size_t cap, size_t *out_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:317</div>
+<p>Frames a payload into an Aliro BLE envelope: 1-byte type (top 2 bits masked off), 1-byte opcode,
+2-byte big-endian payload length, followed by the payload. Returns 0 on success with *out_len set
+to the total framed length; returns -1 if plen exceeds 0xFFFF or cap is too small to hold the
+header plus payload.</p>
+</section>
+<section class="api-entry" id="aliro_ble_unframe">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_ble_unframe</b>(const uint8_t *buf, size_t len, uint8_t *type, uint8_t *opcode, const uint8_t **payload, size_t *plen)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_apdu.c:338</div>
+<p>Parses an Aliro BLE envelope, extracting the type, opcode, and a pointer/length into the payload
+region of buf. The returned *payload points into buf; the caller must not use it beyond buf&#x27;s
+lifetime. Returns 0 on success; returns -1 if len is shorter than the envelope header, or the
+encoded payload length would exceed the buffer.</p>
+</section>
+</div>
+<details><summary>Undocumented (2)</summary><p><code>aliro_tlv_put_empty</code>, <code>aliro_tlv_w_finish</code></p></details>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

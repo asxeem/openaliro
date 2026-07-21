@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_aliro/src/aliro_prim_psa.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_aliro.src.aliro_prim_psa.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_aliro/src</span><span class="sep">/</span><b>aliro_prim_psa.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_prim_psa.c</h1><p class="lede">Aliro crypto primitive backend implemented on Arm PSA Crypto: random generation, AES-256-GCM…</p><div class="metarow"><span><code>modules/woz_aliro/src/aliro_prim_psa.c</code></span><span>9 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>Aliro crypto primitive backend implemented on Arm PSA Crypto: random generation, AES-256-GCM
+encrypt/decrypt, and NIST P-256 key generation, ECDH, and ECDSA sign/verify.
+Provides the aliro_prim_* / aliro_* primitive functions consumed by the higher-level Aliro KDF
+and secure-channel code in aliro_crypto.c; callers must call aliro_prim_init before using any
+other function in this file.</p>
+<p class="chips">depends on <a href="modules.woz_aliro.include.aliro_prim.h.html"><code>modules/woz_aliro/include/aliro_prim.h</code></a></p>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="aliro_prim_init">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_prim_init</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_prim_psa.c:26</div>
+<p>Initialize the PSA Crypto backend.
+Must be called before any other aliro_prim_psa function. Returns 0 on success, -1 on failure.</p>
+</section>
+<section class="api-entry" id="aliro_random">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_random</b>(uint8_t *out, size_t len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_prim_psa.c:33</div>
+<p>Fill out with len bytes of cryptographically secure random data via PSA Crypto.
+Returns 0 on success, -1 on failure.</p>
+</section>
+<section class="api-entry" id="aliro_aes256_gcm_encrypt">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_aes256_gcm_encrypt</b>(const uint8_t key[32], const uint8_t *nonce, size_t nonce_len, const uint8_t *aad, size_t aad_len, const uint8_t *pt, size_t pt_len, uint8_t *ct, uint8_t *tag, size_t tag_len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_prim_psa.c:42</div>
+<p>Encrypt and authenticate plaintext with AES-256-GCM via PSA Crypto.
+Writes pt_len bytes of ciphertext to ct and tag_len bytes of authentication tag to tag. Returns 0
+on success, -1 if tag_len exceeds ALIRO_GCM_TAG, pt_len exceeds ALIRO_AEAD_MAX, key import fails,
+or encryption fails.</p>
+</section>
+<section class="api-entry" id="aliro_aes256_gcm_decrypt">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_aes256_gcm_decrypt</b>(const uint8_t key[32], const uint8_t *nonce, size_t nonce_len, const uint8_t *aad, size_t aad_len, const uint8_t *ct, size_t ct_len, const uint8_t *tag, size_t tag_len, uint8_t *pt)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_prim_psa.c:78</div>
+<p>Decrypt and authenticate an AES-256-GCM ciphertext via PSA Crypto.
+Writes ct_len bytes of plaintext to pt. Returns 0 on success (tag verified), -1 if tag_len
+exceeds ALIRO_GCM_TAG, ct_len exceeds ALIRO_AEAD_MAX, key import fails, or
+authentication/decryption fails.</p>
+</section>
+<section class="api-entry" id="aliro_ec_p256_keygen">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_ec_p256_keygen</b>(uint8_t priv[ALIRO_P256_SCALAR], uint8_t pub[ALIRO_P256_POINT])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_prim_psa.c:113</div>
+<p>Generate a new NIST P-256 key pair via PSA Crypto.
+Writes the private scalar to priv and the uncompressed public point to pub. Returns 0 on success,
+-1 if key generation or export fails.</p>
+</section>
+<section class="api-entry" id="aliro_ec_p256_pub_from_priv">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_ec_p256_pub_from_priv</b>(const uint8_t priv[ALIRO_P256_SCALAR], uint8_t pub[ALIRO_P256_POINT])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_prim_psa.c:140</div>
+<p>Derive the uncompressed P-256 public point from an existing private scalar via PSA Crypto.
+Writes the public point to pub. Returns 0 on success, -1 if the private key import or public-key
+export fails.</p>
+</section>
+<section class="api-entry" id="aliro_ecdh_p256">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_ecdh_p256</b>(const uint8_t priv[ALIRO_P256_SCALAR], const uint8_t peer_pub[ALIRO_P256_POINT], uint8_t shared_x[ALIRO_P256_SCALAR])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_prim_psa.c:166</div>
+<p>Compute the P-256 ECDH shared secret x-coordinate for priv and a peer&#x27;s public point via PSA
+Crypto. Writes the shared x-coordinate to shared_x. Returns 0 on success, -1 if key import or key
+agreement fails.</p>
+</section>
+<section class="api-entry" id="aliro_ecdsa_p256_sign">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_ecdsa_p256_sign</b>(const uint8_t priv[ALIRO_P256_SCALAR], const uint8_t *msg, size_t msg_len, uint8_t sig[ALIRO_P256_SIG])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_prim_psa.c:192</div>
+<p>Sign a message with ECDSA over P-256 using SHA-256, via PSA Crypto.
+Writes the signature to sig. Returns 0 on success, -1 if private key import or signing fails.</p>
+</section>
+<section class="api-entry" id="aliro_ecdsa_p256_verify">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_ecdsa_p256_verify</b>(const uint8_t pub[ALIRO_P256_POINT], const uint8_t *msg, size_t msg_len, const uint8_t sig[ALIRO_P256_SIG])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_prim_psa.c:218</div>
+<p>Verify an ECDSA-P256/SHA-256 signature against a message and public key, via PSA Crypto.
+Returns 0 if the signature verifies, -1 if public key import fails or verification fails.</p>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

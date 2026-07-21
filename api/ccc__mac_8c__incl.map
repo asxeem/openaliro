@@ -1,0 +1,19 @@
+<map id="modules/woz_uwb/src/ccc/ccc_mac.c" name="modules/woz_uwb/src/ccc/ccc_mac.c">
+<area shape="rect" id="Node000001" title="— UWB MAC: hopping sequence, SP0 frame codec, ranging schedule." alt="" coords="47,5,198,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,67,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,49,63,85,59,82,102,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="90,94,155,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="124,44,125,79,120,78,122,49"/>
+<area shape="rect" id="Node000004" href="$ccc__mac_8h.html" title="— CCC UWB MAC layer: ranging&#45;round scheduling, SP0 frame codec, DS&#45;TWR." alt="" coords="179,94,264,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="147,44,197,83,192,85,147,49"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="71,168,145,193"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="200,122,142,161,139,157,204,119"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="179,241,248,267"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="220,118,211,168,212,227,207,225,205,167,216,122"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="286,241,351,267"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="251,117,284,137,299,150,312,166,322,196,324,227,319,224,317,197,307,169,295,154,281,141,251,123"/>
+<area shape="rect" id="Node000008" href="$ccc__kdf_8h.html" title="UWB ranging key schedule + SP0 frame crypto (CONFIG_WOZ_ALIRO)." alt="" coords="220,168,298,193"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="229,117,248,154,243,153,226,122"/>
+<area shape="poly" id="edge8_Node000008_Node000006" title=" " alt="" coords="254,192,231,230,227,226,249,195"/>
+<area shape="poly" id="edge9_Node000008_Node000007" title=" " alt="" coords="270,191,301,230,296,229,267,196"/>
+</map>

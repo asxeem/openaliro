@@ -1,0 +1,14 @@
+<map id="cherry_ccc_session" name="cherry_ccc_session">
+<area shape="rect" id="Node000001" title="CCC ranging session bound to FiRa MAC." alt="" coords="346,124,484,150"/>
+<area shape="rect" id="Node000003" href="$structcherry__ccc__event.html" title="CCC notification delivered to the adapter." alt="" coords="214,229,338,254"/>
+<area shape="poly" id="edge3_Node000003_Node000001" title=" " alt="" coords="378,156,338,184,311,208,288,231,285,226,307,204,335,180,373,159"/>
+<area shape="rect" id="Node000002" href="$structcherry__session.html" title="Base session object; first member of cherry_ccc_session for up&#45;casting." alt="" coords="299,325,408,351"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="360,309,409,152,414,149,364,312"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="297,264,346,325,341,324,294,269"/>
+<area shape="rect" id="Node000004" href="$structcherry__ccc__session__event__session__status.html" title="Payload of a SESSION_STATUS event, giving the new session state and the reason for the change." alt="" coords="5,117,161,158"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="134,163,256,227,251,230,133,168"/>
+<area shape="rect" id="Node000005" href="$structcherry__ccc__session__event__error.html" title="Payload of a SESSION_ERROR event, giving the error status that triggered it." alt="" coords="185,117,322,158"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="261,170,269,204,275,229,270,227,264,205,258,175"/>
+<area shape="rect" id="Node000006" href="$structcherry__ccc__aliro__session__config.html" title="Negotiated Aliro ranging params (filled in&#45;place across M1&#45;M4)." alt="" coords="331,5,499,46"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="416,59,417,125,413,123,414,64"/>
+</map>

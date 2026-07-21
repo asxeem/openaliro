@@ -1,0 +1,16 @@
+<map id="modules/woz_uwb/src/ccc/ccc_session.h" name="modules/woz_uwb/src/ccc/ccc_session.h">
+<area shape="rect" id="Node000001" title="— Aliro/CCC ranging seam: map an Aliro session&#39;s URSK + M1&#45;M4 setup to ccc_ran_params." alt="" coords="5,5,157,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="37,241,101,267"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,46,73,226,68,225,77,47"/>
+<area shape="rect" id="Node000003" href="$ccc__mac_8h.html" title="— CCC UWB MAC layer: ranging&#45;round scheduling, SP0 frame codec, DS&#45;TWR." alt="" coords="101,94,186,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="97,44,127,81,122,82,96,49"/>
+<area shape="poly" id="edge5_Node000003_Node000002" title=" " alt="" coords="129,122,114,143,97,169,85,198,76,227,72,225,79,196,92,166,110,140,133,118"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="106,168,181,193"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="145,118,146,153,141,151,142,122"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="247,241,315,267"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="186,110,216,116,246,127,274,143,297,166,303,181,304,198,296,230,292,226,299,197,298,183,292,169,271,147,244,131,215,121,187,115"/>
+<area shape="rect" id="Node000006" href="$ccc__kdf_8h.html" title="UWB ranging key schedule + SP0 frame crypto (CONFIG_WOZ_ALIRO)." alt="" coords="204,168,283,193"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="161,118,217,158,212,159,160,123"/>
+<area shape="poly" id="edge8_Node000006_Node000002" title=" " alt="" coords="217,195,114,237,112,232,211,193"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="251,191,270,228,265,227,248,196"/>
+</map>

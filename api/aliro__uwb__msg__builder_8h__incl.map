@@ -1,0 +1,38 @@
+<map id="modules/woz_uwb/src/aliro/aliro_uwb_msg_builder.h" name="modules/woz_uwb/src/aliro/aliro_uwb_msg_builder.h">
+<area shape="rect" id="Node000001" title="— big&#45;endian TLV message builder." alt="" coords="234,5,385,61"/>
+<area shape="rect" id="Node000002" href="$aliro__uwb__msg__spec_8h.html" title="— UWB ranging&#45;service framing constants." alt="" coords="5,198,160,223"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="252,64,217,86,180,111,137,150,103,188,99,185,134,146,177,107,214,81,255,60"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="309,492,373,518"/>
+<area shape="poly" id="edge26_Node000001_Node000003" title=" " alt="" coords="276,63,253,91,227,126,208,166,202,187,200,209,200,359,202,380,210,399,235,434,268,462,304,485,298,485,265,466,231,437,205,402,197,381,195,359,195,209,197,186,203,164,223,123,249,88,280,59"/>
+<area shape="rect" id="Node000004" href="$aliro__uwb__session_8h.html" title="— per&#45;session public interface." alt="" coords="367,109,521,150"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="348,59,406,99,401,101,348,64"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="707,492,781,518"/>
+<area shape="poly" id="edge24_Node000001_Node000007" title=" " alt="" coords="384,39,528,58,610,72,691,91,765,113,826,140,849,155,867,172,878,190,882,209,882,359,880,381,873,401,848,436,816,465,783,487,781,482,812,461,844,433,868,398,875,379,877,359,877,209,874,192,863,175,846,159,823,145,763,118,690,96,609,78,527,63,386,44"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="286,271,354,297"/>
+<area shape="poly" id="edge25_Node000001_Node000010" title=" " alt="" coords="312,59,321,256,316,255,309,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="84,221,94,265,111,323,139,387,158,416,180,442,206,462,235,477,296,497,291,497,233,482,203,466,177,446,153,420,134,389,106,325,89,266,84,227"/>
+<area shape="poly" id="edge23_Node000004_Node000003" title=" " alt="" coords="379,152,337,173,294,201,277,218,263,238,254,259,250,283,250,359,257,395,273,428,295,457,318,482,313,481,291,460,269,431,252,397,245,359,245,283,249,258,258,235,273,215,291,197,335,168,383,149"/>
+<area shape="rect" id="Node000005" href="$cherry_8h.html" title="— Cherry core (context + device&#45;capabilities) interface." alt="" coords="635,345,741,371"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="508,148,554,167,601,193,646,227,682,270,693,300,694,331,689,328,687,301,678,273,642,231,598,198,551,172,508,153"/>
+<area shape="poly" id="edge21_Node000004_Node000007" title=" " alt="" coords="521,142,618,164,718,195,763,214,798,235,823,257,829,270,832,283,832,359,826,396,810,430,790,459,769,483,767,479,786,456,806,427,821,394,827,359,827,283,824,272,818,261,795,239,760,219,717,200,616,170,522,148"/>
+<area shape="rect" id="Node000008" href="$cherry__ccc_8h.html" title="— CCC/Aliro&#45;session interface (seam the adapter drives)." alt="" coords="397,198,533,223"/>
+<area shape="poly" id="edge10_Node000004_Node000008" title=" " alt="" coords="450,148,460,183,455,182,448,153"/>
+<area shape="poly" id="edge22_Node000004_Node000010" title=" " alt="" coords="428,148,387,199,340,261,336,257,383,196,424,152"/>
+<area shape="poly" id="edge9_Node000005_Node000003" title=" " alt="" coords="677,370,630,409,568,447,522,465,474,480,389,499,388,494,473,475,520,460,565,442,627,405,672,372"/>
+<area shape="rect" id="Node000006" href="$cherry__common_8h.html" title="— diagnostics config struct and report forward decl." alt="" coords="429,419,554,444"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="657,371,540,416,538,410,652,372"/>
+<area shape="poly" id="edge8_Node000005_Node000007" title=" " alt="" coords="694,369,736,479,731,477,691,373"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="469,444,381,488,380,483,464,445"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="535,442,695,489,689,489,534,448"/>
+<area shape="poly" id="edge20_Node000008_Node000003" title=" " alt="" coords="463,223,354,480,350,477,458,224"/>
+<area shape="poly" id="edge11_Node000008_Node000005" title=" " alt="" coords="534,217,596,235,627,250,654,269,674,298,685,331,680,329,669,301,650,273,624,254,594,240,534,222"/>
+<area shape="poly" id="edge12_Node000008_Node000006" title=" " alt="" coords="467,221,470,297,488,404,483,402,465,297,463,226"/>
+<area shape="poly" id="edge18_Node000008_Node000007" title=" " alt="" coords="534,216,595,228,659,252,689,269,716,289,739,314,756,344,764,379,765,415,754,479,750,475,760,415,759,380,751,346,735,317,713,293,686,273,657,257,594,234,534,221"/>
+<area shape="rect" id="Node000009" href="$cherry__session_8h.html" title="— generic base&#45;session interface." alt="" coords="480,271,640,297"/>
+<area shape="poly" id="edge13_Node000008_Node000009" title=" " alt="" coords="482,221,534,262,529,262,481,227"/>
+<area shape="poly" id="edge19_Node000008_Node000010" title=" " alt="" coords="438,225,359,266,357,262,443,222"/>
+<area shape="poly" id="edge17_Node000009_Node000003" title=" " alt="" coords="548,296,491,351,419,421,362,483,359,478,415,417,487,347,544,299"/>
+<area shape="poly" id="edge14_Node000009_Node000005" title=" " alt="" coords="582,295,655,337,650,337,581,300"/>
+<area shape="poly" id="edge15_Node000009_Node000006" title=" " alt="" coords="557,296,506,406,502,403,552,299"/>
+<area shape="poly" id="edge16_Node000009_Node000007" title=" " alt="" coords="569,295,625,369,724,481,719,480,620,372,567,300"/>
+</map>

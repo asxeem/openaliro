@@ -1,0 +1,7 @@
+<map id="modules/woz_uwb/src/driver/uwb_rxdiag.h" name="modules/woz_uwb/src/driver/uwb_rxdiag.h">
+<area shape="rect" id="Node000001" title="— Read&#45;side accessors for the RX event tallies + log stream." alt="" coords="14,5,165,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,80,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,45,60,82,55,79,75,48"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="104,94,168,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="102,44,124,80,118,80,99,49"/>
+</map>

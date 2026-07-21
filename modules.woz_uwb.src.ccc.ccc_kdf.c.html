@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_uwb/src/ccc/ccc_kdf.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_uwb.src.ccc.ccc_kdf.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_uwb/src/ccc</span><span class="sep">/</span><b>ccc_kdf.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">ccc_kdf.c</h1><p class="lede">@file ccc_kdf.c — UWB key schedule + SP0 Pre-POLL frame codec.</p><div class="metarow"><span><code>modules/woz_uwb/src/ccc/ccc_kdf.c</code></span><span>25 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>@file ccc_kdf.c — UWB key schedule + SP0 Pre-POLL frame codec.</p>
+<p class="chips">depends on <a href="modules.woz_uwb.src.ccc.ccc_kdf.h.html"><code>modules/woz_uwb/src/ccc/ccc_kdf.h</code></a></p>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="put_be32">
+<h3><span class="kindb" title="function">F</span><code>static void <b>put_be32</b>(uint8_t *out, uint32_t v)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:20</div>
+<p>Store v big-endian into out (4 bytes).</p>
+<dl class="params"><dt><code>out</code></dt><dd>Destination buffer for the 4 big-endian bytes.</dd><dt><code>v</code></dt><dd>Value to store.</dd></dl>
+<div class="xref">called by <code>ccc_derive_sts_v</code>, <code>ccc_derive_uad</code>, <code>kdf108_block</code>, <code>sp0_nonce</code></div>
+</section>
+<section class="api-entry" id="get_be32">
+<h3><span class="kindb" title="function">F</span><code>static uint32_t <b>get_be32</b>(const uint8_t *in)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:33</div>
+<p>Load a big-endian uint32 from in (4 bytes).</p>
+<dl class="params"><dt><code>in</code></dt><dd>Source buffer holding 4 big-endian bytes.</dd><dt>returns</dt><dd>The decoded uint32 value.</dd></dl>
+<div class="xref">called by <code>ccc_derive_sts_v</code></div>
+</section>
+<section class="api-entry" id="xor_bytes">
+<h3><span class="kindb" title="function">F</span><code>static void <b>xor_bytes</b>(uint8_t *out, const uint8_t *a, const uint8_t *b, size_t n)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:46</div>
+<p>XOR n bytes: out = a ^ b (out may alias a).</p>
+<dl class="params"><dt><code>out</code></dt><dd>Destination buffer for the XOR result.</dd><dt><code>a</code></dt><dd>First input buffer.</dd><dt><code>b</code></dt><dd>Second input buffer.</dd><dt><code>n</code></dt><dd>Number of bytes to XOR.</dd></dl>
+<div class="xref">called by <code>ccc_aes_cmac</code>, <code>ccc_sp0_decrypt</code>, <code>ccc_sp0_encrypt</code>, <code>sp0_cbc_mac</code>, <code>sp0_ctr</code></div>
+</section>
+<section class="api-entry" id="block_lshift1">
+<h3><span class="kindb" title="function">F</span><code>static uint8_t <b>block_lshift1</b>(const uint8_t in[AES_BLOCK_LEN], uint8_t out[AES_BLOCK_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:61</div>
+<p>One-bit left shift of a 128-bit big-endian block.</p>
+<dl class="params"><dt><code>in</code></dt><dd>Input 128-bit block.</dd><dt><code>out</code></dt><dd>Output buffer receiving the shifted block.</dd><dt>returns</dt><dd>The bit shifted out of the most significant bit position.</dd></dl>
+<div class="xref">called by <code>cmac_subkey</code></div>
+</section>
+<section class="api-entry" id="cmac_subkey">
+<h3><span class="kindb" title="function">F</span><code>static void <b>cmac_subkey</b>(const uint8_t l[AES_BLOCK_LEN], uint8_t out[AES_BLOCK_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:77</div>
+<p>CMAC subkey derivation: K = (L &lt;&lt; 1), XOR Rb if the top bit was set.</p>
+<dl class="params"><dt><code>l</code></dt><dd>Input 128-bit value (L, or a previously derived subkey).</dd><dt><code>out</code></dt><dd>Output buffer receiving the derived subkey.</dd></dl>
+<div class="xref">called by <code>ccc_aes_cmac</code> &nbsp;·&nbsp; calls <code>block_lshift1</code></div>
+</section>
+<section class="api-entry" id="ccc_aes_cmac">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_aes_cmac</b>(const uint8_t *key, size_t key_bits, const uint8_t *msg, size_t msg_len, uint8_t tag[CCC_CMAC_TAG_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:88</div>
+<p>AES-CMAC authentication tag over message.</p>
+<div class="xref">called by <code>ccc_derive_salted_hash</code>, <code>kdf108_block</code> &nbsp;·&nbsp; calls <code>cmac_subkey</code>, <code>xor_bytes</code></div>
+</section>
+<section class="api-entry" id="kdf108_block">
+<h3><span class="kindb" title="function">F</span><code>static int <b>kdf108_block</b>(const uint8_t *kdk, size_t kdk_bits, uint32_t counter, const uint8_t *label, size_t label_len, const uint8_t *context, size_t ctx_len, uint32_t l_bits, uint8_t out[AES_BLOCK_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:163</div>
+<p>One counter-mode CMAC block: CMAC(kdk, counter || label || 0x00 || context || l_bits).</p>
+<dl class="params"><dt><code>kdk</code></dt><dd>Key-derivation key.</dd><dt><code>kdk_bits</code></dt><dd>kdk size in bits.</dd><dt><code>counter</code></dt><dd>Block counter value.</dd><dt><code>label</code></dt><dd>KDF label bytes.</dd><dt><code>label_len</code></dt><dd>Length of label in bytes.</dd><dt><code>context</code></dt><dd>KDF context bytes (may be omitted if ctx_len is 0).</dd><dt><code>ctx_len</code></dt><dd>Length of context in bytes.</dd><dt><code>l_bits</code></dt><dd>Requested output length in bits, encoded into the KDF input.</dd><dt><code>out</code></dt><dd>Output buffer receiving the CMAC block.</dd><dt>returns</dt><dd>0 on success; -E2BIG if the assembled KDF input exceeds the internal buffer; propagated CMAC error otherwise.</dd></dl>
+<div class="xref">called by <code>ccc_derive_mupsk1</code>, <code>ccc_derive_mupsk2</code>, <code>ccc_derive_mursk</code>, <code>ccc_derive_salted_hash</code>, <code>ccc_derive_uad</code>, <code>ccc_derive_ursk_kt</code>, <code>derive_dkey</code> &nbsp;·&nbsp; calls <code>ccc_aes_cmac</code>, <code>put_be32</code></div>
+</section>
+<section class="api-entry" id="ccc_derive_mupsk1">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_derive_mupsk1</b>(const uint8_t ursk[CCC_URSK_LEN], uint8_t out[CCC_MUPSK1_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:217</div>
+<p>Derive mUPSK1, the SP0 Pre-POLL AES-CCM* key.</p>
+<div class="xref">calls <code>kdf108_block</code></div>
+</section>
+<section class="api-entry" id="ccc_derive_mupsk2">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_derive_mupsk2</b>(const uint8_t ursk[CCC_URSK_LEN], uint8_t out[CCC_MUPSK2_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:229</div>
+<p>Derive mUPSK2, the seed for the UWB-address KDF.</p>
+<div class="xref">calls <code>kdf108_block</code></div>
+</section>
+<section class="api-entry" id="ccc_derive_mursk">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_derive_mursk</b>(const uint8_t ursk[CCC_URSK_LEN], uint8_t out[CCC_MURSK_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:249</div>
+<p>Derive mURSK, the ranging-key seed feeding URSK_KT.</p>
+<div class="xref">calls <code>kdf108_block</code></div>
+</section>
+<section class="api-entry" id="ccc_derive_salted_hash">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_derive_salted_hash</b>(const uint8_t ursk[CCC_URSK_LEN], const uint8_t *ranging_config, size_t rc_len, uint8_t out[CCC_SALTED_HASH_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:268</div>
+<p>Derive SaltedHash from the serialized ranging configuration.</p>
+<div class="xref">calls <code>ccc_aes_cmac</code>, <code>kdf108_block</code></div>
+</section>
+<section class="api-entry" id="ccc_derive_ursk_kt">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_derive_ursk_kt</b>(const uint8_t mursk[CCC_MURSK_LEN], uint32_t sts_index, uint8_t out[CCC_URSK_KT_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:294</div>
+<p>Derive URSK_KT, generated once per ranging cycle and keyed by the STS index.</p>
+<div class="xref">calls <code>kdf108_block</code></div>
+</section>
+<section class="api-entry" id="derive_dkey">
+<h3><span class="kindb" title="function">F</span><code>static int <b>derive_dkey</b>(const uint8_t ursk_kt[CCC_URSK_KT_LEN], const uint8_t label[4], const uint8_t salted_hash[CCC_SALTED_HASH_LEN], uint8_t out[CCC_DURSK_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:326</div>
+<p>Shared dURSK/dUDSK derivation body: CMAC(URSK_KT, ctr1 || label || 0x00 || SaltedHash || 0x000000 || 0x80).</p>
+<dl class="params"><dt><code>ursk_kt</code></dt><dd>URSK_KT input key for the current ranging cycle.</dd><dt><code>label</code></dt><dd>4-byte KDF label distinguishing dURSK from dUDSK.</dd><dt><code>salted_hash</code></dt><dd>SaltedHash of the ranging configuration.</dd><dt><code>out</code></dt><dd>Output buffer receiving the derived key.</dd><dt>returns</dt><dd>Result of the underlying KDF block derivation.</dd></dl>
+<div class="xref">called by <code>ccc_derive_dudsk</code>, <code>ccc_derive_dursk</code> &nbsp;·&nbsp; calls <code>kdf108_block</code></div>
+</section>
+<section class="api-entry" id="ccc_derive_dursk">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_derive_dursk</b>(const uint8_t ursk_kt[CCC_URSK_KT_LEN], const uint8_t salted_hash[CCC_SALTED_HASH_LEN], uint8_t out[CCC_DURSK_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:340</div>
+<p>Derive dURSK, per-cycle STS key material.</p>
+<div class="xref">calls <code>derive_dkey</code></div>
+</section>
+<section class="api-entry" id="ccc_derive_dudsk">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_derive_dudsk</b>(const uint8_t ursk_kt[CCC_URSK_KT_LEN], const uint8_t salted_hash[CCC_SALTED_HASH_LEN], uint8_t out[CCC_DUDSK_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:352</div>
+<p>Derive dUDSK, per-cycle SP0 timestamp-frame key.</p>
+<div class="xref">calls <code>derive_dkey</code></div>
+</section>
+<section class="api-entry" id="ccc_derive_sts_v">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_derive_sts_v</b>(const uint8_t salted_hash[CCC_SALTED_HASH_LEN], uint32_t sts_index, uint8_t out[CCC_STS_V_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:364</div>
+<p>Derive STS-V (phyHrpUwbStsV), the per-PPDU STS IV for the DW3000.</p>
+<div class="xref">calls <code>get_be32</code>, <code>put_be32</code></div>
+</section>
+<section class="api-entry" id="ccc_derive_uad">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_derive_uad</b>(const uint8_t mupsk2[CCC_MUPSK2_LEN], uint32_t sts_index0, uint8_t out[CCC_UAD_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:380</div>
+<p>Derive UAD, the raw UWB-address derivation output.</p>
+<div class="xref">calls <code>kdf108_block</code>, <code>put_be32</code></div>
+</section>
+<section class="api-entry" id="remap_if_reserved">
+<h3><span class="kindb" title="function">F</span><code>static void <b>remap_if_reserved</b>(uint8_t *addr, size_t len)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:399</div>
+<p>If addr is a reserved all-ones value (0xFFFF/0xFFFE for 2 bytes, 0xFF..FF for other lengths), clear its top bit.</p>
+<dl class="params"><dt><code>addr</code></dt><dd>Address buffer checked and modified in place.</dd><dt><code>len</code></dt><dd>Length of addr in bytes.</dd></dl>
+<div class="xref">called by <code>ccc_uad_addresses</code></div>
+</section>
+<section class="api-entry" id="ccc_uad_addresses">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_uad_addresses</b>(const uint8_t uad[CCC_UAD_LEN], uint8_t keysource[CCC_KEYSOURCE_LEN], uint8_t dest_short_addr[CCC_DEST_SHORT_ADDR_LEN], uint8_t src_long_addr[CCC_SRC_LONG_ADDR_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:423</div>
+<p>Split UAD into the UWB addresses (KeySource, destination short address, source long address).</p>
+<div class="xref">calls <code>remap_if_reserved</code></div>
+</section>
+<section class="api-entry" id="sp0_nonce">
+<h3><span class="kindb" title="function">F</span><code>static void <b>sp0_nonce</b>(uint8_t nonce[CCC_SP0_NONCE_LEN], const uint8_t src_long_addr[CCC_SRC_LONG_ADDR_LEN], uint32_t frame_counter)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:467</div>
+<p>Build the SP0 CCM* nonce: SrcLongAddr || FrameCounter(BE) || SecLevel.</p>
+<dl class="params"><dt><code>nonce</code></dt><dd>Output buffer receiving the assembled nonce.</dd><dt><code>src_long_addr</code></dt><dd>Source long address included in the nonce.</dd><dt><code>frame_counter</code></dt><dd>Frame counter encoded big-endian into the nonce.</dd></dl>
+<div class="xref">called by <code>ccc_sp0_decrypt</code>, <code>ccc_sp0_encrypt</code> &nbsp;·&nbsp; calls <code>put_be32</code></div>
+</section>
+<section class="api-entry" id="sp0_cbc_mac">
+<h3><span class="kindb" title="function">F</span><code>static int <b>sp0_cbc_mac</b>(const uint8_t key[CCC_MUPSK1_LEN], const uint8_t nonce[CCC_SP0_NONCE_LEN], const uint8_t *mhr, size_t mhr_len, const uint8_t *payload, size_t payload_len, uint8_t tag[AES_BLOCK_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:487</div>
+<p>Compute the CCM* CBC-MAC over B0 || l(a)||MHR || payload, zero-padded per block.</p>
+<dl class="params"><dt><code>key</code></dt><dd>AES-128 key used for the CBC-MAC.</dd><dt><code>nonce</code></dt><dd>SP0 CCM* nonce for this frame.</dd><dt><code>mhr</code></dt><dd>MAC header bytes forming the additional authenticated data (may be omitted if mhr_len is 0).</dd><dt><code>mhr_len</code></dt><dd>Length of mhr in bytes.</dd><dt><code>payload</code></dt><dd>Payload bytes to authenticate.</dd><dt><code>payload_len</code></dt><dd>Length of payload in bytes.</dd><dt><code>tag</code></dt><dd>Output buffer receiving the computed CBC-MAC tag.</dd><dt>returns</dt><dd>0 on success; propagated error from AES encryption otherwise.</dd></dl>
+<div class="xref">called by <code>ccc_sp0_decrypt</code>, <code>ccc_sp0_encrypt</code> &nbsp;·&nbsp; calls <code>xor_bytes</code></div>
+</section>
+<section class="api-entry" id="sp0_ctr">
+<h3><span class="kindb" title="function">F</span><code>static int <b>sp0_ctr</b>(const uint8_t key[CCC_MUPSK1_LEN], const uint8_t nonce[CCC_SP0_NONCE_LEN], const uint8_t *in, size_t len, uint8_t *out, uint8_t s0[AES_BLOCK_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:557</div>
+<p>Apply CCM* CTR mode: emit the S0 keystream block, then XOR keystream S1.. over in to out (symmetric encrypt/decrypt).</p>
+<dl class="params"><dt><code>key</code></dt><dd>AES-128 key used for the CTR keystream.</dd><dt><code>nonce</code></dt><dd>SP0 CCM* nonce for this frame.</dd><dt><code>in</code></dt><dd>Input bytes to transform.</dd><dt><code>len</code></dt><dd>Length of in/out in bytes.</dd><dt><code>out</code></dt><dd>Output buffer receiving the transformed bytes.</dd><dt><code>s0</code></dt><dd>Output buffer receiving the S0 keystream block (used for MIC encryption).</dd><dt>returns</dt><dd>0 on success; propagated error from AES encryption otherwise.</dd></dl>
+<div class="xref">called by <code>ccc_sp0_decrypt</code>, <code>ccc_sp0_encrypt</code> &nbsp;·&nbsp; calls <code>xor_bytes</code></div>
+</section>
+<section class="api-entry" id="sp0_ct_diff">
+<h3><span class="kindb" title="function">F</span><code>static int <b>sp0_ct_diff</b>(const uint8_t *a, const uint8_t *b, size_t n)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:590</div>
+<p>Constant-time inequality: 0 iff the @p n bytes are equal.</p>
+<div class="xref">called by <code>ccc_sp0_decrypt</code></div>
+</section>
+<section class="api-entry" id="ccc_sp0_encrypt">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_sp0_encrypt</b>(const uint8_t key[CCC_MUPSK1_LEN], const uint8_t src_long_addr[CCC_SRC_LONG_ADDR_LEN], uint32_t frame_counter, const uint8_t *mhr, size_t mhr_len, const uint8_t *payload, size_t payload_len, uint8_t *ciphertext_out, uint8_t mic_out[CCC_SP0_MIC_LEN])</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:600</div>
+<p>Encrypt + authenticate an SP0 data frame (AES-CCM*, ENC-MIC-64).</p>
+<div class="xref">calls <code>sp0_cbc_mac</code>, <code>sp0_ctr</code>, <code>sp0_nonce</code>, <code>xor_bytes</code></div>
+</section>
+<section class="api-entry" id="ccc_sp0_decrypt">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_sp0_decrypt</b>(const uint8_t key[CCC_MUPSK1_LEN], const uint8_t src_long_addr[CCC_SRC_LONG_ADDR_LEN], uint32_t frame_counter, const uint8_t *mhr, size_t mhr_len, const uint8_t *ciphertext, size_t ciphertext_len, const uint8_t mic[CCC_SP0_MIC_LEN], uint8_t *payload_out)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_kdf.c:632</div>
+<p>Decrypt + verify an SP0 data frame; zeroes plaintext and returns -EBADMSG on MIC failure.</p>
+<div class="xref">calls <code>sp0_cbc_mac</code>, <code>sp0_ct_diff</code>, <code>sp0_ctr</code>, <code>sp0_nonce</code>, <code>xor_bytes</code></div>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

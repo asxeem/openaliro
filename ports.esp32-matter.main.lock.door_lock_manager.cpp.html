@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ports/esp32-matter/main/lock/door_lock_manager.cpp</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="ports.esp32-matter.main.lock.door_lock_manager.cpp">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>ports/esp32-matter/main/lock</span><span class="sep">/</span><b>door_lock_manager.cpp</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">door_lock_manager.cpp</h1><p class="lede">BoltLockManager: Matter door lock cluster backing store for the ESP32 port. Implements the DoorLock cluster&#x27;s user, cred…</p><div class="metarow"><span><code>ports/esp32-matter/main/lock/door_lock_manager.cpp</code></span><span>26 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>BoltLockManager: Matter door lock cluster backing store for the ESP32 port. Implements the DoorLock cluster&#x27;s user, credential, and weekday/yearday/holiday schedule get/set callbacks over fixed-size in-memory tables mirrored to NVM (ESP32Config blobs), plus lock/unlock actuation and PIN validation. Cluster indices are one-indexed by Matter and decremented internally before bounds-checking against this platform&#x27;s fixed capacity limits.</p>
+<p class="chips">depends on <a href="ports.esp32-matter.main.lock.door_lock_manager.h.html"><code>ports/esp32-matter/main/lock/door_lock_manager.h</code></a></p>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="ReadOptionalConfigBlob">
+<h3><span class="kindb" title="function">F</span><code>bool <b>ReadOptionalConfigBlob</b>(ESP32Config::Key key, uint8_t *data, size_t dataLen, bool *outStale)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:39</div>
+<p>Read an optional fixed-size config blob into data. Treats &quot;config not found&quot; as success (the blob
+is optional and data is left untouched), logs and returns false on any other read error.
+A size mismatch means the blob was written by a build whose record layout differs from this one
+(for example EmberAfPluginDoorLockUserInfo growing across a CHIP update). That is a stale on-disk
+format, not a read failure: the partially-filled buffer is unusable, so *outStale is set and the
+caller reinitialises and rewrites every table. Reporting it as a failure instead would fail
+InitLockState() on every boot with no path back to a good state.</p>
+<div class="xref">called by <code>ReadConfigValues</code></div>
+</section>
+<section class="api-entry" id="WriteConfigBlob">
+<h3><span class="kindb" title="function">F</span><code>bool <b>WriteConfigBlob</b>(ESP32Config::Key key, const uint8_t *data, size_t dataLen)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:59</div>
+<p>Write a fixed-size config blob to persistent storage. Logs and returns false on write failure.</p>
+<div class="xref">called by <code>ReadConfigValues</code>, <code>SetCredential</code>, <code>SetHolidaySchedule</code>, <code>SetUser</code>, <code>SetWeekdaySchedule</code>, <code>SetYeardaySchedule</code></div>
+</section>
+<section class="api-entry" id="Init">
+<h3><span class="kindb" title="function">F</span><code>CHIP_ERROR BoltLockManager::<b>Init</b>(DataModel::Nullable&lt;DoorLock::DlLockState&gt; state, LockParam lockParam)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:75</div>
+<p>Validate the configured lock parameters against this platform&#x27;s fixed capacity limits
+(users, credentials per user, weekday/yearday schedules per user, holiday schedules) and store
+them. Returns CHIP_ERROR_NO_MEMORY if any configured count exceeds its platform maximum, otherwise
+CHIP_NO_ERROR. The state parameter is accepted but unused.</p>
+<div class="xref">called by <code>InitLockState</code></div>
+</section>
+<section class="api-entry" id="IsValidUserIndex">
+<h3><span class="kindb" title="function">F</span><code>bool BoltLockManager::<b>IsValidUserIndex</b>(uint16_t userIndex)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:113</div>
+<p>Check whether userIndex is a valid user index (less than kMaxUsers).</p>
+<div class="xref">called by <code>GetUser</code>, <code>GetWeekdaySchedule</code>, <code>GetYeardaySchedule</code>, <code>SetUser</code>, <code>SetWeekdaySchedule</code>, <code>SetYeardaySchedule</code></div>
+</section>
+<section class="api-entry" id="IsValidCredentialIndex">
+<h3><span class="kindb" title="function">F</span><code>bool BoltLockManager::<b>IsValidCredentialIndex</b>(uint16_t credentialIndex, CredentialTypeEnum type)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:120</div>
+<p>Check whether credentialIndex is valid for the given credential type. Programming PIN credentials
+require index 0; all other types require an index less than kMaxCredentialsPerUser.</p>
+<div class="xref">called by <code>GetCredential</code>, <code>SetCredential</code>, <code>UserIndexForAliroCredential</code></div>
+</section>
+<section class="api-entry" id="CredentialStorageIndex">
+<h3><span class="kindb" title="function">F</span><code>uint16_t BoltLockManager::<b>CredentialStorageIndex</b>(uint16_t credentialIndex, CredentialTypeEnum type) const</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:130</div>
+<p>Compute the flat storage index for a credential of the given type and per-user index, packing
+type and index into a single slot number (type * kMaxCredentialsPerUser + credentialIndex).</p>
+<div class="xref">called by <code>GetCredential</code>, <code>SetCredential</code>, <code>UserIndexForAliroCredential</code>, <code>ValidatePIN</code></div>
+</section>
+<section class="api-entry" id="IsValidWeekdayScheduleIndex">
+<h3><span class="kindb" title="function">F</span><code>bool BoltLockManager::<b>IsValidWeekdayScheduleIndex</b>(uint8_t scheduleIndex)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:137</div>
+<p>Check whether scheduleIndex is a valid weekday schedule index (less than
+kMaxWeekdaySchedulesPerUser).</p>
+<div class="xref">called by <code>GetWeekdaySchedule</code>, <code>SetWeekdaySchedule</code></div>
+</section>
+<section class="api-entry" id="IsValidYeardayScheduleIndex">
+<h3><span class="kindb" title="function">F</span><code>bool BoltLockManager::<b>IsValidYeardayScheduleIndex</b>(uint8_t scheduleIndex)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:144</div>
+<p>Check whether scheduleIndex is a valid yearday schedule index (less than
+kMaxYeardaySchedulesPerUser).</p>
+<div class="xref">called by <code>GetYeardaySchedule</code>, <code>SetYeardaySchedule</code></div>
+</section>
+<section class="api-entry" id="IsValidHolidayScheduleIndex">
+<h3><span class="kindb" title="function">F</span><code>bool BoltLockManager::<b>IsValidHolidayScheduleIndex</b>(uint8_t scheduleIndex)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:150</div>
+<p>Check whether scheduleIndex is a valid holiday schedule index (less than kMaxHolidaySchedules).</p>
+<div class="xref">called by <code>GetHolidaySchedule</code>, <code>SetHolidaySchedule</code></div>
+</section>
+<section class="api-entry" id="ReadConfigValues">
+<h3><span class="kindb" title="function">F</span><code>bool BoltLockManager::<b>ReadConfigValues</b>()</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:164</div>
+<p>Loads all persisted door-lock state (users, credentials, names, credential data, per-user credential links, weekday/yearday/holiday schedules) from NVM into the in-memory tables.
+Detects a stale database, either by a blob whose stored size does not match this build&#x27;s table
+size or by credential slot 0 holding a non-programming-PIN type (an old mixed-type layout); in
+either case clears every in-memory table and rewrites all blobs to NVM.
+Returns true if all blob reads (and, if triggered, all stale-format rewrites) succeed; false if any read or rewrite fails.
+Every blob is sized by its own array via sizeof, never by the runtime LockParams counts. The
+counts come from Matter attributes and can differ from the compiled capacity, which would make
+the read length disagree with the write length and re-flag the blob as stale on every boot.</p>
+<div class="xref">called by <code>InitLockState</code> &nbsp;·&nbsp; calls <code>ReadOptionalConfigBlob</code>, <code>WriteConfigBlob</code></div>
+</section>
+<section class="api-entry" id="Lock">
+<h3><span class="kindb" title="function">F</span><code>void BoltLockManager::<b>Lock</b>(EndpointId endpointId, OperationSourceEnum source, const DataModel::Nullable&lt;uint16_t&gt; &amp;userIndex)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:228</div>
+<p>Lock the bolt on the given endpoint, updating the Matter door lock cluster state and the status
+LED. Records source as the cause of the lock transition.
+userIndex: one-indexed user the operation is attributed to in the LockOperation event, or null
+when the operation cannot be traced to a stored user.</p>
+</section>
+<section class="api-entry" id="Unlock">
+<h3><span class="kindb" title="function">F</span><code>void BoltLockManager::<b>Unlock</b>(EndpointId endpointId, OperationSourceEnum source, const DataModel::Nullable&lt;uint16_t&gt; &amp;userIndex)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:238</div>
+<p>Unlock the bolt on the given endpoint, updating the Matter door lock cluster state and the status
+LED. Drives the LED&#x27;s Aliro-specific indication when source is kAliro.
+userIndex: one-indexed user the operation is attributed to in the LockOperation event, or null
+when the operation cannot be traced to a stored user.</p>
+</section>
+<section class="api-entry" id="UserIndexForAliroCredential">
+<h3><span class="kindb" title="function">F</span><code>uint16_t BoltLockManager::<b>UserIndexForAliroCredential</b>(const ByteSpan &amp;credentialData)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:251</div>
+<p>Find the user that owns a given Aliro endpoint key, so an approach unlock can be attributed to a
+person in the LockOperation event rather than reported anonymously.
+credentialData: the credential public key the reader authenticated (uncompressed P-256, 65 bytes).
+Scans occupied users&#x27; credential links for an Aliro endpoint-key credential whose stored bytes
+match, comparing against the mCredentialData backing store directly (the ByteSpan in
+mLockCredentials is restored from NVM with a stale pointer after a reboot).
+Returns the one-indexed user index, or 0 if no occupied user owns a matching credential.</p>
+<div class="xref">calls <code>CredentialStorageIndex</code>, <code>IsValidCredentialIndex</code></div>
+</section>
+<section class="api-entry" id="GetUser">
+<h3><span class="kindb" title="function">F</span><code>bool BoltLockManager::<b>GetUser</b>(EndpointId endpointId, uint16_t userIndex, EmberAfPluginDoorLockUserInfo &amp;user)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:284</div>
+<p>Looks up a stored user by index for the Matter door lock cluster.
+userIndex: one-indexed by the caller; decremented here and validated against kMaxUsers.
+user: output; on an available (unoccupied) slot only userStatus is set; on an occupied slot name, credentials, unique ID, type, credential rule, and creator/modifier are also filled in, with creation/modification source always reported as Matter.
+Returns true if userIndex is valid, whether or not the slot is occupied; returns false only if userIndex (0 or out of range) is invalid.</p>
+<div class="xref">calls <code>IsValidUserIndex</code></div>
+</section>
+<section class="api-entry" id="SetUser">
+<h3><span class="kindb" title="function">F</span><code>bool BoltLockManager::<b>SetUser</b>(EndpointId endpointId, uint16_t userIndex, FabricIndex creator, FabricIndex modifier, const CharSpan &amp;userName, uint32_t uniqueId, UserStatusEnum userStatus, UserTypeEnum usertype, CredentialRuleEnum credentialRule, const CredentialStruct * credentials, size_t totalCredentials)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:328</div>
+<p>Stores a user record by index for the Matter door lock cluster, persisting it and its credential links to NVM.
+userIndex: one-indexed by the caller; decremented here and validated against kMaxUsers.
+creator, modifier: fabric indices recorded as the user&#x27;s creator and last modifier.
+userName: must not exceed DOOR_LOCK_MAX_USER_NAME_SIZE.
+credentials, totalCredentials: credential list to associate with the user; totalCredentials must not exceed LockParams.numberOfCredentialsPerUser.
+Returns false if userIndex is invalid, userName is too long, totalCredentials is too large, or the NVM write fails; true on success.</p>
+<div class="xref">calls <code>IsValidUserIndex</code>, <code>WriteConfigBlob</code></div>
+</section>
+<section class="api-entry" id="GetCredential">
+<h3><span class="kindb" title="function">F</span><code>bool BoltLockManager::<b>GetCredential</b>(EndpointId endpointId, uint16_t credentialIndex, CredentialTypeEnum credentialType, EmberAfPluginDoorLockCredentialInfo &amp;credential)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:393</div>
+<p>Looks up a stored credential by index and type for the Matter door lock cluster.
+Programming-PIN indices are used as-is; all other credential types are one-indexed by the caller and decremented here.
+endpointId: unused, present for cluster callback signature compatibility.
+credentialIndex: caller-supplied index; must pass IsValidCredentialIndex after the type-specific decrement.
+credentialType: type of credential being looked up.
+credential: output; on an available (unoccupied) slot only status is set; on an occupied slot type, data, and creator/modifier are also filled in, with creation/modification source always reported as Matter.
+Returns true if credentialIndex is valid, whether or not the slot is occupied; returns false only if credentialIndex is invalid for the given type.</p>
+<div class="xref">calls <code>CredentialStorageIndex</code>, <code>IsValidCredentialIndex</code></div>
+</section>
+<section class="api-entry" id="SetCredential">
+<h3><span class="kindb" title="function">F</span><code>bool BoltLockManager::<b>SetCredential</b>(EndpointId endpointId, uint16_t credentialIndex, FabricIndex creator, FabricIndex modifier, DlCredentialStatus credentialStatus, CredentialTypeEnum credentialType, const ByteSpan &amp;credentialData)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:438</div>
+<p>Stores a credential by index and type for the Matter door lock cluster, persisting it to NVM.
+Programming-PIN indices are used as-is; all other credential types are one-indexed by the caller and decremented here.
+endpointId: unused, present for cluster callback signature compatibility.
+credentialIndex: caller-supplied index; must pass IsValidCredentialIndex after the type-specific decrement.
+creator, modifier: fabric indices recorded as the credential&#x27;s creator and last modifier.
+credentialStatus: status to store for this credential slot.
+credentialType: type of credential being stored.
+credentialData: raw credential bytes; must not exceed kMaxCredentialSize.
+Returns true on success; false if credentialIndex is invalid, credentialData exceeds kMaxCredentialSize, or the NVM write fails.</p>
+<div class="xref">calls <code>CredentialStorageIndex</code>, <code>IsValidCredentialIndex</code>, <code>WriteConfigBlob</code></div>
+</section>
+<section class="api-entry" id="GetWeekdaySchedule">
+<h3><span class="kindb" title="function">F</span><code>DlStatus BoltLockManager::<b>GetWeekdaySchedule</b>(EndpointId endpointId, uint8_t weekdayIndex, uint16_t userIndex, EmberAfPluginDoorLockWeekDaySchedule &amp;schedule)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:478</div>
+<p>Looks up a stored weekday schedule by weekday index and user index for the Matter door lock cluster.
+weekdayIndex, userIndex: both one-indexed by the caller; decremented here and validated against their respective max counts.
+schedule: output, populated only when the slot is occupied.
+Returns DlStatus::kFailure if either index is 0 or out of range, kNotFound if the slot is unoccupied, kSuccess otherwise.</p>
+<div class="xref">calls <code>IsValidUserIndex</code>, <code>IsValidWeekdayScheduleIndex</code></div>
+</section>
+<section class="api-entry" id="SetWeekdaySchedule">
+<h3><span class="kindb" title="function">F</span><code>DlStatus BoltLockManager::<b>SetWeekdaySchedule</b>(EndpointId endpointId, uint8_t weekdayIndex, uint16_t userIndex, DlScheduleStatus status, DaysMaskMap daysMask, uint8_t startHour, uint8_t startMinute, uint8_t endHour, uint8_t endMinute)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:504</div>
+<p>Stores a weekday schedule by weekday index and user index for the Matter door lock cluster, persisting it to NVM.
+weekdayIndex, userIndex: both one-indexed by the caller; decremented here and validated against their respective max counts.
+status, daysMask, startHour, startMinute, endHour, endMinute: schedule fields written to the slot.
+Returns DlStatus::kFailure if either index is 0, out of range, or the NVM write fails; kSuccess otherwise.</p>
+<div class="xref">calls <code>IsValidUserIndex</code>, <code>IsValidWeekdayScheduleIndex</code>, <code>WriteConfigBlob</code></div>
+</section>
+<section class="api-entry" id="GetYeardaySchedule">
+<h3><span class="kindb" title="function">F</span><code>DlStatus BoltLockManager::<b>GetYeardaySchedule</b>(EndpointId endpointId, uint8_t yearDayIndex, uint16_t userIndex, EmberAfPluginDoorLockYearDaySchedule &amp;schedule)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:538</div>
+<p>Looks up a stored yearday schedule by yearday index and user index for the Matter door lock cluster.
+yearDayIndex, userIndex: both one-indexed by the caller; decremented here and validated against their respective max counts.
+schedule: output, populated only when the slot is occupied.
+Returns DlStatus::kFailure if either index is 0 or out of range, kNotFound if the slot is unoccupied, kSuccess otherwise.</p>
+<div class="xref">calls <code>IsValidUserIndex</code>, <code>IsValidYeardayScheduleIndex</code></div>
+</section>
+<section class="api-entry" id="SetYeardaySchedule">
+<h3><span class="kindb" title="function">F</span><code>DlStatus BoltLockManager::<b>SetYeardaySchedule</b>(EndpointId endpointId, uint8_t yearDayIndex, uint16_t userIndex, DlScheduleStatus status, uint32_t localStartTime, uint32_t localEndTime)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:564</div>
+<p>Stores a yearday schedule by yearday index and user index for the Matter door lock cluster, persisting it to NVM.
+yearDayIndex, userIndex: both one-indexed by the caller; decremented here and validated against their respective max counts.
+status, localStartTime, localEndTime: schedule fields written to the slot.
+Returns DlStatus::kFailure if either index is 0, out of range, or the NVM write fails; kSuccess otherwise.</p>
+<div class="xref">calls <code>IsValidUserIndex</code>, <code>IsValidYeardayScheduleIndex</code>, <code>WriteConfigBlob</code></div>
+</section>
+<section class="api-entry" id="GetHolidaySchedule">
+<h3><span class="kindb" title="function">F</span><code>DlStatus BoltLockManager::<b>GetHolidaySchedule</b>(EndpointId endpointId, uint8_t holidayIndex, EmberAfPluginDoorLockHolidaySchedule &amp;schedule)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:594</div>
+<p>Looks up a stored holiday schedule by index for the Matter door lock cluster.
+holidayIndex: one-indexed by the caller; decremented here and validated against kMaxHolidaySchedules.
+schedule: output, populated only when the slot is occupied.
+Returns DlStatus::kFailure if holidayIndex is 0 or out of range, kNotFound if the slot is unoccupied, kSuccess otherwise.</p>
+<div class="xref">calls <code>IsValidHolidayScheduleIndex</code></div>
+</section>
+<section class="api-entry" id="SetHolidaySchedule">
+<h3><span class="kindb" title="function">F</span><code>DlStatus BoltLockManager::<b>SetHolidaySchedule</b>(EndpointId endpointId, uint8_t holidayIndex, DlScheduleStatus status, uint32_t localStartTime, uint32_t localEndTime, OperatingModeEnum operatingMode)</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:617</div>
+<p>Stores a holiday schedule by index for the Matter door lock cluster, persisting it to NVM.
+holidayIndex: one-indexed by the caller; decremented here and validated against kMaxHolidaySchedules.
+status, localStartTime, localEndTime, operatingMode: schedule fields written to the slot.
+Returns DlStatus::kFailure if holidayIndex is 0, out of range, or the NVM write fails; kSuccess otherwise.</p>
+<div class="xref">calls <code>IsValidHolidayScheduleIndex</code>, <code>WriteConfigBlob</code></div>
+</section>
+<section class="api-entry" id="lockStateToString">
+<h3><span class="kindb" title="function">F</span><code>const char * BoltLockManager::<b>lockStateToString</b>(DlLockState lockState) const</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:643</div>
+<p>Return a human-readable string for a DlLockState value (&quot;Not Fully Locked&quot;, &quot;Locked&quot;, &quot;Unlocked&quot;,
+&quot;Unlatched&quot;), or &quot;Unknown&quot; for kUnknownEnumValue or any unrecognized value.</p>
+</section>
+<section class="api-entry" id="ValidatePIN">
+<h3><span class="kindb" title="function">F</span><code>bool BoltLockManager::<b>ValidatePIN</b>(EndpointId endpointId, const Optional&lt;ByteSpan&gt; &amp;pin, OperationErrorEnum &amp;err) const</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:667</div>
+<p>Validates an optional PIN against the door lock&#x27;s stored PIN credentials for a remote operation.
+If no PIN is supplied, succeeds unless the RequirePINforRemoteOperation attribute is true (defaults to not required if the attribute read fails). If a PIN is supplied, succeeds if it exact-matches any occupied PIN credential slot.
+endpointId: endpoint whose RequirePINforRemoteOperation attribute is checked.
+pin: PIN to validate, or empty to check whether a PIN is required.
+err: output; set to OperationErrorEnum::kInvalidCredential when a supplied PIN matches no stored credential.
+Returns true if no PIN was required or a match was found; false otherwise.</p>
+<div class="xref">calls <code>CredentialStorageIndex</code></div>
+</section>
+<section class="api-entry" id="InitLockState">
+<h3><span class="kindb" title="function">F</span><code>CHIP_ERROR BoltLockManager::<b>InitLockState</b>()</code></h3>
+<div class="src">ports/esp32-matter/main/lock/door_lock_manager.cpp:707</div>
+<p>Initializes the door lock&#x27;s runtime state: reads the initial lock state and per-endpoint user/credential capacity attributes (falling back to 5 credentials-per-user and 10 users on read failure), initializes BoltLockMgr with those limits, then loads persisted state from NVM.
+Returns CHIP_NO_ERROR on success; the error from BoltLockMgr().Init() if lock-parameter validation fails; CHIP_ERROR_PERSISTED_STORAGE_VALUE_NOT_FOUND if loading persisted config fails.</p>
+<div class="xref">calls <code>Init</code>, <code>ReadConfigValues</code></div>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

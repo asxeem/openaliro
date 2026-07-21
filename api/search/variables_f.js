@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['r1_5fantennas_0',['r1_antennas',['../structaliro__uwb__adapter__reader__config.html#a259c71e2831128f06666df6e444f4a2e',1,'aliro_uwb_adapter_reader_config']]],
+  ['r2_5fantennas_1',['r2_antennas',['../structaliro__uwb__adapter__reader__config.html#ab6fbb741527139be1bae47fcbbc921fd',1,'aliro_uwb_adapter_reader_config']]],
+  ['radar_5fcapabilities_2',['radar_capabilities',['../structcherry__core__event__device__capabilities.html#ac39e6faacad898e6bd77887e8069662a',1,'cherry_core_event_device_capabilities']]],
+  ['ranging_5fblock_3',['ranging_block',['../structccc__pre__poll.html#a0d22b92b25c389204e86c5c71bf3d26a',1,'ccc_pre_poll::ranging_block'],['../structccc__final__data.html#a5ed036518d4395dd144fc9d7e03ac831',1,'ccc_final_data::ranging_block']]],
+  ['ranging_5fconfig_4',['ranging_config',['../structwoz__uwb__aliro__cfg.html#a12454975af6fbe32a1bb8f6b9dc63509',1,'woz_uwb_aliro_cfg']]],
+  ['ranging_5fround_5fusage_5',['Ranging_Round_Usage',['../structfira__device__configure__s.html#a457629f892ed55c6ffbf1924d1ea0978',1,'fira_device_configure_s']]],
+  ['ranging_5fstatus_6',['ranging_status',['../structccc__responder__ts.html#a5b5e1297333642b5c34226f02fa8cc08',1,'ccc_responder_ts']]],
+  ['ranging_5fts_5ffinal_5ftx_7',['ranging_ts_final_tx',['../structccc__final__data.html#a51410ad1a42664a4035acc4433c506ca',1,'ccc_final_data']]],
+  ['rc_5flen_8',['rc_len',['../structwoz__uwb__aliro__cfg.html#aa12801ff8617729e0f1ce75778b6fa24',1,'woz_uwb_aliro_cfg']]],
+  ['resp_5frx_9',['resp_rx',['../structuwb__twr__result.html#a05037c8a2a76f85bfcc19216df10ec9b',1,'uwb_twr_result']]],
+  ['responder_5findex_10',['responder_index',['../structccc__responder__ts.html#ae2219ced2175dc61ea1f321e6366ea71',1,'ccc_responder_ts']]],
+  ['rframe_5fconfig_11',['Rframe_Config',['../structfira__device__configure__s.html#a95ef436b1de8decdb7d2d4d1de6b48f9',1,'fira_device_configure_s']]],
+  ['role_12',['role',['../structfira__device__configure__s.html#a43a9113f4ec32c9fb6555ea2ab299147',1,'fira_device_configure_s']]],
+  ['round_5fduration_5frstu_13',['Round_Duration_RSTU',['../structfira__device__configure__s.html#a26d69d1dc0227e60ee48af45fc22e884',1,'fira_device_configure_s']]],
+  ['round_5fhopping_14',['Round_Hopping',['../structfira__device__configure__s.html#a681a692e26ad6c99258db8af65b1c961',1,'fira_device_configure_s']]],
+  ['round_5findex_15',['round_index',['../structccc__pre__poll.html#ac2e401e60e882d36a26b3ece6d35d844',1,'ccc_pre_poll::round_index'],['../structccc__final__data.html#a72be01ff3d7dc671bfaf6d14341501f2',1,'ccc_final_data::round_index'],['../structccc__hop__decision.html#a41a41b0f15f62c52c58229d191b5216f',1,'ccc_hop_decision::round_index']]],
+  ['rx_5farmed_16',['rx_armed',['../structuwb__selftest__result.html#a6cc0c4fc0839ffe26b9de88702583ff8',1,'uwb_selftest_result']]],
+  ['rx_5fevent_17',['rx_event',['../structuwb__selftest__result.html#a82b63e45ccc2f9df2e4a9318fda026d1',1,'uwb_selftest_result']]],
+  ['rx_5fstatus_18',['rx_status',['../structuwb__selftest__result.html#ad78888b9acc801aaa739d6bd8b83dc9f',1,'uwb_selftest_result']]]
+];

@@ -1,0 +1,24 @@
+<map id="modules/woz_uwb/src/aliro/include/cherry/cherry_ccc.h" name="modules/woz_uwb/src/aliro/include/cherry/cherry_ccc.h">
+<area shape="rect" id="Node000001" title="— CCC/Aliro&#45;session interface (seam the adapter drives)." alt="" coords="202,5,353,61"/>
+<area shape="rect" id="Node000002" href="$cherry_8h.html" title="— Cherry core (context + device&#45;capabilities) interface." alt="" coords="65,183,172,208"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,57,161,79,144,93,129,110,118,138,117,168,112,167,113,137,124,108,140,89,158,74,203,53"/>
+<area shape="rect" id="Node000003" href="$cherry__common_8h.html" title="— diagnostics config struct and report forward decl." alt="" coords="156,256,281,282"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="296,59,313,96,316,116,313,135,299,168,281,198,243,247,239,243,277,195,295,166,308,134,310,116,308,97,295,64"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,330,80,356"/>
+<area shape="poly" id="edge13_Node000001_Node000004" title=" " alt="" coords="199,59,156,79,110,106,68,140,51,161,37,184,26,209,23,231,28,282,36,315,30,315,23,282,17,231,21,208,32,181,46,158,64,137,107,101,154,74,203,55"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="236,330,300,356"/>
+<area shape="poly" id="edge15_Node000001_Node000005" title=" " alt="" coords="303,59,321,82,333,108,343,134,349,162,343,206,316,283,292,320,289,316,311,281,337,205,344,162,338,136,328,110,316,85,302,64"/>
+<area shape="rect" id="Node000006" href="$cherry__session_8h.html" title="— generic base&#45;session interface." alt="" coords="138,109,299,135"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="261,59,237,98,233,94,257,63"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="424,109,493,135"/>
+<area shape="poly" id="edge14_Node000001_Node000007" title=" " alt="" coords="334,59,422,101,417,103,334,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="136,206,192,246,187,248,135,212"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="115,209,58,318,53,315,110,208"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="120,206,128,243,135,263,146,280,162,296,181,309,224,329,218,329,179,313,159,300,142,284,130,265,123,245,118,211"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="190,285,87,326,85,321,188,280"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="228,280,254,318,248,317,225,285"/>
+<area shape="poly" id="edge9_Node000006_Node000002" title=" " alt="" coords="200,137,150,175,146,171,203,133"/>
+<area shape="poly" id="edge10_Node000006_Node000003" title=" " alt="" coords="220,133,221,242,216,240,217,137"/>
+<area shape="poly" id="edge11_Node000006_Node000004" title=" " alt="" coords="136,135,92,153,72,167,55,184,40,215,34,250,35,285,39,315,33,315,29,285,29,250,35,214,51,181,69,163,90,149,140,131"/>
+<area shape="poly" id="edge12_Node000006_Node000005" title=" " alt="" coords="229,133,264,184,282,219,296,256,298,272,296,288,285,318,281,314,290,287,292,272,291,257,278,221,260,187,227,138"/>
+</map>

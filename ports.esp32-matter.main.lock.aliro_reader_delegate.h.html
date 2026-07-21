@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ports/esp32-matter/main/lock/aliro_reader_delegate.h</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="ports.esp32-matter.main.lock.aliro_reader_delegate.h">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>ports/esp32-matter/main/lock</span><span class="sep">/</span><b>aliro_reader_delegate.h</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_reader_delegate.h</h1><p class="lede">Declares AliroReaderDelegate, the Aliro (Apple Home Key) reader-provisioning and BLE-UWB half of…</p><div class="metarow"><span><code>ports/esp32-matter/main/lock/aliro_reader_delegate.h</code></span><span>1 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>Declares AliroReaderDelegate, the Aliro (Apple Home Key) reader-provisioning and BLE-UWB half of
+the Matter DoorLock cluster delegate, bridging controller commands to the on-device reader
+identity, trust store, and BLE advertising state.</p>
+<p class="chips">used by <a href="ports.esp32-matter.main.app_main.cpp.html"><code>ports/esp32-matter/main/app_main.cpp</code></a>, <a href="ports.esp32-matter.main.lock.aliro_reader_delegate.cpp.html"><code>ports/esp32-matter/main/lock/aliro_reader_delegate.cpp</code></a></p>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="class">
+<h3><span class="kindb" title="function">F</span><code><b>class</b> AliroReaderDelegate: public chip::app::Clusters::DoorLock::Delegate</code></h3>
+<div class="src">ports/esp32-matter/main/lock/aliro_reader_delegate.h:50</div>
+<p>AliroReaderDelegate — the Aliro (Apple Home Key) reader-provisioning half of
+the Door Lock cluster Delegate, for a BLE + UWB (&quot;Express&quot;) reader.
+Apple Home writes the reader identity with SetAliroReaderConfig (signing key,
+verification key, group identifier, and — because kAliroBLEUWB is advertised —
+the group resolving key) and reads the reader attributes back to confirm; this
+delegate holds that config and advertises the expedited + BLE-UWB protocol
+versions the reader speaks.
+Aliro credential *keys* (issuer / endpoint, credential types 6/7/8) do NOT
+flow through this Delegate. They arrive on the generic
+emberAfPluginDoorLockSet/GetCredential path and are stored by BoltLockManager
+(its storage is credential-type indexed and already sized to hold them), so
+this class implements only the reader-config attributes plus the
+&quot;number of keys supported&quot; getters the server consults to validate those
+credential writes.
+The provisioned identity is persisted, not in-memory only: SetAliroReaderConfig
+hands it to aliro_reader_provision_identity, which stores it through aliro_prov
+in NVS and refreshes advertising. That is what keeps a Wallet key valid and lets
+the UWB reader start after a power cycle.</p>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

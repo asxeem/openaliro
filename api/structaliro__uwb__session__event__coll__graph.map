@@ -1,0 +1,36 @@
+<map id="aliro_uwb_session_event" name="aliro_uwb_session_event">
+<area shape="rect" id="Node000001" title="Session event handed to the client, carrying status, error, or distance reports." alt="" coords="702,308,869,333"/>
+<area shape="rect" id="Node000002" href="$structaliro__uwb__session.html" title="Per&#45;approach ranging&#45;setup session record holding the CCC state machine and derived keys for one Alir..." alt="" coords="974,302,1103,328"/>
+<area shape="poly" id="edge8_Node000002_Node000001" title=" " alt="" coords="884,315,893,315,976,316,971,317,893,320,885,320"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="983,333,951,343,892,344,839,336,838,331,893,339,950,338,988,332"/>
+<area shape="rect" id="Node000003" href="$structaliro__uwb__adapter.html" title="Session&#45;independent reader state shared across all ranging sessions for an Aliro UWB adapter." alt="" coords="722,126,849,152"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="832,156,891,186,952,225,996,264,1029,302,1024,301,992,268,949,229,889,191,832,161"/>
+<area shape="rect" id="Node000004" href="$structcherry.html" title="Opaque Cherry context holder." alt="" coords="438,180,496,205"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="510,187,589,178,677,165,742,151,737,154,679,170,589,184,512,192"/>
+<area shape="rect" id="Node000005" href="$structaliro__uwb__adapter__reader__config.html" title="Reader&#45;side selection preferences (borrowed for the adapter&#39;s lifetime)." alt="" coords="382,8,552,49"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="566,38,624,50,679,69,730,95,770,126,765,126,727,100,677,73,622,56,568,43"/>
+<area shape="rect" id="Node000006" href="$structaliro__uwb__preferred__hopping__configs.html" title="Ordered hopping preferences (at least one default sequence required)." alt="" coords="22,8,157,49"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="171,26,383,26,380,30,173,31"/>
+<area shape="rect" id="Node000007" href="$structcherry__ccc__capabilities.html" title="Device CCC/Aliro capability set advertised to the peer." alt="" coords="388,73,546,98"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="560,94,678,112,731,125,726,126,678,118,561,100"/>
+<area shape="rect" id="Node000008" href="$structcherry__common__diag__cfg.html" title="Per&#45;session diagnostics selection flags and CIR window parameters, passed by value." alt="" coords="382,126,552,152"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="567,136,725,138,720,140,568,142"/>
+<area shape="rect" id="Node000009" href="$structaliro__uwb__message.html" title="Framed Aliro BLE message with 4&#45;byte header followed by TLV payload." alt="" coords="718,382,854,408"/>
+<area shape="poly" id="edge9_Node000002_Node000009" title=" " alt="" coords="869,387,910,380,949,369,989,349,1019,329,1024,327,991,353,951,374,911,386,870,393"/>
+<area shape="rect" id="Node000010" href="$structcherry__ccc__session.html" title="CCC ranging session bound to FiRa MAC." alt="" coords="398,521,536,546"/>
+<area shape="poly" id="edge10_Node000002_Node000010" title=" " alt="" coords="551,543,656,554,772,561,828,560,878,556,919,548,949,535,973,514,992,488,1007,459,1018,428,1030,370,1035,330,1039,326,1035,371,1023,430,1012,461,996,491,977,518,952,540,921,553,879,562,828,566,772,566,655,559,551,548"/>
+<area shape="rect" id="Node000012" href="$structcherry__ccc__event.html" title="CCC notification delivered to the adapter." alt="" coords="724,460,848,485"/>
+<area shape="poly" id="edge13_Node000012_Node000010" title=" " alt="" coords="550,517,677,494,726,486,731,485,679,499,551,523"/>
+<area shape="rect" id="Node000011" href="$structcherry__session.html" title="Base session object; first member of cherry_ccc_session for up&#45;casting." alt="" coords="984,570,1093,596"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="971,596,870,611,786,617,702,611,637,598,575,578,500,550,501,544,577,572,639,593,702,606,786,612,869,606,966,596"/>
+<area shape="poly" id="edge12_Node000011_Node000012" title=" " alt="" coords="832,489,1010,570,1004,569,831,494"/>
+<area shape="rect" id="Node000013" href="$structcherry__ccc__session__event__session__status.html" title="Payload of a SESSION_STATUS event, giving the new session state and the reason for the change." alt="" coords="389,301,544,342"/>
+<area shape="poly" id="edge18_Node000001_Node000013" title=" " alt="" coords="559,319,704,320,699,321,560,324"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="560,344,679,379,689,389,693,399,697,409,704,419,730,440,759,459,754,459,727,444,700,422,692,411,688,401,684,392,677,384,560,349"/>
+<area shape="rect" id="Node000014" href="$structcherry__ccc__session__event__error.html" title="Payload of a SESSION_ERROR event, giving the error status that triggered it." alt="" coords="398,412,536,453"/>
+<area shape="poly" id="edge19_Node000001_Node000014" title=" " alt="" coords="550,426,625,417,655,411,677,402,684,395,689,387,700,368,727,347,753,335,758,333,730,352,704,371,693,390,689,398,679,407,657,416,625,423,551,431"/>
+<area shape="poly" id="edge15_Node000012_Node000014" title=" " alt="" coords="550,451,576,455,653,464,726,471,720,471,652,469,576,461,550,456"/>
+<area shape="rect" id="Node000015" href="$structcherry__ccc__aliro__session__config.html" title="Negotiated Aliro ranging params (filled in&#45;place across M1&#45;M4)." alt="" coords="5,303,174,343"/>
+<area shape="poly" id="edge17_Node000002_Node000015" title=" " alt="" coords="188,307,282,295,382,287,525,281,637,281,893,286,922,284,951,286,1004,301,999,302,950,291,922,290,893,291,637,287,525,287,382,292,283,301,190,311"/>
+<area shape="poly" id="edge16_Node000010_Node000015" title=" " alt="" coords="142,349,444,518,440,522,140,354"/>
+</map>

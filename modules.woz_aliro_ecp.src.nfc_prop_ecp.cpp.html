@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_aliro_ecp/src/nfc_prop_ecp.cpp</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_aliro_ecp.src.nfc_prop_ecp.cpp">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_aliro_ecp/src</span><span class="sep">/</span><b>nfc_prop_ecp.cpp</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">nfc_prop_ecp.cpp</h1><p class="lede">NFC Type A proprietary callback implementation for Aliro Express unlock (tap-to-unlock without…</p><div class="metarow"><span><code>modules/woz_aliro_ecp/src/nfc_prop_ecp.cpp</code></span><span>5 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>NFC Type A proprietary callback implementation for Aliro Express unlock (tap-to-unlock without
+Face ID). Emits a CRC_A–checksummed ECP frame carrying the reader identifier.</p>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="Crc16A">
+<h3><span class="kindb" title="function">F</span><code>void <b>Crc16A</b>(const uint8_t *data, unsigned int size, uint8_t *result)</code></h3>
+<div class="src">modules/woz_aliro_ecp/src/nfc_prop_ecp.cpp:47</div>
+<p>Computes the ISO/IEC 14443-A CRC_A checksum (initial value 0x6363) over a byte buffer.</p>
+<dl class="params"><dt><code>data</code></dt><dd>Pointer to the input bytes to checksum.</dd><dt><code>size</code></dt><dd>Number of bytes in data to process.</dd><dt><code>result</code></dt><dd>Output buffer receiving the 2-byte little-endian CRC_A result.</dd></dl>
+<div class="xref">called by <code>NfcPropInit</code></div>
+</section>
+<section class="api-entry" id="PropInit">
+<h3><span class="kindb" title="function">F</span><code>ReturnCode <b>PropInit</b>(void)</code></h3>
+<div class="src">modules/woz_aliro_ecp/src/nfc_prop_ecp.cpp:66</div>
+<p>Initializes the RFAL NFC Type A polling stack.</p>
+<dl class="params"><dt>returns</dt><dd>Return code from rfalNfcaPollerInitialize.</dd></dl>
+</section>
+<section class="api-entry" id="PropTechDetect">
+<h3><span class="kindb" title="function">F</span><code>ReturnCode <b>PropTechDetect</b>(void)</code></h3>
+<div class="src">modules/woz_aliro_ecp/src/nfc_prop_ecp.cpp:77</div>
+<p>Transmits the armed ECP frame as a fire-and-forget beacon and reports no proprietary device detected so RFAL polling can proceed.</p>
+<dl class="params"><dt>returns</dt><dd>RFAL_ERR_TIMEOUT if the frame is not armed, or RFAL_ERR_TIMEOUT after transmission to signal no proprietary device found.</dd></dl>
+</section>
+<section class="api-entry" id="NfcPropInit">
+<h3><span class="kindb" title="function">F</span><code>void <b>NfcPropInit</b>(void)</code></h3>
+<div class="src">modules/woz_aliro_ecp/src/nfc_prop_ecp.cpp:110</div>
+<p>Builds and arms the ECP frame with the Aliro header, provisioned reader identifier, and CRC_A checksum for emission.</p>
+<div class="xref">calls <code>Crc16A</code></div>
+</section>
+<section class="api-entry" id="NfcPropGetCallbacks">
+<h3><span class="kindb" title="function">F</span><code>const rfalNfcPropCallbacks *<b>NfcPropGetCallbacks</b>(void)</code></h3>
+<div class="src">modules/woz_aliro_ecp/src/nfc_prop_ecp.cpp:133</div>
+<p>Returns the RFAL proprietary NFC callback table for Aliro ECP emission.</p>
+<dl class="params"><dt>returns</dt><dd>Pointer to the static rfalNfcPropCallbacks table.</dd></dl>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_aliro/src/aliro_reader.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_aliro.src.aliro_reader.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_aliro/src</span><span class="sep">/</span><b>aliro_reader.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_reader.c</h1><p class="lede">Aliro reader engine: drives the Access Protocol (AUTH0/AUTH1/EXCHANGE) handshake over BLE…</p><div class="metarow"><span><code>modules/woz_aliro/src/aliro_reader.c</code></span><span>31 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>Aliro reader engine: drives the Access Protocol (AUTH0/AUTH1/EXCHANGE) handshake over BLE,
+manages reader identity and credential trust provisioning in NVS, and arms UWB ranging once
+a session is authenticated. Maintains a fixed-size table of per-connection sessions tracking
+transaction phase and secure-channel state, and exposes start/attach entry points for both
+standalone and Matter-attached BLE transports, plus provisioning and diagnostic APIs used by
+Matter commissioning and the bench console.</p>
+<p class="chips">depends on <a href="modules.woz_aliro.include.aliro_ble.h.html"><code>modules/woz_aliro/include/aliro_ble.h</code></a>, <a href="modules.woz_aliro.include.aliro_crypto.h.html"><code>modules/woz_aliro/include/aliro_crypto.h</code></a>, <a href="modules.woz_aliro.include.aliro_prim.h.html"><code>modules/woz_aliro/include/aliro_prim.h</code></a>, <a href="modules.woz_aliro.include.aliro_prov.h.html"><code>modules/woz_aliro/include/aliro_prov.h</code></a>, <a href="modules.woz_aliro.include.aliro_reader.h.html"><code>modules/woz_aliro/include/aliro_reader.h</code></a>, <a href="modules.woz_aliro.src.aliro_apdu.h.html"><code>modules/woz_aliro/src/aliro_apdu.h</code></a>, <a href="modules.woz_aliro.src.aliro_ranging.h.html"><code>modules/woz_aliro/src/aliro_ranging.h</code></a>, <a href="modules.woz_uwb.src.facade.woz_log.h.html"><code>modules/woz_uwb/src/facade/woz_log.h</code></a>, <a href="modules.woz_uwb.src.facade.woz_port.h.html"><code>modules/woz_uwb/src/facade/woz_port.h</code></a></p>
+<figure class="graph-wrap"><div class="graph-shell"><pre class="mermaid">flowchart TD
+  aliro_reader_authenticated_credential --&gt; load_provisioning</pre></div></figure>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="compute_reader_group_x">
+<h3><span class="kindb" title="function">F</span><code>static void <b>compute_reader_group_x</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:81</div>
+<p>Recover the reader group key X from the provisioned signingKey. Call after any
+mutation of s_id. Leaves s_have_group_x=false (and logs) on failure.</p>
+<div class="xref">called by <code>aliro_reader_provision_clear</code>, <code>aliro_reader_provision_identity</code>, <code>load_provisioning</code></div>
+</section>
+<section class="api-entry" id="phase_str">
+<h3><span class="kindb" title="function">F</span><code>static const char *<b>phase_str</b>(enum txn_phase p)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:116</div>
+<p>Returns a human-readable name for a transaction phase enum value, or &quot;?&quot; for an unrecognized
+value.</p>
+<div class="xref">called by <code>on_disconnected</code>, <code>transaction_feed</code></div>
+</section>
+<section class="api-entry" id="aliro_session">
+<h3><span class="kindb" title="class">C</span><code>static struct <b>aliro_session</b></code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:143</div>
+<p>One credential-auth transaction, keyed by BLE connection handle. Holds the
+reader&#x27;s ephemeral keypair and the transcript inputs (txid, device pubkey, Z)
+that derive the two secure channels and the URSK, so everything a transaction
+needs between AUTH0 and ranging setup lives here. Cleared on disconnect;
+ALIRO_MAX_SESSIONS of them are statically allocated.</p>
+</section>
+<section class="api-entry" id="session_find">
+<h3><span class="kindb" title="function">F</span><code>static struct aliro_session *<b>session_find</b>(uint16_t conn_handle)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:167</div>
+<p>Finds the active session matching the given BLE connection handle.
+Returns a pointer to the matching session, or NULL if no active session has that conn_handle.</p>
+<div class="xref">called by <code>on_data</code>, <code>on_disconnected</code></div>
+</section>
+<section class="api-entry" id="session_alloc">
+<h3><span class="kindb" title="function">F</span><code>static struct aliro_session *<b>session_alloc</b>(uint16_t conn_handle)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:180</div>
+<p>Allocates and returns the first inactive slot in the fixed-size session table for a new
+connection, initializing it to phase PH_IDLE. Returns NULL if all ALIRO_MAX_SESSIONS slots are
+already active.</p>
+<div class="xref">called by <code>on_connected</code></div>
+</section>
+<section class="api-entry" id="load_provisioning">
+<h3><span class="kindb" title="function">F</span><code>static void <b>load_provisioning</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:198</div>
+<p>Loads the reader&#x27;s provisioning state (identity, trust anchors) from NVS into the module-level
+s_id/s_trust, lazily creating the provisioning mutex on first call. Idempotent: does nothing on
+subsequent calls once s_loaded is set. Logs whether a dev-default or real identity was loaded and
+its source (NVS vs. dev default), then recomputes the reader group X coordinate.</p>
+<div class="xref">called by <code>aliro_reader_authenticated_credential</code>, <code>aliro_reader_prov_print</code>, <code>aliro_reader_provision_add_trust</code>, <code>aliro_reader_provision_clear</code>, <code>aliro_reader_provision_identity</code>, <code>aliro_reader_trust_clear</code>, <code>aliro_reader_trust_last</code>, <code>reader_engine_init</code> &nbsp;·&nbsp; calls <code>compute_reader_group_x</code></div>
+</section>
+<section class="api-entry" id="send_ap_command">
+<h3><span class="kindb" title="function">F</span><code>static int <b>send_ap_command</b>(uint16_t conn, uint8_t ins, const uint8_t *tlv, size_t len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:225</div>
+<p>Frame + send an Access-Protocol command: wrap the command TLV in an ISO7816
+APDU (ins selects AUTH0/AUTH1/EXCHANGE), then a BLE Access frame
+(type=ACCESS, opcode=AP_OP_COMMAND). The command byte lives in the APDU INS,
+NOT the BLE opcode — the phone rejects a raw TLV under opcode=INS.</p>
+<div class="xref">called by <code>on_auth0_response</code>, <code>on_auth1_response</code>, <code>start_auth</code></div>
+</section>
+<section class="api-entry" id="start_auth">
+<h3><span class="kindb" title="function">F</span><code>static void <b>start_auth</b>(struct aliro_session *s)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:252</div>
+<p>Kick the reader-driven access protocol: ephemeral keys + txid -&gt; AUTH0.</p>
+<div class="xref">called by <code>transaction_feed</code> &nbsp;·&nbsp; calls <code>send_ap_command</code></div>
+</section>
+<section class="api-entry" id="on_auth0_response">
+<h3><span class="kindb" title="function">F</span><code>static void <b>on_auth0_response</b>(struct aliro_session *s, const uint8_t *pl, size_t len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:283</div>
+<p>Handles an inbound AUTH0Response: strips the APDU status word, parses the device&#x27;s ephemeral
+public key, performs ECDH with the reader&#x27;s ephemeral private key, derives the KDF intermediate
+z, signs the reader-usage transcript, and sends AUTH1. On any failure (short/malformed APDU,
+parse failure, ECDH failure, signing failure) sets s-&gt;phase to PH_FAILED and returns without
+sending. On success sets s-&gt;phase to PH_SENT_AUTH1 after sending the AUTH1 command. Logs (does
+not fail on) an unexpected status word other than 0x9000.</p>
+<div class="xref">called by <code>transaction_feed</code> &nbsp;·&nbsp; calls <code>send_ap_command</code></div>
+</section>
+<section class="api-entry" id="on_auth1_response">
+<h3><span class="kindb" title="function">F</span><code>static void <b>on_auth1_response</b>(struct aliro_session *s, const uint8_t *pl, size_t len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:349</div>
+<p>Handles an inbound AUTH1Response: derives the AP and BLE-ranging secure channel keys and URSK
+from the ECDH intermediate, decrypts and parses the response, verifies the device&#x27;s signature,
+checks trust, and sends EXCHANGE. Requires the reader group X coordinate to already be available
+(s_have_group_x); fails otherwise. Derives the session salt and 160-byte key block, splits it
+into the AP channel keys and URSK, and separately derives the BLE ranging-channel keys from the
+block&#x27;s BleSK segment using a versions-based salt; both secure channels are initialized with
+counters starting at 1. Decrypts the AUTH1Response body via AES-GCM and fails on tag mismatch
+(indicating a key/counter/framing error), oversized ciphertext, or parse failure. Verifies the
+device&#x27;s signature over the device-usage transcript using the presented device public key if
+available, else the device&#x27;s ephemeral public key; a bad signature fails the session. Records the
+presented credential key under s_prov_lock and checks it against the trust store: an untrusted
+key fails the session unless the reader identity is the dev default (which accepts and warns). On
+success, seals and sends the EXCHANGE command, sets s-&gt;phase to PH_SENT_EXCHANGE, and logs the
+derived URSK; on any failure path sets s-&gt;phase to PH_FAILED and returns without sending
+EXCHANGE.</p>
+<div class="xref">called by <code>transaction_feed</code> &nbsp;·&nbsp; calls <code>send_ap_command</code></div>
+</section>
+<section class="api-entry" id="on_exchange_response">
+<h3><span class="kindb" title="function">F</span><code>static void <b>on_exchange_response</b>(struct aliro_session *s, const uint8_t *pl, size_t len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:537</div>
+<p>Handle the EXCHANGE response, then complete the AP and arm ranging. The body is
+an AP (proto-0) response on the ExpeditedSK channel: &lt;ct || 16B tag&gt; SW1SW2.</p>
+<div class="xref">called by <code>transaction_feed</code></div>
+</section>
+<section class="api-entry" id="reader_status_send_on_host">
+<h3><span class="kindb" title="function">F</span><code>static void <b>reader_status_send_on_host</b>(bool unsecured)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:607</div>
+<p>Reader Status Changed (Aliro transaction step 23): the reader-&gt;phone grant/relock
+confirmation that fires the iPhone Wallet unlock animation. proto-2 (Notification)
+message-id 0x02, one State Attribute (id 0x00, len 2) = [OperationSource,
+ReaderStateByte]. OperationSource 0x04 = this user device in the BLE+UWB Aliro flow;
+ReaderStateByte Unsecured 0x01 = granted (animate), Secured 0x00 = relocked. The
+65-byte access-credential public key is NOT serialized (the reference uses it only
+to select which connection to notify). Plaintext the BleSK channel then seals:
+[02][02][00 04][00 02 04 &lt;state&gt;]. Runs on the BLE-host task (posted via
+aliro_ble_post_reader_status) so it serializes with the other sc_ble seals.</p>
+</section>
+<section class="api-entry" id="aliro_reader_notify_unlock">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_reader_notify_unlock</b>(bool unsecured)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:642</div>
+<p>Sends a Reader-Status BLE notification reporting the lock&#x27;s unsecured/secured state to the
+connected device. unsecured is true if the reader/lock is currently unsecured (unlocked), false
+if secured.</p>
+</section>
+<section class="api-entry" id="aliro_reader_authenticated_credential">
+<h3><span class="kindb" title="function">F</span><code>bool <b>aliro_reader_authenticated_credential</b>(uint8_t out[ALIRO_CRED_PUB_LEN])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:650</div>
+<p>Copies the credential public key that most recently passed the trust check into out.
+Returns true if a credential has authenticated since boot (out written), false otherwise
+(out untouched). Safe to call from any task.</p>
+<div class="xref">calls <code>load_provisioning</code></div>
+</section>
+<section class="api-entry" id="capture_a5_tlv">
+<h3><span class="kindb" title="function">F</span><code>static size_t <b>capture_a5_tlv</b>(const uint8_t *pl, size_t pl_len, uint8_t *out, size_t cap)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:670</div>
+<p>Scan an op-0x05 Initiate-Access-Protocol payload for the phone&#x27;s 0xA5
+proprietary-information TLV (short-form BER length; the A5 value is small) and
+copy the whole TLV (tag+len+value) into out. Returns the stored length, or 0
+if no well-formed 0xA5 TLV fits.</p>
+<div class="xref">called by <code>transaction_feed</code></div>
+</section>
+<section class="api-entry" id="transaction_feed">
+<h3><span class="kindb" title="function">F</span><code>static void <b>transaction_feed</b>(struct aliro_session *s, const uint8_t *data, uint16_t len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:688</div>
+<p>Consume one inbound Aliro transaction SDU.</p>
+<div class="xref">called by <code>on_data</code> &nbsp;·&nbsp; calls <code>capture_a5_tlv</code>, <code>on_auth0_response</code>, <code>on_auth1_response</code>, <code>on_exchange_response</code>, <code>phase_str</code>, <code>start_auth</code></div>
+</section>
+<section class="api-entry" id="on_connected">
+<h3><span class="kindb" title="function">F</span><code>static void <b>on_connected</b>(uint16_t conn_handle)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:782</div>
+<p>BLE connection-established callback: allocates a session slot for the new connection.
+Logs an error and returns without effect if no free session slot is available.</p>
+<div class="xref">calls <code>session_alloc</code></div>
+</section>
+<section class="api-entry" id="on_disconnected">
+<h3><span class="kindb" title="function">F</span><code>static void <b>on_disconnected</b>(uint16_t conn_handle)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:796</div>
+<p>BLE disconnection callback: marks the connection&#x27;s session inactive (if one exists) and
+stops any UWB ranging associated with the connection.
+Logs the session&#x27;s message count and final transaction phase before deactivating it.</p>
+<div class="xref">calls <code>phase_str</code>, <code>session_find</code></div>
+</section>
+<section class="api-entry" id="on_data">
+<h3><span class="kindb" title="function">F</span><code>static void <b>on_data</b>(uint16_t conn_handle, const uint8_t *data, uint16_t len)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:811</div>
+<p>BLE data-received callback: looks up the session for conn_handle and feeds the data into its
+transaction state machine.
+Logs a warning and drops the data if no active session exists for conn_handle.</p>
+<div class="xref">calls <code>session_find</code>, <code>transaction_feed</code></div>
+</section>
+<section class="api-entry" id="make_ble_cfg">
+<h3><span class="kindb" title="function">F</span><code>static struct aliro_ble_config <b>make_ble_cfg</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:825</div>
+<p>The reader&#x27;s BLE transport config: advertised versions/features + the
+transaction transport callbacks. Shared by the standalone + attached starts.</p>
+<div class="xref">called by <code>aliro_reader_ble_prepare</code>, <code>aliro_reader_start</code></div>
+</section>
+<section class="api-entry" id="reader_engine_init">
+<h3><span class="kindb" title="function">F</span><code>static int <b>reader_engine_init</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:847</div>
+<p>crypto + provisioning load + UWB ranging setup, shared by both start paths.</p>
+<div class="xref">called by <code>aliro_reader_start</code>, <code>aliro_reader_start_attached</code> &nbsp;·&nbsp; calls <code>load_provisioning</code></div>
+</section>
+<section class="api-entry" id="aliro_reader_start">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_reader_start</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:864</div>
+<p>Starts the Aliro reader: initializes the engine (crypto, provisioning, UWB ranging) and brings up
+the BLE transport using the default advertising config. Returns 0 on success; returns -1 if
+engine initialization fails, or the underlying aliro_ble_start result otherwise.</p>
+<div class="xref">calls <code>make_ble_cfg</code>, <code>reader_engine_init</code></div>
+</section>
+<section class="api-entry" id="aliro_reader_ble_prepare">
+<h3><span class="kindb" title="function">F</span><code>const void *<b>aliro_reader_ble_prepare</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:882</div>
+<p>Prepares the BLE transport and returns the Aliro GATT service definition for external
+registration, without starting the transport. Returns NULL if aliro_ble_prepare fails; on success
+returns the pointer from aliro_ble_service_def(), owned by the BLE layer.</p>
+<div class="xref">calls <code>make_ble_cfg</code></div>
+</section>
+<section class="api-entry" id="aliro_reader_start_attached">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_reader_start_attached</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:899</div>
+<p>Starts the Aliro reader in &quot;attached&quot; transport mode: initializes the engine, applies provisioned
+resolvable advertising parameters if a real GRK is present, then starts the attached BLE
+transport. Unlike aliro_reader_start, this applies GRK-based advertising params (group/subgroup
+ID from reader_id, GRK) before starting, when the reader has already been provisioned; falls back
+to unresolvable advertising if no GRK is set yet. Returns 0 on success; returns -1 if engine
+initialization fails, or the underlying aliro_ble_start_attached result otherwise.</p>
+<div class="xref">calls <code>reader_engine_init</code></div>
+</section>
+<section class="api-entry" id="aliro_reader_refresh_adv">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_reader_refresh_adv</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:936</div>
+<p>Refreshes the BLE advertisement to include the resolvable service data once a real
+GroupResolvingKey (GRK) is available. Handles the case where Matter provisioning
+(SetAliroReaderConfig) lands after advertising has already started with only the bare 0xFFF2 UUID
+(dev default, all-zero GRK), which the phone cannot resolve. No-ops if the GRK in s_id is still
+all-zero. On a nonzero GRK, derives the two-byte subgroup ID from reader_id[16..17] and calls
+aliro_ble_set_adv_params + aliro_ble_readvertise to make the reader approach-resolvable.</p>
+</section>
+<section class="api-entry" id="aliro_reader_prov_print">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_reader_prov_print</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:967</div>
+<p>Print the reader&#x27;s provisioning state (identity, trust anchors, last presented credential)
+to the console for diagnostics.
+Loads provisioning first, then snapshots the shared state under s_prov_lock before printing
+so UART I/O does not hold the lock during the BLE task&#x27;s trust check.</p>
+<div class="xref">calls <code>load_provisioning</code></div>
+</section>
+<section class="api-entry" id="aliro_reader_trust_last">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_reader_trust_last</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:1011</div>
+<p>Add the most recently presented credential&#x27;s public key to the trust store and persist it.
+Returns 1 if no credential has been presented yet or it is already trusted (nothing
+persisted), -1 if the store is full or the NVS write fails (in-memory trust store left
+unchanged on failure), 0 if newly added and committed.</p>
+<div class="xref">calls <code>load_provisioning</code></div>
+</section>
+<section class="api-entry" id="aliro_reader_trust_clear">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_reader_trust_clear</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:1054</div>
+<p>Empty the trust store and persist the empty store, keeping the reader identity.
+Returns 1 if the store was already empty (nothing persisted), -1 if the NVS write fails
+(in-memory trust store left unchanged), 0 if cleared and committed.
+Every re-pair mints a fresh credential and nothing evicts the old ones, so the store
+reaches ALIRO_TRUST_MAX and refuses the key currently being presented. A Matter factory
+reset does not touch this namespace, so without this the only way out is erasing NVS.</p>
+<div class="xref">calls <code>load_provisioning</code></div>
+</section>
+<section class="api-entry" id="aliro_reader_provision_identity">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_reader_provision_identity</b>(const uint8_t reader_id[ALIRO_READER_ID_LEN], const uint8_t sign_priv[ALIRO_READER_PRIV_LEN], const uint8_t grk[ALIRO_GRK_LEN])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:1088</div>
+<p>Store a Matter-provisioned reader identity (reader ID, signing private key, GRK), keeping
+any trust anchors already present, and persist it to NVS.
+Returns -1 if the NVS write fails, in which case in-memory identity (s_id) is unchanged;
+returns 0 on success, after which the reader group key salt is recomputed via
+compute_reader_group_x since the signing key changed.</p>
+<div class="xref">calls <code>compute_reader_group_x</code>, <code>load_provisioning</code></div>
+</section>
+<section class="api-entry" id="aliro_reader_provision_add_trust">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_reader_provision_add_trust</b>(const uint8_t cred_pub[ALIRO_CRED_PUB_LEN])</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:1121</div>
+<p>Add a Matter-provisioned credential public key to the reader&#x27;s trust store and persist it.
+Returns 0 if newly added and stored, 1 if the credential was already trusted (nothing
+persisted), -1 if the store is full, cred_pub is not a valid P-256 point, or the NVS write
+fails. On failure the in-memory trust store (s_trust) is left unchanged.</p>
+<div class="xref">calls <code>load_provisioning</code></div>
+</section>
+<section class="api-entry" id="aliro_reader_provision_clear">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_reader_provision_clear</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_reader.c:1155</div>
+<p>Revert the reader&#x27;s provisioning to the default dev identity and empty trust store, and
+persist that state to NVS.
+Returns -1 if the NVS write fails, in which case in-memory state is unchanged; returns 0 on
+success, after which the reader group key salt is recomputed via compute_reader_group_x.</p>
+<div class="xref">calls <code>compute_reader_group_x</code>, <code>load_provisioning</code></div>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

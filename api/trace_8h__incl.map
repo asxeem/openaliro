@@ -1,0 +1,9 @@
+<map id="modules/woz_uwb/src/facade/trace.h" name="modules/woz_uwb/src/facade/trace.h">
+<area shape="rect" id="Node000001" title="— Structured [WOZ_TRACE] emit helpers, gated on CONFIG_WOZ_E2E_TRACE." alt="" coords="54,5,206,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,74,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,46,67,86,63,81,105,47"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="98,94,162,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="132,44,133,80,128,77,128,48"/>
+<area shape="rect" id="Node000004" href="$woz__log_8h_source.html" title=" " alt="" coords="186,94,266,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="155,44,202,84,197,84,153,49"/>
+</map>

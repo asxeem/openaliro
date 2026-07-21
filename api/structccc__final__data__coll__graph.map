@@ -1,0 +1,5 @@
+<map id="ccc_final_data" name="ccc_final_data">
+<area shape="rect" id="Node000001" title="Final_Data message parameters." alt="" coords="15,102,120,128"/>
+<area shape="rect" id="Node000002" href="$structccc__responder__ts.html" title="One responder&#39;s timestamp record in a Final_Data message." alt="" coords="5,5,130,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,45,70,102,65,101,65,48"/>
+</map>

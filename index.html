@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>openaliro</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="index">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><b>Overview</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><svg class="hero-art" viewBox="0 0 400 400" aria-hidden="true" fill="none" stroke="currentColor"><circle cx="330" cy="70" r="40" stroke-width="1"/><circle cx="330" cy="70" r="95" stroke-width="1"/><circle cx="330" cy="70" r="155" stroke-width="1"/><circle cx="330" cy="70" r="220" stroke-width="1"/><circle cx="330" cy="70" r="290" stroke-width="1"/><circle cx="330" cy="70" r="4" fill="currentColor" stroke="none"/></svg><div class="hero-grid"><section class="hero"><div class="pill">Developer documentation</div><h1>openaliro</h1><p class="lede">openaliro implements the lock side of an Aliro digital key. The phone authenticates over Bluetooth LE and measures its distance over ultra-wideband: the door unlocks as the phone approaches and relocks as it leaves.</p><div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">nrfutil sdk-manager toolchain install --ncs-version v3.3.0</span><button type="button" class="js-copycmd" data-cmd="nrfutil sdk-manager toolchain install --ncs-version v3.3.0">Copy</button></div><div class="cta"><a class="btn btn-primary" href="esp32-bringup.html">Get started</a><a class="btn" href="architecture.html">Architecture</a></div><div class="stats"><div class="stat-b"><b>100</b><span>subsystems</span></div><div class="stat-b"><b>97%</b><span>documented</span></div><div class="stat-b"><b>603</b><span>symbols</span></div></div></section><div class="hero-side"><div class="term"><div class="t-head"><span class="t-dot" style="background:#ff5f57"></span><span class="t-dot" style="background:#febc2e"></span><span class="t-dot" style="background:#28c840"></span><span class="t-title">openaliro · zsh</span></div><div class="t-body"><div class="t-line" style="--i:0"><span class="t-p">$</span>nrfutil sdk-manager toolchain install --ncs-version v3.3.0<span class="t-c">  # once per machine</span></div><div class="t-line" style="--i:1"><span class="t-p">$</span>make bootstrap<span class="t-c">  # fetch NCS v3.3.0 + the Nordic add-on (~6.5 GB) into ./workspace</span></div><div class="t-line" style="--i:2"><span class="t-p">$</span>make build<span class="t-c">  # → ./build/merged.hex</span></div><div class="t-line" style="--i:3"><span class="t-p">$</span>make flash-erase<span class="t-c">  # first flash of a net-core image</span></div><div class="t-line" style="--i:4"><span class="t-p">$</span>make flash<span class="t-c">  # every flash after that</span></div><div class="t-line" style="--i:5"><span class="t-p">$</span><span class="t-cur"></span></div></div></div></div></div></div></header>
+<div class="mid">
+<main class="doc ">
+<ul class="feats">
+<li><a href="architecture.html"><span class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3 2 8.5 12 14l10-5.5L12 3z"/><path d="M2 15.5 12 21l10-5.5"/></svg></span><span class="f-name">Architecture</span><span class="f-desc">Every subsystem on one page, in reading order.</span></a></li>
+<li><a href="esp32-gotchas.html"><span class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"/></svg></span><span class="f-name">Hardware</span><span class="f-desc">ESP32-S3 Aliro port — gotchas and observations</span></a></li>
+<li><a href="troubleshooting.html"><span class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5"/></svg></span><span class="f-name">Troubleshooting</span><span class="f-desc">Troubleshooting and FAQ</span></a></li>
+<li><a href="#subsystems"><span class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 18v3H6.5A2.5 2.5 0 0 1 4 18.5"/></svg></span><span class="f-name">Reference</span><span class="f-desc">All 100 modules, grouped by directory.</span></a></li>
+</ul>
+<div class="section-h"><h2>Guides</h2><span class="rule"></span></div>
+<div class="row-cap">Start here</div>
+<ul class="rows">
+<li><a href="esp32-bringup.html"><span class="row-name">DWM3000EVB → ESP32-S3 bring-up checklist</span><span class="row-desc">One page, match-the-table. The pin map&#x27;s source of truth is <code>components/woz_uwb/port/board_pins.h</code>; if you change it there, change it here.</span></a></li>
+</ul>
+<div class="row-cap">Hardware</div>
+<ul class="rows">
+<li><a href="esp32-gotchas.html"><span class="row-name">ESP32-S3 Aliro port — gotchas and observations</span><span class="row-desc">Hard-won, non-obvious findings from porting the Aliro UWB door-lock reader to ESP32-S3 (ESP-IDF + esp-matter + NimBLE + DWM3000EVB). Each entry is a trap actually hit…</span></a></li>
+<li><a href="hardware-validation.html"><span class="row-name">Hardware validation checklist</span><span class="row-desc">Automated CI covers the host-side core of the nRF target (KAT suite, coverage floor, ASan/UBSan). It does not build either ESP32 port, and the end-to-end product runs…</span></a></li>
+</ul>
+<div class="row-cap">Troubleshooting</div>
+<ul class="rows">
+<li><a href="troubleshooting.html"><span class="row-name">Troubleshooting and FAQ</span><span class="row-desc">Common issues, grouped by where they show up. Deeper protocol background is in <code>protocol-research.md</code> (on-air behavior) and <code>protocol-notes.md</code> (firmware time and…</span></a></li>
+</ul>
+<div class="row-cap">Deep dives</div>
+<ul class="rows">
+<li><a href="approach-direction.html"><span class="row-name">Approach Direction — the Home app Left/Front/Right control</span><span class="row-desc">How the Apple Home app&#x27;s &quot;Approach Direction&quot; control is exposed by an Aliro lock, and every trap hit making it appear on the ESP32-S3 port. Validated on silicon…</span></a></li>
+<li><a href="chipset-memory.html"><span class="row-name">Memory usage (nRF5340 build)</span><span class="row-desc">Scope: the primary nRF5340 DK image only. The ESP32-S3 ports have their own budgets and partition layout (<code>ports/esp32-*/partitions.csv</code>) and are not measured here.</span></a></li>
+<li><a href="porting-esp32-phase3.html"><span class="row-name">ESP32-S3 port — Phase 3: the credential auth (deriving the ranging key)</span><span class="row-desc">Prerequisite reading: <code>porting-esp32.md</code> (roadmap and retrospective) and <code>protocol-research.md</code> (the reverse-engineered protocol notes; this doc stays at that same…</span></a></li>
+<li><a href="porting-esp32.html"><span class="row-name">openaliro on ESP32-S3: porting roadmap and retrospective</span><span class="row-desc">This document keeps the original plan, written before any ESP32 code existed, and marks what the plan got right and wrong. The plan&#x27;s own estimates are left unedited…</span></a></li>
+<li><a href="porting.html"><span class="row-name">Porting openaliro</span><span class="row-desc">How the UWB engine moves to a new chipset, what it costs, and how to prove a port did not change the code the validated target runs.</span></a></li>
+<li><a href="protocol-notes.html"><span class="row-name">Time synchronization and credential validity</span><span class="row-desc">Firmware-level notes on one subsystem: how the reader obtains wall-clock time, how that interacts with Aliro&#x27;s time-based credential checks, and the fixes this repo…</span></a></li>
+<li><a href="protocol-research.html"><span class="row-name">Protocol research: BLE + UWB proximity unlock</span><span class="row-desc">This report documents the on-air behavior of a phone-driven ultra-wideband (UWB) proximity unlock: how a phone opens a fixed reader on approach. The phone conducts…</span></a></li>
+<li><a href="reference.html"><span class="row-name">Reference</span><span class="row-desc">The API reference at <code>site/api/index.html</code> is a separate tree, generated by Doxygen from the declarations themselves. It is built rather than committed, so there is…</span></a></li>
+</ul>
+<div class="row-cap">Project</div>
+<ul class="rows">
+<li><a href="RELEASING.html"><span class="row-name">Releasing</span><span class="row-desc">How to cut a release. Versions follow SemVer (<code>vMAJOR.MINOR.PATCH</code>); pre-1.0, a minor bump means new capability and a patch bump means fixes only.</span></a></li>
+</ul>
+<div class="section-h" id="subsystems"><h2>Reference</h2><span class="rule"></span></div>
+<div class="ref-dir"><code>repository root</code></div>
+<ul class="rows mono">
+<li><a href="bootstrap.sh.html"><span class="row-name">bootstrap.sh</span><span class="row-desc">bootstrap.sh — build a self-contained west workspace, PRISTINE from upstream.</span></a></li>
+<li><a href="build.sh.html"><span class="row-name">build.sh</span><span class="row-desc">build.sh {build|rebuild|flash|flash-erase|build-flash} — build the Aliro</span></a></li>
+<li><a href="docs.sh.html"><span class="row-name">docs.sh</span><span class="row-desc">docs.sh — build the documentation site into site/.</span></a></li>
+<li><a href="ws-seed.sh.html"><span class="row-name">ws-seed.sh</span><span class="row-desc">ws-seed.sh — give this git worktree its own NCS workspace, cheaply.</span></a></li>
+</ul>
+<div class="ref-dir"><code>integration/homeassistant</code></div>
+<ul class="rows mono">
+<li><a href="integration.homeassistant.aliro_mqtt_bridge.html"><span class="row-name">aliro_mqtt_bridge.py</span><span class="row-desc">Republish the lock&#x27;s console log to MQTT as Home Assistant entities.</span></a></li>
+</ul>
+<div class="ref-dir"><code>modules/woz_aliro/include</code></div>
+<ul class="rows mono">
+<li><a href="modules.woz_aliro.include.aliro_ble.h.html"><span class="row-name">aliro_ble.h</span><span class="row-desc">Aliro BLE-UWB reader transport: GATT service definition, advertised feature flags, and transport</span></a></li>
+<li><a href="modules.woz_aliro.include.aliro_crypto.h.html"><span class="row-name">aliro_crypto.h</span><span class="row-desc">Aliro crypto public API: key derivation, AES-GCM secure channels, and wire message</span></a></li>
+<li><a href="modules.woz_aliro.include.aliro_prim.h.html"><span class="row-name">aliro_prim.h</span></a></li>
+<li><a href="modules.woz_aliro.include.aliro_prov.h.html"><span class="row-name">aliro_prov.h</span><span class="row-desc">Persistent reader provisioning storage: identity and credential trust anchors saved to and</span></a></li>
+<li><a href="modules.woz_aliro.include.aliro_reader.h.html"><span class="row-name">aliro_reader.h</span></a></li>
+</ul>
+<div class="ref-dir"><code>modules/woz_aliro/src</code></div>
+<ul class="rows mono">
+<li><a href="modules.woz_aliro.src.aliro_apdu.c.html"><span class="row-name">aliro_apdu.c</span><span class="row-desc">Aliro APDU TLV codec: builds command payloads (AUTH0, AUTH1, AuthData, EXCHANGE) and parses</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_apdu.h.html"><span class="row-name">aliro_apdu.h</span><span class="row-desc">APDU framing and parsing for the Aliro Access Protocol: builds outbound command APDUs via a</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_crypto.c.html"><span class="row-name">aliro_crypto.c</span><span class="row-desc">Aliro cryptographic primitives: key derivation (KDF/HKDF), key-block splitting, AES-GCM secure</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_hash.c.html"><span class="row-name">aliro_hash.c</span><span class="row-desc">Self-contained SHA-256, HMAC-SHA256, HKDF, and ANSI-X9.63 KDF implementation for the ESP32-IDF</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_hash.h.html"><span class="row-name">aliro_hash.h</span><span class="row-desc">Streaming SHA-256 (FIPS 180-4) implementation used by the Aliro crypto layer.</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_prim_psa.c.html"><span class="row-name">aliro_prim_psa.c</span><span class="row-desc">Aliro crypto primitive backend implemented on Arm PSA Crypto: random generation, AES-256-GCM</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_prov.c.html"><span class="row-name">aliro_prov.c</span><span class="row-desc">Aliro reader provisioning state: default dev identity, and serialization/deserialization of the</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_ranging.c.html"><span class="row-name">aliro_ranging.c</span><span class="row-desc">UWB ranging bring-up and lifecycle for the Aliro reader: initializes the reader&#x27;s UWB</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_ranging.h.html"><span class="row-name">aliro_ranging.h</span><span class="row-desc">Aliro M1-M4 ranging-setup interface: negotiates UWB ranging parameters with the device and</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_reader.c.html"><span class="row-name">aliro_reader.c</span><span class="row-desc">Aliro reader engine: drives the Access Protocol (AUTH0/AUTH1/EXCHANGE) handshake over BLE,</span></a></li>
+</ul>
+<div class="ref-dir"><code>modules/woz_aliro_ecp/src</code></div>
+<ul class="rows mono">
+<li><a href="modules.woz_aliro_ecp.src.nfc_prop_ecp.cpp.html"><span class="row-name">nfc_prop_ecp.cpp</span><span class="row-desc">NFC Type A proprietary callback implementation for Aliro Express unlock (tap-to-unlock without</span></a></li>
+</ul>
+<div class="ref-dir"><code>modules/woz_uwb/src/aliro</code></div>
+<ul class="rows mono">
+<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_adapter.c.html"><span class="row-name">aliro_uwb_adapter.c</span><span class="row-desc">@file aliro_uwb_adapter.c — reader-context lifecycle.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_internal.h.html"><span class="row-name">aliro_uwb_internal.h</span><span class="row-desc">@file aliro_uwb_internal.h — private context types and shared helpers.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_msg.c.html"><span class="row-name">aliro_uwb_msg.c</span><span class="row-desc">@file aliro_uwb_msg.c — setup/notification message codec.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_msg.h.html"><span class="row-name">aliro_uwb_msg.h</span><span class="row-desc">@file aliro_uwb_msg.h — message framing accessors, dispatch and builders.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_msg_builder.c.html"><span class="row-name">aliro_uwb_msg_builder.c</span><span class="row-desc">@file aliro_uwb_msg_builder.c — big-endian TLV message builder.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_msg_builder.h.html"><span class="row-name">aliro_uwb_msg_builder.h</span><span class="row-desc">@file aliro_uwb_msg_builder.h — big-endian TLV message builder.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_msg_parser.c.html"><span class="row-name">aliro_uwb_msg_parser.c</span><span class="row-desc">@file aliro_uwb_msg_parser.c — TLV attribute parser and big-endian reads.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_msg_parser.h.html"><span class="row-name">aliro_uwb_msg_parser.h</span><span class="row-desc">@file aliro_uwb_msg_parser.h — TLV attribute iteration and big-endian reads.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_msg_spec.h.html"><span class="row-name">aliro_uwb_msg_spec.h</span><span class="row-desc">@file aliro_uwb_msg_spec.h — UWB ranging-service framing constants.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_session.c.html"><span class="row-name">aliro_uwb_session.c</span><span class="row-desc">@file aliro_uwb_session.c — per-session lifecycle and state machine.</span></a></li>
+</ul>
+<div class="ref-dir"><code>modules/woz_uwb/src/aliro/include/aliro_uwb_adapter</code></div>
+<ul class="rows mono">
+<li><a href="modules.woz_uwb.src.aliro.include.aliro_uwb_adapter.aliro_uwb_adapter.h.html"><span class="row-name">aliro_uwb_adapter.h</span><span class="row-desc">@file aliro_uwb_adapter.h — reader-device public interface.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.include.aliro_uwb_adapter.aliro_uwb_session.h.html"><span class="row-name">aliro_uwb_session.h</span><span class="row-desc">@file aliro_uwb_session.h — per-session public interface.</span></a></li>
+</ul>
+<div class="ref-dir"><code>modules/woz_uwb/src/aliro/include/cherry</code></div>
+<ul class="rows mono">
+<li><a href="modules.woz_uwb.src.aliro.include.cherry.cherry.h.html"><span class="row-name">cherry.h</span><span class="row-desc">@file cherry.h — Cherry core (context + device-capabilities) interface.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.include.cherry.cherry_ccc.h.html"><span class="row-name">cherry_ccc.h</span><span class="row-desc">@file cherry_ccc.h — CCC/Aliro-session interface (seam the adapter drives).</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.include.cherry.cherry_common.h.html"><span class="row-name">cherry_common.h</span><span class="row-desc">@file cherry_common.h — diagnostics config struct and report forward decl.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.include.cherry.cherry_session.h.html"><span class="row-name">cherry_session.h</span><span class="row-desc">@file cherry_session.h — generic base-session interface.</span></a></li>
+</ul>
+<div class="ref-dir"><code>modules/woz_uwb/src/ccc</code></div>
+<ul class="rows mono">
+<li><a href="modules.woz_uwb.src.ccc.aliro_kdf.h.html"><span class="row-name">aliro_kdf.h</span><span class="row-desc">@file aliro_kdf.h — UWB Ranging Secret Key (URSK) length.</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.aliro_round_config.h.html"><span class="row-name">aliro_round_config.h</span><span class="row-desc">@file aliro_round_config.h — one knob for the CCC ranging round&#x27;s responder count.</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_crypto_mbedtls.c.html"><span class="row-name">ccc_crypto_mbedtls.c</span><span class="row-desc">@file ccc_crypto_mbedtls.c — AES-ECB block via mbedTLS, backing the CCC key schedule on SoCs</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_crypto_psa.c.html"><span class="row-name">ccc_crypto_psa.c</span><span class="row-desc">@file ccc_crypto_psa.c — On-target AES-ECB block (PSA/CC312) backing the CCC key schedule.</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_kdf.c.html"><span class="row-name">ccc_kdf.c</span><span class="row-desc">@file ccc_kdf.c — UWB key schedule + SP0 Pre-POLL frame codec.</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_kdf.h.html"><span class="row-name">ccc_kdf.h</span><span class="row-desc">@file ccc_kdf.h</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_mac.c.html"><span class="row-name">ccc_mac.c</span><span class="row-desc">@file ccc_mac.c — UWB MAC: hopping sequence, SP0 frame codec, ranging schedule.</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_mac.h.html"><span class="row-name">ccc_mac.h</span><span class="row-desc">@file ccc_mac.h — CCC UWB MAC layer: ranging-round scheduling, SP0 frame codec, DS-TWR.</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_session.c.html"><span class="row-name">ccc_session.c</span><span class="row-desc">@file ccc_session.c — Aliro/CCC ranging seam implementation. See ccc_session.h.</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_session.h.html"><span class="row-name">ccc_session.h</span><span class="row-desc">@file ccc_session.h — Aliro/CCC ranging seam: map an Aliro session&#x27;s URSK + M1-M4 setup to</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_shim.c.html"><span class="row-name">ccc_shim.c</span><span class="row-desc">@file ccc_shim.c — CCC STS substitution core (implementation).</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_shim.h.html"><span class="row-name">ccc_shim.h</span><span class="row-desc">@file ccc_shim.h — map a per-frame STS index to the (dURSK, STS-V) pair the DW3000 STS engine</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_shim_rx.c.html"><span class="row-name">ccc_shim_rx.c</span><span class="row-desc">@file ccc_shim_rx.c — responder-RX CCC STS substitution (ld --wrap=dwt_rxenable) programming the</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_shim_wrap.c.html"><span class="row-name">ccc_shim_wrap.c</span><span class="row-desc">@file ccc_shim_wrap.c — per-frame STS interception (ld --wrap=dwt_configurestsiv) substituting</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_sts.c.html"><span class="row-name">ccc_sts.c</span><span class="row-desc">@file ccc_sts.c — DW3000 STS register load for the CCC ranging path.</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.ccc_sts.h.html"><span class="row-name">ccc_sts.h</span><span class="row-desc">@file ccc_sts.h — load a CCC ranging PPDU&#x27;s STS key + IV into the DW3000 STS engine.</span></a></li>
+<li><a href="modules.woz_uwb.src.ccc.cherry_ccc_shim.c.html"><span class="row-name">cherry_ccc_shim.c</span><span class="row-desc">@file cherry_ccc_shim.c — cherry_ccc_* seam (Aliro responder) implemented over the lock-native</span></a></li>
+</ul>
+<div class="ref-dir"><code>modules/woz_uwb/src/driver</code></div>
+<ul class="rows mono">
+<li><a href="modules.woz_uwb.src.driver.uwb_isr.c.html"><span class="row-name">uwb_isr.c</span><span class="row-desc">@file uwb_isr.c — DW3000 interrupt-callback registration (implementation).</span></a></li>
+<li><a href="modules.woz_uwb.src.driver.uwb_isr.h.html"><span class="row-name">uwb_isr.h</span><span class="row-desc">@file uwb_isr.h — DW3000 interrupt-callback registration (public surface).</span></a></li>
+<li><a href="modules.woz_uwb.src.driver.uwb_min.c.html"><span class="row-name">uwb_min.c</span><span class="row-desc">@file uwb_min.c — DW3110 bring-up driver (implementation).</span></a></li>
+<li><a href="modules.woz_uwb.src.driver.uwb_min.h.html"><span class="row-name">uwb_min.h</span><span class="row-desc">@file uwb_min.h — Minimal DW3110 (DWM3000EVB) hardware bring-up driver.</span></a></li>
+<li><a href="modules.woz_uwb.src.driver.uwb_rxdiag.c.html"><span class="row-name">uwb_rxdiag.c</span><span class="row-desc">@file uwb_rxdiag.c — Diagnostic RX/TX event tallies + ranging heartbeat.</span></a></li>
+<li><a href="modules.woz_uwb.src.driver.uwb_rxdiag.h.html"><span class="row-name">uwb_rxdiag.h</span><span class="row-desc">@file uwb_rxdiag.h — Read-side accessors for the RX event tallies + log stream.</span></a></li>
+<li><a href="modules.woz_uwb.src.driver.uwb_selftest.c.html"><span class="row-name">uwb_selftest.c</span><span class="row-desc">@file uwb_selftest.c — Kconfig-gated one-shot UWB init self-test (no iPhone).</span></a></li>
+</ul>
+<div class="ref-dir"><code>modules/woz_uwb/src/facade</code></div>
+<ul class="rows mono">
+<li><a href="modules.woz_uwb.src.facade.trace.h.html"><span class="row-name">trace.h</span><span class="row-desc">@file trace.h — Structured [WOZ_TRACE] emit helpers, gated on CONFIG_WOZ_E2E_TRACE.</span></a></li>
+<li><a href="modules.woz_uwb.src.facade.woz_alloc.h.html"><span class="row-name">woz_alloc.h</span><span class="row-desc">Memory allocation and timing facade: qmalloc, qcalloc, qfree wrap the platform heap;</span></a></li>
+<li><a href="modules.woz_uwb.src.facade.woz_bytes.h.html"><span class="row-name">woz_bytes.h</span></a></li>
+<li><a href="modules.woz_uwb.src.facade.woz_diag.h.html"><span class="row-name">woz_diag.h</span><span class="row-desc">@file woz_diag.h — DIAGK(): compile-time gate for verbose UWB bring-up diagnostics.</span></a></li>
+<li><a href="modules.woz_uwb.src.facade.woz_log.h.html"><span class="row-name">woz_log.h</span></a></li>
+<li><a href="modules.woz_uwb.src.facade.woz_logfmt.c.html"><span class="row-name">woz_logfmt.c</span><span class="row-desc">@file woz_logfmt.c — PRETTY-gated high-res timestamp + compact colored log line.</span></a></li>
+<li><a href="modules.woz_uwb.src.facade.woz_logquiet.c.html"><span class="row-name">woz_logquiet.c</span><span class="row-desc">@file woz_logquiet.c — PRETTY-gated runtime muting of benign upstream error spam.</span></a></li>
+<li><a href="modules.woz_uwb.src.facade.woz_port.h.html"><span class="row-name">woz_port.h</span></a></li>
+<li><a href="modules.woz_uwb.src.facade.woz_util.h.html"><span class="row-name">woz_util.h</span></a></li>
+<li><a href="modules.woz_uwb.src.facade.woz_uwb_facade.c.html"><span class="row-name">woz_uwb_facade.c</span><span class="row-desc">UWB facade: binds the CCC credential-based STS engine to the DW3000 radio, exposes Aliro DS-TWR</span></a></li>
+<li><a href="modules.woz_uwb.src.facade.woz_uwb_facade.h.html"><span class="row-name">woz_uwb_facade.h</span><span class="row-desc">Public header for UWB facade: exposes Aliro DS-TWR responder lifecycle and range query; the CCC</span></a></li>
+</ul>
+<div class="ref-dir"><code>modules/woz_uwb/src/fira</code></div>
+<ul class="rows mono">
+<li><a href="modules.woz_uwb.src.fira.fira_device_config.h.html"><span class="row-name">fira_device_config.h</span><span class="row-desc">@file fira_device_config.h — FiRa DS-TWR device/session parameter bag consumed by</span></a></li>
+<li><a href="modules.woz_uwb.src.fira.fira_session.c.html"><span class="row-name">fira_session.c</span><span class="row-desc">@file fira_session.c — Range + URSK store for the CCC Pre-POLL responder.</span></a></li>
+<li><a href="modules.woz_uwb.src.fira.fira_session.h.html"><span class="row-name">fira_session.h</span><span class="row-desc">@file fira_session.h — Range + URSK store for the CCC Pre-POLL responder.</span></a></li>
+</ul>
+<div class="ref-dir"><code>modules/woz_uwb/src/shell</code></div>
+<ul class="rows mono">
+<li><a href="modules.woz_uwb.src.shell.aliro_shell.c.html"><span class="row-name">aliro_shell.c</span><span class="row-desc">@file aliro_shell.c — <code>aliro</code> UART shell command: colored console over the UWB engine.</span></a></li>
+</ul>
+<div class="ref-dir"><code>ports/esp32-idf/components/aliro_ble</code></div>
+<ul class="rows mono">
+<li><a href="ports.esp32-idf.components.aliro_ble.aliro_ble.c.html"><span class="row-name">aliro_ble.c</span><span class="row-desc">NimBLE-backed BLE transport for the Aliro reader: GAP advertising, the Aliro GATT service,</span></a></li>
+</ul>
+<div class="ref-dir"><code>ports/esp32-idf/components/aliro_reader</code></div>
+<ul class="rows mono">
+<li><a href="ports.esp32-idf.components.aliro_reader.aliro_prov_nvs.c.html"><span class="row-name">aliro_prov_nvs.c</span><span class="row-desc">NVS-backed persistence for Aliro reader provisioning: loads and stores the serialized reader</span></a></li>
+</ul>
+<div class="ref-dir"><code>ports/esp32-idf/components/woz_uwb/port</code></div>
+<ul class="rows mono">
+<li><a href="ports.esp32-idf.components.woz_uwb.port.board_pins.h.html"><span class="row-name">board_pins.h</span><span class="row-desc">DW3000 (DWM3000EVB) wiring on ESP32-S3, SPI2/FSPI. Mirrors the pin choices in</span></a></li>
+<li><a href="ports.esp32-idf.components.woz_uwb.port.dw3000_hw.c.html"><span class="row-name">dw3000_hw.c</span><span class="row-desc">ESP-IDF GPIO/IRQ backend for the DW3000 decadriver — implements dw3000_hw.h.</span></a></li>
+<li><a href="ports.esp32-idf.components.woz_uwb.port.dw3000_spi.c.html"><span class="row-name">dw3000_spi.c</span><span class="row-desc">ESP-IDF SPI backend for the DW3000 decadriver — implements dw3000_spi.h.</span></a></li>
+<li><a href="ports.esp32-idf.components.woz_uwb.port.woz_wrap_stubs.c.html"><span class="row-name">woz_wrap_stubs.c</span><span class="row-desc">Minimal ESP-IDF port of the essential RX-callback shim.</span></a></li>
+</ul>
+<div class="ref-dir"><code>ports/esp32-idf/main</code></div>
+<ul class="rows mono">
+<li><a href="ports.esp32-idf.main.app_shell.c.html"><span class="row-name">app_shell.c</span><span class="row-desc">ESP32-IDF console shell for the standalone Aliro UWB responder bench app: registers status, range, aliro-start/stop, pro</span></a></li>
+<li><a href="ports.esp32-idf.main.app_shell.h.html"><span class="row-name">app_shell.h</span></a></li>
+<li><a href="ports.esp32-idf.main.main.c.html"><span class="row-name">main.c</span><span class="row-desc">Woz UWB ranging engine on ESP32-S3 (ESP-IDF) — minimal bring-up app.</span></a></li>
+</ul>
+<div class="ref-dir"><code>ports/esp32-matter/main</code></div>
+<ul class="rows mono">
+<li><a href="ports.esp32-matter.main.app_driver.cpp.html"><span class="row-name">app_driver.cpp</span><span class="row-desc">Board driver glue for the ESP32 Matter port: button input, WS2812 lock-status LED, and the</span></a></li>
+<li><a href="ports.esp32-matter.main.app_main.cpp.html"><span class="row-name">app_main.cpp</span><span class="row-desc">Matter application main: door lock endpoint setup, Matter lifecycle event handling, and (when</span></a></li>
+<li><a href="ports.esp32-matter.main.app_priv.h.html"><span class="row-name">app_priv.h</span></a></li>
+<li><a href="ports.esp32-matter.main.app_shell.cpp.html"><span class="row-name">app_shell.cpp</span><span class="row-desc">ESP32-IDF console shell for the Aliro Matter door lock app: registers status, range, aliro, lock/unlock, codes, factoryr</span></a></li>
+<li><a href="ports.esp32-matter.main.app_shell.h.html"><span class="row-name">app_shell.h</span></a></li>
+<li><a href="ports.esp32-matter.main.lock_led.c.html"><span class="row-name">lock_led.c</span><span class="row-desc">Lock-state indicator LED: maps lock state (and Aliro activity) to an RGB colour for the single</span></a></li>
+<li><a href="ports.esp32-matter.main.lock_led.h.html"><span class="row-name">lock_led.h</span><span class="row-desc">Lock status LED color mapping: derives the RGB color for the lock indicator from the</span></a></li>
+</ul>
+<div class="ref-dir"><code>ports/esp32-matter/main/lock</code></div>
+<ul class="rows mono">
+<li><a href="ports.esp32-matter.main.lock.aliro_reader_delegate.cpp.html"><span class="row-name">aliro_reader_delegate.cpp</span><span class="row-desc">AliroReaderDelegate: implements the Aliro reader-provisioning and BLE-UWB portions of the Matter</span></a></li>
+<li><a href="ports.esp32-matter.main.lock.aliro_reader_delegate.h.html"><span class="row-name">aliro_reader_delegate.h</span><span class="row-desc">Declares AliroReaderDelegate, the Aliro (Apple Home Key) reader-provisioning and BLE-UWB half of</span></a></li>
+<li><a href="ports.esp32-matter.main.lock.door_lock_callbacks.cpp.html"><span class="row-name">door_lock_callbacks.cpp</span><span class="row-desc">Matter DoorLock cluster plugin callbacks: wires the ESP32 port&#x27;s BoltLockManager into the</span></a></li>
+<li><a href="ports.esp32-matter.main.lock.door_lock_manager.cpp.html"><span class="row-name">door_lock_manager.cpp</span><span class="row-desc">BoltLockManager: Matter door lock cluster backing store for the ESP32 port. Implements the DoorLock cluster&#x27;s user, cred</span></a></li>
+<li><a href="ports.esp32-matter.main.lock.door_lock_manager.h.html"><span class="row-name">door_lock_manager.h</span><span class="row-desc">Door lock manager for the Matter DoorLock cluster: owns bolt lock state plus the users,</span></a></li>
+</ul>
+<div class="ref-dir"><code>ports/esp32s3/sample/src</code></div>
+<ul class="rows mono">
+<li><a href="ports.esp32s3.sample.src.main.c.html"><span class="row-name">main.c</span><span class="row-desc">Woz UWB ranging engine on ESP32-S3 — minimal bring-up sample.</span></a></li>
+</ul>
+<div class="ref-dir"><code>tools</code></div>
+<ul class="rows mono">
+<li><a href="tools.docs_links.html"><span class="row-name">docs_links.py</span><span class="row-desc">Repair cross-document links in the rendered site, then assert none are left broken.</span></a></li>
+<li><a href="tools.docs_title.html"><span class="row-name">docs_title.py</span><span class="row-desc">Title the generated pages after the repository, not after the checkout directory.</span></a></li>
+</ul>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

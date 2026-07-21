@@ -1,0 +1,26 @@
+<map id="modules/woz_uwb/src/driver/uwb_selftest.c" name="modules/woz_uwb/src/driver/uwb_selftest.c">
+<area shape="rect" id="Node000001" title="— Kconfig&#45;gated one&#45;shot UWB init self&#45;test (no iPhone)." alt="" coords="249,5,400,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,98,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="255,49,109,92,107,87,258,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="122,94,232,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="286,48,214,89,211,84,290,45"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="256,94,394,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="326,44,327,80,322,77,323,49"/>
+<area shape="rect" id="Node000005" href="$woz__uwb__facade_8h_source.html" title=" " alt="" coords="418,94,552,120"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="365,44,449,86,444,87,365,49"/>
+<area shape="rect" id="Node000009" href="$ccc__shim_8h.html" title="— map a per&#45;frame STS index to the (dURSK, STS&#45;V) pair the DW3000 STS engine loads." alt="" coords="582,94,670,120"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="400,44,569,89,564,91,400,49"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="584,241,652,267"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="477,119,458,156,455,175,460,192,482,214,510,230,540,240,571,249,566,249,538,245,507,235,479,218,456,195,450,175,453,154,473,122"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="677,241,741,267"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="485,118,488,155,494,175,504,191,664,240,659,240,501,195,489,177,483,156,482,122"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="514,168,589,193"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="497,117,532,157,527,156,495,122"/>
+<area shape="poly" id="edge10_Node000009_Node000006" title=" " alt="" coords="628,118,622,227,617,224,623,122"/>
+<area shape="poly" id="edge11_Node000009_Node000007" title=" " alt="" coords="671,114,717,132,738,147,755,166,760,184,757,201,735,233,732,228,752,199,755,184,750,169,735,151,715,137,670,119"/>
+<area shape="poly" id="edge9_Node000009_Node000008" title=" " alt="" coords="616,119,576,159,573,155,611,121"/>
+<area shape="rect" id="Node000010" href="$ccc__kdf_8h.html" title="UWB ranging key schedule + SP0 frame crypto (CONFIG_WOZ_ALIRO)." alt="" coords="663,168,741,193"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="640,118,681,158,676,156,638,123"/>
+<area shape="poly" id="edge13_Node000010_Node000006" title=" " alt="" coords="690,193,645,233,643,229,685,195"/>
+<area shape="poly" id="edge14_Node000010_Node000007" title=" " alt="" coords="705,192,708,228,704,224,701,196"/>
+</map>

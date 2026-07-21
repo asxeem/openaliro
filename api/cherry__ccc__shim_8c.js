@@ -1,0 +1,26 @@
+var cherry__ccc__shim_8c =
+[
+    [ "cherry", "structcherry.html", "structcherry" ],
+    [ "cherry_session", "structcherry__session.html", "structcherry__session" ],
+    [ "cherry_ccc_session", "structcherry__ccc__session.html", "structcherry__ccc__session" ],
+    [ "SHIM_URSK_LEN", "cherry__ccc__shim_8c.html#a44caa4180eba44d8aca6b3214fc86aaf", null ],
+    [ "cherry_ccc_event_free", "cherry__ccc__shim_8c.html#a95da779e90c17527dd685af618d14621", null ],
+    [ "cherry_ccc_session_create_aliro_responder", "cherry__ccc__shim_8c.html#ac1ddf58e40dcfae4e8d7f5d8b1328b02", null ],
+    [ "cherry_ccc_session_set_initiation_time", "cherry__ccc__shim_8c.html#a07eff7b95702170d2244f64c6d476302", null ],
+    [ "cherry_ccc_session_set_protocol_version", "cherry__ccc__shim_8c.html#a6c73dcd3362bf0acaa202e92d8949a97", null ],
+    [ "cherry_ccc_session_set_round2_antennas", "cherry__ccc__shim_8c.html#adcad53e5766a3e5993d7c2e60eb2e29f", null ],
+    [ "cherry_ccc_session_set_sts_index", "cherry__ccc__shim_8c.html#a64a0c05e602f506cfd8b746e990e22cd", null ],
+    [ "cherry_ccc_session_set_ursk", "cherry__ccc__shim_8c.html#ad93b479576031776e58878c5f68097de", null ],
+    [ "cherry_ccc_session_to_base", "cherry__ccc__shim_8c.html#ae8c9296715cb56a540aee2ddda8234ba", null ],
+    [ "cherry_create", "cherry__ccc__shim_8c.html#a2e7f1a2cc3d8e53346f9885830c06bd6", null ],
+    [ "cherry_destroy_sync", "cherry__ccc__shim_8c.html#a8af83cd79707993b516ea3409546f39b", null ],
+    [ "cherry_session_destroy", "cherry__ccc__shim_8c.html#a13bd621b1c20f4098f504150e7e0ca43", null ],
+    [ "cherry_session_get_user_data", "cherry__ccc__shim_8c.html#a2f5be9ea57aace035b675cfe6dee6920", null ],
+    [ "cherry_session_set_antennas", "cherry__ccc__shim_8c.html#a05bac8bc4c900c0ff123209ac319d5c0", null ],
+    [ "cherry_session_set_diagnostics", "cherry__ccc__shim_8c.html#a1a0d98fcaab13b0bc950cf907a5c816d", null ],
+    [ "cherry_session_start", "cherry__ccc__shim_8c.html#a32789bd3c6cb1f2428abb154ec8ac39d", null ],
+    [ "cherry_session_stop", "cherry__ccc__shim_8c.html#ac0449851e8343c2bc04f978ff7b1cc76", null ],
+    [ "emit_error", "cherry__ccc__shim_8c.html#a6ffb543cd725e70c784a83dd75fbeb82", null ],
+    [ "emit_status", "cherry__ccc__shim_8c.html#a56fdc44a25ab7e9ad62730f1f217390f", null ],
+    [ "to_ccc", "cherry__ccc__shim_8c.html#a8b97df257c4033b00f58f36b95aded3b", null ]
+];

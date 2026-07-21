@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_uwb/src/fira/fira_session.c</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_uwb.src.fira.fira_session.c">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_uwb/src/fira</span><span class="sep">/</span><b>fira_session.c</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">fira_session.c</h1><p class="lede">@file fira_session.c — Range + URSK store for the CCC Pre-POLL responder.</p><div class="metarow"><span><code>modules/woz_uwb/src/fira/fira_session.c</code></span><span>8 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>@file fira_session.c — Range + URSK store for the CCC Pre-POLL responder.</p>
+<p class="chips">depends on <a href="modules.woz_uwb.src.ccc.aliro_kdf.h.html"><code>modules/woz_uwb/src/ccc/aliro_kdf.h</code></a>, <a href="modules.woz_uwb.src.facade.woz_port.h.html"><code>modules/woz_uwb/src/facade/woz_port.h</code></a>, <a href="modules.woz_uwb.src.fira.fira_session.h.html"><code>modules/woz_uwb/src/fira/fira_session.h</code></a></p>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="fira_session_set_provisioned_ursk">
+<h3><span class="kindb" title="function">F</span><code>void <b>fira_session_set_provisioned_ursk</b>(const uint8_t *ursk)</code></h3>
+<div class="src">modules/woz_uwb/src/fira/fira_session.c:18</div>
+<p>Stash an Aliro URSK for the CCC Pre-POLL STS decode; NULL clears it.</p>
+</section>
+<section class="api-entry" id="fira_session_get_ursk">
+<h3><span class="kindb" title="function">F</span><code>const uint8_t *<b>fira_session_get_ursk</b>(void)</code></h3>
+<div class="src">modules/woz_uwb/src/fira/fira_session.c:29</div>
+<p>The stashed Aliro URSK (32 bytes), or NULL if none — for the Pre-POLL decode.</p>
+</section>
+<section class="api-entry" id="fira_session_current_slot">
+<h3><span class="kindb" title="function">F</span><code>uint32_t <b>fira_session_current_slot</b>(void)</code></h3>
+<div class="src">modules/woz_uwb/src/fira/fira_session.c:34</div>
+<p>STS-index slot clock (inert without a MAC time base); returns 0.</p>
+</section>
+<section class="api-entry" id="fira_session_last_range">
+<h3><span class="kindb" title="function">F</span><code>bool <b>fira_session_last_range</b>(int32_t *cm_out, uint16_t *addr_out, uint8_t *nlos_out, uint32_t *block_out, int64_t *age_ms_out)</code></h3>
+<div class="src">modules/woz_uwb/src/fira/fira_session.c:52</div>
+<p>Fetch the most recent valid DS-TWR range; out-params optional (NULL to skip).</p>
+</section>
+<section class="api-entry" id="fira_session_range_plausible">
+<h3><span class="kindb" title="function">F</span><code>bool <b>fira_session_range_plausible</b>(int32_t cm)</code></h3>
+<div class="src">modules/woz_uwb/src/fira/fira_session.c:77</div>
+<p>Layer 1: true if @p cm is a physically plausible DS-TWR distance.</p>
+<div class="xref">called by <code>fira_session_set_ccc_range_cm</code></div>
+</section>
+<section class="api-entry" id="fira_session_sts_quality_ok">
+<h3><span class="kindb" title="function">F</span><code>bool <b>fira_session_sts_quality_ok</b>(int32_t driver_verdict, int16_t quality_index)</code></h3>
+<div class="src">modules/woz_uwb/src/fira/fira_session.c:82</div>
+<p>Layer 2: true if the STS correlated well enough to trust its timestamp.</p>
+<dl class="params"><dt><code>driver_verdict</code></dt><dd>dwt_readstsquality() return (&gt;=0 good, &lt;0 bad).</dd><dt><code>quality_index</code></dt><dd>the signed STS quality index it wrote.</dd></dl>
+</section>
+<section class="api-entry" id="fira_session_range_trusted">
+<h3><span class="kindb" title="function">F</span><code>bool <b>fira_session_range_trusted</b>(void)</code></h3>
+<div class="src">modules/woz_uwb/src/fira/fira_session.c:87</div>
+<p>Layer 4: true once &gt;= K consecutive plausible, mutually consistent ranges have been latched. Cleared by any implausible or outlier block.</p>
+</section>
+<section class="api-entry" id="fira_session_set_ccc_range_cm">
+<h3><span class="kindb" title="function">F</span><code>void <b>fira_session_set_ccc_range_cm</b>(int32_t cm, uint32_t block)</code></h3>
+<div class="src">modules/woz_uwb/src/fira/fira_session.c:92</div>
+<p>Latch a CCC DS-TWR range so it flows up the Aliro mRangingData seam.</p>
+<div class="xref">calls <code>fira_session_range_plausible</code></div>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+<map id="aliro_uwb_msg_builder" name="aliro_uwb_msg_builder">
+<area shape="rect" id="Node000001" title="Accumulates bytes into a heap&#45;allocated Aliro UWB message." alt="" coords="5,102,159,128"/>
+<area shape="rect" id="Node000002" href="$structaliro__uwb__message.html" title="Framed Aliro BLE message with 4&#45;byte header followed by TLV payload." alt="" coords="14,5,150,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,45,85,102,79,101,80,48"/>
+</map>

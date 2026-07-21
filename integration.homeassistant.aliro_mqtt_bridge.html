@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>integration/homeassistant/aliro_mqtt_bridge.py</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="integration.homeassistant.aliro_mqtt_bridge">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>integration/homeassistant</span><span class="sep">/</span><b>aliro_mqtt_bridge.py</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_mqtt_bridge.py</h1><p class="lede">Republish the lock&#x27;s console log to MQTT as Home Assistant entities.</p><div class="metarow"><span><code>integration/homeassistant/aliro_mqtt_bridge.py</code></span><span>4 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<h2>Overview</h2>
+<p>Republish the lock&#x27;s console log to MQTT as Home Assistant entities.</p>
+<p>Usage: aliro_mqtt_bridge.py --port /dev/tty.usbmodem1234 [--broker HOST] [--node NAME]
+       aliro_mqtt_bridge.py --port - --dry-run &lt; captured.log</p>
+<p>Reads the UWB console line by line, extracts the per-block range line and the
+access verdict, and publishes them as two MQTT Discovery entities: a distance
+sensor in millimetres and an access event carrying granted/denied. Lines
+matching neither pattern are ignored.</p>
+<p>The range line is gated on the firmware side behind CONFIG_WOZ_PRETTY_SHELL and
+uwb_rxdiag_rng_get(), so it only appears once <code>aliro frames on</code> has been issued
+on the shell. Without that, the access events still flow but distance stays
+unpublished.</p>
+<p>Reading from &#x27;-&#x27; takes the log on stdin, which with --dry-run exercises the
+parser and the payloads without a broker or a board attached. paho-mqtt is
+imported only when publishing, pyserial only for a real port, so neither is
+needed for a dry run.</p>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="parse_line">
+<h3><span class="kindb" title="function">F</span><code><b>parse_line</b>(line: str) -&gt; Optional[dict]</code></h3>
+<div class="src">integration/homeassistant/aliro_mqtt_bridge.py:38</div>
+<p>Return a reading dict for a range or access line, else None.</p>
+<p>Zephyr prefixes every line with a timestamp and module tag, so both
+patterns are searched for rather than anchored.</p>
+<div class="xref">called by <code>main</code></div>
+</section>
+<section class="api-entry" id="discovery_payloads">
+<h3><span class="kindb" title="function">F</span><code><b>discovery_payloads</b>(node: str) -&gt; list[tuple[str, dict]]</code></h3>
+<div class="src">integration/homeassistant/aliro_mqtt_bridge.py:60</div>
+<p>Return (topic, config) pairs announcing both entities to Home Assistant.</p>
+<div class="xref">called by <code>main</code></div>
+</section>
+<section class="api-entry" id="reading_to_message">
+<h3><span class="kindb" title="function">F</span><code><b>reading_to_message</b>(node: str, reading: dict) -&gt; tuple[str, str]</code></h3>
+<div class="src">integration/homeassistant/aliro_mqtt_bridge.py:97</div>
+<p>Map a parsed reading to the (topic, payload) that carries it.</p>
+<div class="xref">called by <code>main</code></div>
+</section>
+<section class="api-entry" id="open_lines">
+<h3><span class="kindb" title="function">F</span><code><b>open_lines</b>(port: str, baud: int) -&gt; Iterator[str]</code></h3>
+<div class="src">integration/homeassistant/aliro_mqtt_bridge.py:105</div>
+<p>Yield console lines from stdin (&#x27;-&#x27;) or from a serial port.</p>
+<div class="xref">called by <code>main</code></div>
+</section>
+</div>
+<details><summary>Undocumented (1)</summary><p><code>main</code></p></details>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>

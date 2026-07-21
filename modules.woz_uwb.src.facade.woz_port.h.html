@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>modules/woz_uwb/src/facade/woz_port.h</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="side" data-active="modules.woz_uwb.src.facade.woz_port.h">
+<div class="side-head">
+<a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov-bar"><span style="width:97%"></span></div></div>
+</div>
+<button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
+<nav class="tree" id="tree"></nav>
+</aside>
+<div class="content">
+<header class="topbar">
+<button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+<div class="crumb"><span>modules/woz_uwb/src/facade</span><span class="sep">/</span><b>woz_port.h</b></div>
+<div class="spacer"></div>
+<button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+<button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
+</header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">woz_port.h</h1><div class="metarow"><span><code>modules/woz_uwb/src/facade/woz_port.h</code></span><span>12 documented symbols</span></div></div></header>
+<div class="mid">
+<main class="doc ">
+<p class="chips">used by <a href="modules.woz_aliro.src.aliro_reader.c.html"><code>modules/woz_aliro/src/aliro_reader.c</code></a>, <a href="modules.woz_uwb.src.ccc.ccc_shim_rx.c.html"><code>modules/woz_uwb/src/ccc/ccc_shim_rx.c</code></a>, <a href="modules.woz_uwb.src.driver.uwb_isr.c.html"><code>modules/woz_uwb/src/driver/uwb_isr.c</code></a>, <a href="modules.woz_uwb.src.driver.uwb_min.c.html"><code>modules/woz_uwb/src/driver/uwb_min.c</code></a>, <a href="modules.woz_uwb.src.facade.woz_alloc.h.html"><code>modules/woz_uwb/src/facade/woz_alloc.h</code></a>, <a href="modules.woz_uwb.src.fira.fira_session.c.html"><code>modules/woz_uwb/src/fira/fira_session.c</code></a></p>
+<div class="section-h"><h2>API</h2><span class="rule"></span></div>
+<div class="api">
+<section class="api-entry" id="woz_malloc">
+<h3><span class="kindb" title="function">F</span><code>static inline void *<b>woz_malloc</b>(size_t size)</code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:162</div>
+<p>Allocate size bytes.</p>
+<dl class="params"><dt><code>size</code></dt><dd>Number of bytes to allocate.</dd><dt>returns</dt><dd>Pointer to allocated memory, or NULL on failure.</dd></dl>
+</section>
+<section class="api-entry" id="woz_calloc">
+<h3><span class="kindb" title="function">F</span><code>static inline void *<b>woz_calloc</b>(size_t n, size_t size)</code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:172</div>
+<p>Allocate and zero-initialize n elements of size bytes each.</p>
+<dl class="params"><dt><code>n</code></dt><dd>Number of elements.</dd><dt><code>size</code></dt><dd>Bytes per element.</dd><dt>returns</dt><dd>Pointer to allocated and zeroed memory, or NULL on failure.</dd></dl>
+</section>
+<section class="api-entry" id="woz_free">
+<h3><span class="kindb" title="function">F</span><code>static inline void <b>woz_free</b>(void *ptr)</code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:180</div>
+<p>Deallocate memory.</p>
+<dl class="params"><dt><code>ptr</code></dt><dd>Pointer to memory to free (may be NULL).</dd></dl>
+</section>
+<section class="api-entry" id="woz_uptime_us">
+<h3><span class="kindb" title="function">F</span><code>static inline int64_t <b>woz_uptime_us</b>(void)</code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:188</div>
+<p>Monotonic microseconds since boot.</p>
+<dl class="params"><dt>returns</dt><dd>Microseconds elapsed since system start.</dd></dl>
+<div class="xref">called by <code>woz_cycle_get_32</code>, <code>woz_uptime_ms</code></div>
+</section>
+<section class="api-entry" id="woz_uptime_ms">
+<h3><span class="kindb" title="function">F</span><code>static inline int64_t <b>woz_uptime_ms</b>(void)</code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:199</div>
+<p>Monotonic milliseconds since boot.</p>
+<dl class="params"><dt>returns</dt><dd>Milliseconds elapsed since system start.</dd></dl>
+<div class="xref">calls <code>woz_uptime_us</code></div>
+</section>
+<section class="api-entry" id="woz_sleep_ms">
+<h3><span class="kindb" title="function">F</span><code>static inline void <b>woz_sleep_ms</b>(int32_t ms)</code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:207</div>
+<p>Sleep for a given number of milliseconds (host-test stub).</p>
+<dl class="params"><dt><code>ms</code></dt><dd>milliseconds to sleep; ignored in deterministic host tests.</dd></dl>
+</section>
+<section class="api-entry" id="woz_sleep_us">
+<h3><span class="kindb" title="function">F</span><code>static inline void <b>woz_sleep_us</b>(int64_t us)</code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:215</div>
+<p>Sleep for a given number of microseconds (host-test stub).</p>
+<dl class="params"><dt><code>us</code></dt><dd>microseconds to sleep; ignored in deterministic host tests.</dd></dl>
+</section>
+<section class="api-entry" id="woz_cycle_get_32">
+<h3><span class="kindb" title="function">F</span><code>static inline uint32_t <b>woz_cycle_get_32</b>(void)</code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:223</div>
+<p>Retrieve a 32-bit cycle counter with microsecond resolution.</p>
+<dl class="params"><dt>returns</dt><dd>current uptime in microseconds, cast to uint32_t.</dd></dl>
+<div class="xref">calls <code>woz_uptime_us</code></div>
+</section>
+<section class="api-entry" id="woz_mutex_t">
+<h3><span class="kindb" title="class">C</span><code>typedef int <b>woz_mutex_t</b></code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:230</div>
+<p>Opaque mutex type for host tests (single-threaded, no-op).</p>
+</section>
+<section class="api-entry" id="woz_mutex_init">
+<h3><span class="kindb" title="function">F</span><code>static inline void <b>woz_mutex_init</b>(woz_mutex_t *m)</code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:235</div>
+<p>Initialize a mutex (host-test stub).</p>
+<dl class="params"><dt><code>m</code></dt><dd>pointer to mutex to initialize; no-op in single-threaded tests.</dd></dl>
+</section>
+<section class="api-entry" id="woz_mutex_lock">
+<h3><span class="kindb" title="function">F</span><code>static inline void <b>woz_mutex_lock</b>(woz_mutex_t *m)</code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:243</div>
+<p>Acquire a mutex (host-test stub).</p>
+<dl class="params"><dt><code>m</code></dt><dd>pointer to mutex to lock; no-op in single-threaded tests.</dd></dl>
+</section>
+<section class="api-entry" id="woz_mutex_unlock">
+<h3><span class="kindb" title="function">F</span><code>static inline void <b>woz_mutex_unlock</b>(woz_mutex_t *m)</code></h3>
+<div class="src">modules/woz_uwb/src/facade/woz_port.h:251</div>
+<p>Release a mutex (host-test stub).</p>
+<dl class="params"><dt><code>m</code></dt><dd>pointer to mutex to unlock; no-op in single-threaded tests.</dd></dl>
+</section>
+</div>
+</main>
+<aside class="toc-rail" id="toc" aria-label="On this page"></aside>
+</div>
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+<input id="palInput" placeholder="Jump to a module or symbol…" autocomplete="off" spellcheck="false">
+<div class="results" id="results"></div>
+<div class="pal-foot"><span><kbd>&#8593;&#8595;</kbd>navigate</span><span><kbd>&#8629;</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script defer src="nav.js"></script>
+</body>
+</html>
