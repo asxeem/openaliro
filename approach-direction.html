@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="openaliro">
+<meta property="og:title" content="Approach Direction — the Home app Left/Front/Right control">
+<meta property="og:image" content="https://asxeem.github.io/openaliro/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
 <title>Approach Direction — the Home app Left/Front/Right control</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -11,7 +16,7 @@
 <aside class="side" data-active="approach-direction">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>603/616 · 97%</b></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>605/619 · 97%</b></div>
 <div class="cov-bar"><span style="width:97%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
@@ -82,9 +87,23 @@ credential key NOT trusted (not in trust store); rejecting</code></pre>
 <p><strong>VERIFIED.</strong> Nothing gates an unlock on the stored value. Measuring which direction a phone approaches from requires angle of arrival, which needs a dual-antenna UWB part. The DW3110 used on the DWM3000EVB has a single antenna and cannot produce it.</p>
 <p>The attribute is stored, reported, and round-trips correctly to the app. The behaviour behind it is not implemented, and on this hardware cannot be.</p>
 <h2>9. Port coverage</h2>
-<table><thead><tr><th>Port</th><th>Status</th></tr></thead><tbody><tr><td><code>ports/esp32-matter</code></td><td><strong>implemented</strong> — runtime <code>cluster::create()</code> in <code>app_main.cpp</code></td></tr><tr><td>nRF5340 door lock app</td><td><strong>not implemented</strong></td></tr></tbody></table>
-<p>The two ports build their data models differently. The ESP32 port constructs endpoints at runtime, so the cluster is a few lines of C++. The nRF app&#x27;s data model is ZAP-generated from a <code>.zap</code> file, so adding a manufacturer cluster there means supplying a custom cluster definition XML, registering it with ZAP, adding the cluster to the door lock endpoint, and regenerating.</p>
-<p>One consolation for that work: ZAP emits <code>FeatureMap</code> and <code>ClusterRevision</code> for every cluster automatically, so §3 — the trap that cost the most time here — cannot occur on that path.</p>
+<table><thead><tr><th>Port</th><th>Status</th></tr></thead><tbody><tr><td><code>ports/esp32-matter</code></td><td><strong>implemented</strong> — runtime <code>cluster::create()</code> in <code>app_main.cpp</code></td></tr><tr><td>nRF5340 door lock app</td><td><strong>implemented</strong> — static tables, <code>integration/patches/approach-direction-cluster.patch</code></td></tr></tbody></table>
+<p>The two ports build their data models differently. The ESP32 port constructs endpoints at runtime, so the cluster is a few lines of C++. The nRF app&#x27;s is a set of static tables compiled into the image.</p>
+<h3>9.1 The nRF data model is not regenerated at build time</h3>
+<p><strong>VERIFIED.</strong> It is tempting to assume the <code>.zap</code> file is the source of truth and edit it. It is not, on this build. <code>ncs_configure_data_model</code> passes <code>BYPASS_IDL</code> to <code>chip_configure_data_model</code>, which takes the branch that *skips* the <code>chip_zapgen</code> target entirely and instead adds the checked-in <code>zap-generated/</code> directory as an include path. <code>endpoint_config.h</code> appears nowhere in <code>build.ninja</code> as a build rule. Editing <code>lock.zap</code> alone changes nothing in the image.</p>
+<p>The variant in use is selected by <code>src/matter/CMakeLists.txt</code>: with <code>CONFIG_NCS_SAMPLE_MATTER_ZAP_FILE_PATH</code> unset and <code>CONFIG_DOOR_LOCK_BLE_UWB=y</code>, that is <code>zap_uwb/</code>. Read it from a configured build&#x27;s <code>.config</code>, not from Kconfig defaults.</p>
+<p>So the cluster is added by patching the generated <code>endpoint_config.h</code>: three attribute records, one cluster record, and the counters that describe them.</p>
+<h3>9.2 The counters must stay consistent with the tables</h3>
+<p>The static tables are index-addressed, and four <code>#define</code>s must agree with them: <code>GENERATED_ATTRIBUTE_COUNT</code>, <code>GENERATED_CLUSTER_COUNT</code>, <code>ZAP_FIXED_ENDPOINT_DATA_VERSION_COUNT</code> and <code>ATTRIBUTE_MAX_SIZE</code>, plus the per-endpoint <code>GENERATED_ENDPOINT_TYPES</code> row <code>{ cluster index, cluster count, endpoint size }</code>.</p>
+<p>Two structural rules make the edit an append rather than a renumbering:</p>
+<ul><li>A cluster&#x27;s attributes must be <strong>contiguous</strong> in the attribute table, and an endpoint&#x27;s</li></ul>
+<p>clusters contiguous in the cluster table. The door lock endpoint&#x27;s clusters are already last, so a new cluster appends at the end of both tables without moving anything.</p>
+<ul><li><code>clusterSize</code> is the sum of the sizes of that cluster&#x27;s attributes that are <strong>not</strong></li></ul>
+<p><code>EXTERNAL_STORAGE</code>, and an endpoint&#x27;s size is the sum of its clusters&#x27; sizes. All three new attributes are RAM-backed, so the cluster adds 1 + 4 + 2 = 7 bytes, and both the endpoint row and <code>ATTRIBUTE_MAX_SIZE</code> grow by 7.</p>
+<p>These are checkable rather than guessable: every counter can be re-derived from the tables in the same file, which is the cheapest way to catch an arithmetic slip before a build.</p>
+<p>One thing this path does get for free: <code>FeatureMap</code> and <code>ClusterRevision</code> are written out per cluster like any other attribute, so §3 — the trap that cost the most time on the other port — cannot occur here as an omission by a helper.</p>
+<h3>9.3 It collides with the opt-in Home Assistant patches</h3>
+<p><code>ha-occupancy-endpoint.patch</code> adds a third endpoint and so bumps the <strong>same</strong> counter lines. Two patches cannot both change <code>GENERATED_ATTRIBUTE_COUNT 205</code>, in either order. The stack is therefore cumulative: Approach Direction applies first, and the HA patches are cut against a tree that already has it. <code>tests/tooling/patch_drift_check.sh</code> applies all of them in that order, so a future edit that breaks the composition fails there.</p>
 </main>
 <aside class="toc-rail" id="toc" aria-label="On this page"></aside>
 </div>
