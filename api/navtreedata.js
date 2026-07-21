@@ -53,7 +53,7 @@ var NAVTREEINDEX =
 "aliro__apdu_8h_source.html",
 "ccc__kdf_8h.html#a9796c95f276324ced7be149ca03fbec8",
 "dir_4e66aa6a3b20794b61bd99422a9b7392.html",
-"structwoz__uwb__aliro__cfg.html#a12454975af6fbe32a1bb8f6b9dc63509"
+"structwoz__sink.html"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';
