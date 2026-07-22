@@ -16,7 +16,7 @@
 <area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="416,48,260,92,259,87,421,45"/>
 <area shape="rect" id="Node000012" href="$uwb__rxdiag_8h.html" title="— Read&#45;side accessors for the RX event tallies + log stream." alt="" coords="27,94,125,120"/>
 <area shape="poly" id="edge16_Node000001_Node000012" title=" " alt="" coords="414,44,142,96,140,91,416,39"/>
-<area shape="rect" id="Node000013" href="$woz__diag_8h.html" title="— DIAGK(): compile&#45;time gate for verbose UWB bring&#45;up diagnostics." alt="" coords="1069,94,1156,120"/>
+<area shape="rect" id="Node000013" href="$woz__diag_8h.html" title="— DIAGK(): gate for verbose UWB bring&#45;up diagnostics." alt="" coords="1069,94,1156,120"/>
 <area shape="poly" id="edge19_Node000001_Node000013" title=" " alt="" coords="567,31,782,54,1056,93,1051,94,782,59,567,36"/>
 <area shape="rect" id="Node000015" href="$woz__alloc_8h_source.html" title=" " alt="" coords="388,94,479,120"/>
 <area shape="poly" id="edge21_Node000001_Node000015" title=" " alt="" coords="479,45,453,83,450,79,475,48"/>

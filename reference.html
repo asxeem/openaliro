@@ -16,8 +16,8 @@
 <aside class="side" data-active="reference">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -39,7 +39,7 @@
 <ul><li>preprocessor constants, which is where most of the protocol lives in this codebase</li></ul>
 <p>(attribute IDs, frame lengths, key-block offsets, bitmask layouts)</p>
 <ul><li>enum values and their numeric encodings</li><li>struct members, with the per-field comments</li><li>include graphs</li></ul>
-<p>It covers the code this project owns: <code>modules/woz_uwb</code>, <code>modules/woz_aliro_ecp</code>, and the ESP32-S3 reader components (<code>aliro_ble</code>, <code>aliro_crypto</code>, <code>aliro_reader</code>). The Zephyr compatibility shim is excluded as port scaffolding rather than API.</p>
+<p>It covers the code this project owns: <code>modules/woz_port</code>, <code>modules/woz_uwb</code>, <code>modules/woz_aliro</code>, <code>modules/woz_aliro_ecp</code>, and the ESP32-S3 reader components (<code>aliro_ble</code>, <code>aliro_crypto</code>, <code>aliro_reader</code>).</p>
 <h2>Reference or Architecture?</h2>
 <p>The two trees answer different questions, and neither replaces the other.</p>
 <table><thead><tr><th>Question</th><th>Where to look</th></tr></thead><tbody><tr><td>What are the fields of this struct? What is this constant&#x27;s value?</td><td>Reference</td></tr><tr><td>What calls this function, and what does it call?</td><td><a href="architecture.html">Architecture</a></td></tr><tr><td>Which files make up this subsystem, and what depends on what?</td><td><a href="architecture.html">Architecture</a></td></tr><tr><td>Why is it built this way? What went wrong on the bench?</td><td>The guides, starting with <a href="esp32-gotchas.html"><code>esp32-gotchas.md</code></a></td></tr></tbody></table>

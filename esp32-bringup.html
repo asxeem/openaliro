@@ -16,8 +16,8 @@
 <aside class="side" data-active="esp32-bringup">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -34,7 +34,7 @@
 <header class="hero-band"><div class="hero-in"><div class="eyebrow">Hardware</div><h1>ESP32-S3 bring-up</h1></div></header>
 <div class="mid">
 <main class="doc reading">
-<p>One page, match-the-table. The pin map&#x27;s source of truth is <code>components/woz_uwb/port/board_pins.h</code>; if you change it there, change it here.</p>
+<p>One page, match-the-table. The pin map&#x27;s source of truth is <code>ports/esp32/components/woz_uwb/port/board_pins.h</code>; if you change it there, change it here.</p>
 <h2>1. Wire it (11 connections)</h2>
 <p>Power the EVB from the ESP32-S3 board&#x27;s <strong>3V3</strong> pin, not 5 V — the DW3000 is a 3.3 V part. Share a common ground and USB-power the board during bring-up.</p>
 <table><thead><tr><th>DWM3000EVB (Arduino pin)</th><th>Signal</th><th>→</th><th>ESP32-S3</th></tr></thead><tbody><tr><td>D13</td><td>SCLK</td><td>→</td><td>GPIO12</td></tr><tr><td>D11</td><td>MOSI</td><td>→</td><td>GPIO11</td></tr><tr><td>D12</td><td>MISO</td><td>→</td><td>GPIO13</td></tr><tr><td>D10</td><td>CS</td><td>→</td><td>GPIO10</td></tr><tr><td>D8</td><td>IRQ</td><td>→</td><td>GPIO5</td></tr><tr><td>D7</td><td>RSTn</td><td>→</td><td>GPIO4</td></tr><tr><td>D9</td><td>WAKEUP</td><td>→</td><td>GPIO6</td></tr><tr><td>3V3</td><td>power</td><td>→</td><td>3V3</td></tr><tr><td>GND</td><td>ground</td><td>→</td><td>GND</td></tr><tr><td>D1</td><td>SPI-POL</td><td>→</td><td>GND (mode-0 strap)</td></tr><tr><td>D0</td><td>SPI-PHA</td><td>→</td><td>GND (mode-0 strap)</td></tr></tbody></table>
@@ -54,7 +54,7 @@
 <p>recheck the power-select jumper, then CS/SCLK/MOSI/MISO, then the mode-0 strap, then drop to slow-only by setting <code>WOZ_DW3000_SPI_FAST_HZ</code> to <code>2000000</code> in <code>board_pins.h</code>.</p>
 <h2>4. Prove a real range</h2>
 <p>Ranging needs a peer to drive the DS-TWR exchange: an Aliro-capable iPhone with a key provisioned for this reader, or a second DW3000 board acting as initiator. With a peer, <code>range: NN cm</code> lines appear and <code>status</code> reports a trusted range.</p>
-<p>For the full approach-unlock path — commissioning, a key in the phone&#x27;s wallet, and the Wallet unlock animation — use the Matter app in <a href="https://github-asxeem/asxeem/openaliro/blob/main/ports/esp32/apps/matter-lock"><code>../matter-lock</code></a> instead. This bench app has no Matter layer, so nothing provisions a real credential into a phone for it.</p>
+<p>For the full approach-unlock path — commissioning, a key in the phone&#x27;s wallet, and the Wallet unlock animation — use the Matter app in <a href="https://github-asxeem/asxeem/openaliro/blob/main/ports/esp32/apps/matter-lock"><code>ports/esp32/apps/matter-lock</code></a> instead. This bench app has no Matter layer, so nothing provisions a real credential into a phone for it.</p>
 <p>No antenna calibration was needed on this hardware. If distances come out negative or absurd, read <a href="esp32-gotchas.html"><code>docs/esp32-gotchas.md</code></a> §6.4 before reaching for a calibration constant — it was a timestamp-pairing bug, not a physical offset.</p>
 <style id="gv-pager-css">
 .gv-pager{display:flex;gap:.8rem;margin:2.6rem 0 .4rem;padding-top:1.4rem;border-top:1px solid var(--line)}

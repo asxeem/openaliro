@@ -22,7 +22,7 @@
 <!-- Node1 -->
 <g id="Node000001" class="node">
 <title>Node1</title>
-<g id="a_Node000001"><a xlink:title="— DIAGK(): compile&#45;time gate for verbose UWB bring&#45;up diagnostics.">
+<g id="a_Node000001"><a xlink:title="— DIAGK(): gate for verbose UWB bring&#45;up diagnostics.">
 <polygon fill="#999999" stroke="#666666" points="113.5,-85.75 0,-85.75 0,-55.25 113.5,-55.25 113.5,-85.75"/>
 <text xml:space="preserve" text-anchor="start" x="8" y="-72.25" font-family="Helvetica,sans-Serif" font-size="10.00">modules/woz_uwb/src</text>
 <text xml:space="preserve" text-anchor="middle" x="56.75" y="-61" font-family="Helvetica,sans-Serif" font-size="10.00">/facade/woz_diag.h</text>

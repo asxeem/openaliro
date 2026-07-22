@@ -16,8 +16,8 @@
 <aside class="side" data-active="set-up">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -53,8 +53,7 @@
 <h2>ESP32-S3 ports</h2>
 <p>Both apps expect ESP-IDF at <code>~/esp/esp-idf</code> (override: <code>IDF_EXPORT=</code>); CI pins ESP-IDF v5.5.4 and esp-matter in <a href="https://github-asxeem/asxeem/openaliro/blob/main/.github/workflows/firmware-builds.yml"><code>firmware-builds.yml</code></a>.</p>
 <p><strong>Reader</strong> (<code>../ports/esp32/apps/reader</code>): plain ESP-IDF, no esp-matter.</p>
-<div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">cd ports/esp32/apps/reader</span><button type="button" class="js-copycmd" data-cmd="cd ports/esp32/apps/reader">Copy</button></div><div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">make set-target</span><button type="button" class="js-copycmd" data-cmd="make set-target">Copy</button></div><div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">make build</span><button type="button" class="js-copycmd" data-cmd="make build">Copy</button></div><div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">make flash</span><button type="button" class="js-copycmd" data-cmd="make flash">Copy</button></div>
-<p><code>make set-target</code> runs once per checkout.</p>
+<div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">cd ports/esp32/apps/reader</span><button type="button" class="js-copycmd" data-cmd="cd ports/esp32/apps/reader">Copy</button></div><div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">idf.py set-target esp32s3</span><button type="button" class="js-copycmd" data-cmd="idf.py set-target esp32s3">Copy</button></div><div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">make build</span><button type="button" class="js-copycmd" data-cmd="make build">Copy</button></div><div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">make flash</span><button type="button" class="js-copycmd" data-cmd="make flash">Copy</button></div>
 <p><strong>Matter door lock</strong> (<code>../ports/esp32/apps/matter-lock</code>): also needs esp-matter at <code>~/esp/esp-matter</code> (override: <code>ESP_MATTER_PATH=</code>).</p>
 <div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">cd ports/esp32/apps/matter-lock</span><button type="button" class="js-copycmd" data-cmd="cd ports/esp32/apps/matter-lock">Copy</button></div><div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">make set-target</span><button type="button" class="js-copycmd" data-cmd="make set-target">Copy</button></div><div class="cmdchip"><span class="t-p">$</span><span class="c-cmd">make go</span><button type="button" class="js-copycmd" data-cmd="make go">Copy</button></div>
 <p><code>make go</code> = build + flash + monitor; <code>flash</code> and <code>monitor</code> refuse SEGGER/J-Link ports, so they can never touch an nRF5340 DK on the bench.</p>

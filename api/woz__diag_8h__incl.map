@@ -1,5 +1,5 @@
 <map id="modules/woz_uwb/src/facade/woz_diag.h" name="modules/woz_uwb/src/facade/woz_diag.h">
-<area shape="rect" id="Node000001" title="— DIAGK(): compile&#45;time gate for verbose UWB bring&#45;up diagnostics." alt="" coords="5,5,157,46"/>
+<area shape="rect" id="Node000001" title="— DIAGK(): gate for verbose UWB bring&#45;up diagnostics." alt="" coords="5,5,157,46"/>
 <area shape="rect" id="Node000002" href="$woz__log_8h_source.html" title=" " alt="" coords="41,94,121,120"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,44,84,79,78,78,79,48"/>
 </map>

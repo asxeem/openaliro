@@ -16,8 +16,8 @@
 <aside class="side" data-active="ports.esp32.apps.matter-lock.main.app_main.cpp">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -31,7 +31,7 @@
 <a class="gh-chip" data-repo="asxeem/openaliro" href="https://github.com/asxeem/openaliro" target="_blank" rel="noopener" aria-label="asxeem/openaliro on GitHub"><svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="gh-name">asxeem/openaliro</span><span class="gh-stat"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.8l1.9 3.85 4.25.62-3.08 3 .73 4.23L8 11.5l-3.8 2 .73-4.23-3.08-3 4.25-.62z"/></svg><b data-gh="stars"></b></span><span class="gh-stat"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="4" cy="3.5" r="1.7"/><circle cx="12" cy="3.5" r="1.7"/><circle cx="8" cy="12.5" r="1.7"/><path d="M4 5.2v.8a2.2 2.2 0 0 0 2.2 2.2h3.6A2.2 2.2 0 0 0 12 6V5.2M8 8.2v2.6"/></svg><b data-gh="forks"></b></span></a>
 <button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
 </header>
-<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">app_main.cpp</h1><p class="lede">Matter application main: door lock endpoint setup, Matter lifecycle event handling, and (when…</p><div class="metarow"><span><code>ports/esp32/apps/matter-lock/main/app_main.cpp</code></span><span>7 documented symbols</span></div></div></header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">app_main.cpp</h1><p class="lede">Matter application main: door lock endpoint setup, Matter lifecycle event handling, and (when…</p><div class="metarow"><span><code>ports/esp32/apps/matter-lock/main/app_main.cpp</code></span><span>10 documented symbols</span></div></div></header>
 <div class="mid">
 <main class="doc ">
 <h2>Overview</h2>
@@ -46,38 +46,54 @@ esp-matter&#x27;s node/cluster framework.</p>
 <div class="api">
 <section class="api-entry" id="aliro_operating_user">
 <h3><span class="kindb" title="function">F</span><code>static app::DataModel::Nullable&lt;uint16_t&gt; <b>aliro_operating_user</b>(void)</code></h3>
-<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:119</div>
+<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:128</div>
 <p>Resolve the Matter user that owns the credential the reader authenticated, so the LockOperation
 event names who operated the lock. Without it the event is anonymous and Apple Home, unable to
 tell which member unlocked, notifies every device in the home including the one that just did it.
 Call from the Matter task (it reads the door lock&#x27;s user and credential tables).
 Returns a null user index if no credential has authenticated since boot or no stored user owns it.</p>
+<div class="xref">called by <code>schedule_bolt_lock</code>, <code>schedule_bolt_unlock</code></div>
+</section>
+<section class="api-entry" id="schedule_bolt_unlock">
+<h3><span class="kindb" title="function">F</span><code>static void <b>schedule_bolt_unlock</b>(void)</code></h3>
+<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:150</div>
+<p>Drive the bolt from the approach controller. Both hop to the Matter task (the only thread allowed
+to touch the DoorLock cluster). Unlock also stamps the walk-up latency mark on its first execution.</p>
+<div class="xref">called by <code>aliro_reader_task</code> &nbsp;·&nbsp; calls <code>aliro_operating_user</code></div>
+</section>
+<section class="api-entry" id="aliro_range_median">
+<h3><span class="kindb" title="function">F</span><code>static int32_t <b>aliro_range_median</b>(const int32_t *win, int n)</code></h3>
+<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:175</div>
+<p>Median of the first n samples of win (n in [1, ALIRO_RANGE_MEDIAN_N]). Rejects the metre-scale
+spikes in the per-block UWB distance without the lag of a running average.</p>
 <div class="xref">called by <code>aliro_reader_task</code></div>
+</section>
+<section class="api-entry" id="on_uwb_range">
+<h3><span class="kindb" title="function">F</span><code>static void <b>on_uwb_range</b>(void)</code></h3>
+<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:197</div>
+<p>Range-latch listener: runs on the UWB RX path, so it only stamps the latency
+trace and wakes the reader task; the unlock decision itself stays on the task.</p>
 </section>
 <section class="api-entry" id="aliro_reader_task">
 <h3><span class="kindb" title="function">F</span><code>static void <b>aliro_reader_task</b>(void *arg)</code></h3>
-<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:148</div>
+<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:222</div>
 <p>Background task that starts the Aliro reader and drives approach-based lock/unlock from UWB range.
-Delays 1 s at startup to let Matter&#x27;s BLE host finish syncing before the reader takes over the
-shared legacy advertiser, then calls aliro_reader_start_attached().
-Runs forever as the sole auto-lock driver (the fixed Matter auto-relock is disabled): unlocks when
-a trusted peer&#x27;s range is within ALIRO_UNLOCK_RANGE_CM, holds while present, and relocks when the
-peer moves past ALIRO_RELOCK_RANGE_CM or disconnects. Uses hysteresis (relock band wider than
-unlock band) to avoid chatter on range jitter. Sends the phone a &quot;Reader Status Changed&quot; BLE
-notification on each transition so the Wallet unlock animation fires; the notification is a no-op
-if the ranging session has already dropped. Polls every 200 ms.</p>
-<div class="xref">calls <code>aliro_operating_user</code></div>
+Waits for the shared NimBLE host to be usable (host synced, Matter&#x27;s advertiser released) before
+calling aliro_reader_start_attached(), instead of sleeping a flat second. Then runs forever as the
+sole auto-lock driver (the fixed Matter auto-relock is disabled). See the controller comment inside
+for how the noisy per-block UWB distance is conditioned into stable grant / unlock / relock events.</p>
+<div class="xref">calls <code>aliro_range_median</code>, <code>schedule_bolt_lock</code>, <code>schedule_bolt_unlock</code></div>
 </section>
 <section class="api-entry" id="start_aliro_reader_once">
 <h3><span class="kindb" title="function">F</span><code>static void <b>start_aliro_reader_once</b>(void)</code></h3>
-<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:202</div>
+<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:341</div>
 <p>Start the Aliro reader task exactly once, idempotent across repeated calls (e.g. from multiple
 event callbacks). Spawns aliro_reader_task on its own FreeRTOS task; logs the outcome.</p>
 <div class="xref">called by <code>app_event_cb</code>, <code>app_main</code></div>
 </section>
 <section class="api-entry" id="app_event_cb">
 <h3><span class="kindb" title="function">F</span><code>static void <b>app_event_cb</b>(const ChipDeviceEvent *event, intptr_t arg)</code></h3>
-<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:222</div>
+<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:361</div>
 <p>Matter device-event callback: logs commissioning/fabric/BLE lifecycle events and, when Aliro
 BLE+UWB support is enabled, starts the Aliro reader once commissioning completes (Matter releases
 the BLE advertiser at that point). On the last fabric being removed, reopens a DNS-SD-only
@@ -86,21 +102,21 @@ commissioning window if one is not already open.</p>
 </section>
 <section class="api-entry" id="app_identification_cb">
 <h3><span class="kindb" title="function">F</span><code>static esp_err_t <b>app_identification_cb</b>(identification::callback_type_t type, uint16_t endpoint_id, uint8_t effect_id, uint8_t effect_variant, void *priv_data)</code></h3>
-<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:308</div>
+<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:456</div>
 <p>This callback is invoked when clients interact with the Identify Cluster.
 In the callback implementation, an endpoint can identify itself. (e.g., by flashing an LED or
 light).</p>
 </section>
 <section class="api-entry" id="app_attribute_update_cb">
 <h3><span class="kindb" title="function">F</span><code>static esp_err_t <b>app_attribute_update_cb</b>(attribute::callback_type_t type, uint16_t endpoint_id, uint32_t cluster_id, uint32_t attribute_id, esp_matter_attr_val_t *val, void *priv_data)</code></h3>
-<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:319</div>
+<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:467</div>
 <p>This callback is called for every attribute update. The callback implementation shall
 handle the desired attributes and return an appropriate error code. If the attribute
 is not of your interest, please do not return an error code and strictly return ESP_OK.</p>
 </section>
 <section class="api-entry" id="app_main">
 <h3><span class="kindb" title="function">F</span><code>extern &quot;C&quot; void <b>app_main</b>()</code></h3>
-<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:342</div>
+<div class="src">ports/esp32/apps/matter-lock/main/app_main.cpp:490</div>
 <p>Application entry point: initializes NVS, the lock LED, power management, and the Matter node
 with a door lock endpoint (adding Aliro provisioning/BLE-UWB clusters and delegate when enabled).
 Registers the Aliro reader&#x27;s GATT service with the BLE host before esp_matter::start so it
@@ -111,6 +127,7 @@ must not run alongside esp_matter::console::init since both read the same consol
 <div class="xref">calls <code>start_aliro_reader_once</code></div>
 </section>
 </div>
+<details><summary>Undocumented (1)</summary><p><code>schedule_bolt_lock</code></p></details>
 </main>
 <aside class="toc-rail" id="toc" aria-label="On this page"></aside>
 </div>

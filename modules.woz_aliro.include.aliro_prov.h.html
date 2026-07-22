@@ -16,8 +16,8 @@
 <aside class="side" data-active="modules.woz_aliro.include.aliro_prov.h">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -45,14 +45,14 @@ credential is authenticated.</p>
 <div class="api">
 <section class="api-entry" id="aliro_reader_identity">
 <h3><span class="kindb" title="class">C</span><code>struct <b>aliro_reader_identity</b></code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prov.h:42</div>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:43</div>
 <p>The reader&#x27;s provisioned identity. reader_id rides AUTH0 and both ECDSA
 transcripts (tag 0x4D); sign_priv signs the reader-usage transcript. is_dev
 marks the built-in bench identity, never a real deployment.</p>
 </section>
 <section class="api-entry" id="aliro_trust_store">
 <h3><span class="kindb" title="class">C</span><code>struct <b>aliro_trust_store</b></code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prov.h:55</div>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:56</div>
 <p>Trusted credential public keys. A presented credential authenticates only if
 its key is in here (or the store is empty and dev policy allows it). A raw-key
 allowlist is the interim seam; real issuer-chain validation is the Phase-4
@@ -78,37 +78,49 @@ refinement that plugs in at aliro_prov_trust_check.</p>
 <h3><span class="kindb" title="macro">#</span><code>#define <b>ALIRO_GRK_LEN</b>         16u</code></h3>
 <div class="src">modules/woz_aliro/include/aliro_prov.h:35</div>
 </section>
+<section class="api-entry" id="ALIRO_KPERSISTENT_LEN">
+<h3><span class="kindb" title="macro">#</span><code>#define <b>ALIRO_KPERSISTENT_LEN</b> 32u</code></h3>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:36</div>
+</section>
 <section class="api-entry" id="ALIRO_PROV_BLOB_HDR">
 <h3><span class="kindb" title="macro">#</span><code>#define <b>ALIRO_PROV_BLOB_HDR</b> 6u</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prov.h:62</div>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:68</div>
 </section>
 <section class="api-entry" id="aliro_prov_dev_default">
 <h3><span class="kindb" title="function">F</span><code>void <b>aliro_prov_dev_default</b>(struct aliro_reader_identity *id, struct aliro_trust_store *ts)</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prov.h:70</div>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:77</div>
 </section>
 <section class="api-entry" id="aliro_prov_serialize">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_prov_serialize</b>(const struct aliro_reader_identity *id, const struct aliro_trust_store *ts, uint8_t *out, size_t cap, size_t *out_len)</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prov.h:74</div>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:81</div>
 </section>
 <section class="api-entry" id="aliro_prov_deserialize">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_prov_deserialize</b>(const uint8_t *buf, size_t len, struct aliro_reader_identity *id, struct aliro_trust_store *ts)</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prov.h:79</div>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:86</div>
 </section>
 <section class="api-entry" id="aliro_prov_trust_check">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_prov_trust_check</b>(const struct aliro_trust_store *ts, const uint8_t cred_pub[ALIRO_CRED_PUB_LEN])</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prov.h:86</div>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:93</div>
 </section>
 <section class="api-entry" id="aliro_prov_trust_add">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_prov_trust_add</b>(struct aliro_trust_store *ts, const uint8_t cred_pub[ALIRO_CRED_PUB_LEN])</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prov.h:91</div>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:98</div>
+</section>
+<section class="api-entry" id="aliro_prov_trust_find">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_prov_trust_find</b>(const struct aliro_trust_store *ts, const uint8_t cred_pub[ALIRO_CRED_PUB_LEN])</code></h3>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:101</div>
+</section>
+<section class="api-entry" id="aliro_prov_kpersistent_set">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_prov_kpersistent_set</b>(struct aliro_trust_store *ts, int idx, const uint8_t kp[ALIRO_KPERSISTENT_LEN])</code></h3>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:107</div>
 </section>
 <section class="api-entry" id="aliro_prov_load">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_prov_load</b>(struct aliro_reader_identity *id, struct aliro_trust_store *ts)</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prov.h:100</div>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:117</div>
 </section>
 <section class="api-entry" id="aliro_prov_store">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_prov_store</b>(const struct aliro_reader_identity *id, const struct aliro_trust_store *ts)</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prov.h:103</div>
+<div class="src">modules/woz_aliro/include/aliro_prov.h:120</div>
 </section>
 </div>
 </main>

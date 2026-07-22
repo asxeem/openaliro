@@ -16,8 +16,8 @@
 <aside class="side" data-active="modules.woz_uwb.src.fira.fira_session.h">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -98,6 +98,11 @@
 <h3><span class="kindb" title="function">F</span><code>bool <b>fira_session_range_trusted</b>(void)</code></h3>
 <div class="src">modules/woz_uwb/src/fira/fira_session.h:69</div>
 <p>Layer 4: true once &gt;= K consecutive plausible, mutually consistent ranges have been latched. Cleared by any implausible or outlier block.</p>
+</section>
+<section class="api-entry" id="fira_session_set_range_listener">
+<h3><span class="kindb" title="function">F</span><code>void <b>fira_session_set_range_listener</b>(void (*cb)(void))</code></h3>
+<div class="src">modules/woz_uwb/src/fira/fira_session.h:73</div>
+<p>Register a callback fired after each accepted range latch (NULL to clear). Runs on the UWB RX path — keep it to a task wake, nothing heavier.</p>
 </section>
 </div>
 </main>

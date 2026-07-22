@@ -284,7 +284,7 @@ var sectionId = 'dynsection-0';
 <!-- Node15 -->
 <g id="Node000015" class="node">
 <title>Node15</title>
-<g id="a_Node000015"><a xlink:href="woz__diag_8h.html" target="_top" xlink:title="— DIAGK(): compile&#45;time gate for verbose UWB bring&#45;up diagnostics.">
+<g id="a_Node000015"><a xlink:href="woz__diag_8h.html" target="_top" xlink:title="— DIAGK(): gate for verbose UWB bring&#45;up diagnostics.">
 <polygon fill="white" stroke="#666666" points="1001.74,-129.75 936.24,-129.75 936.24,-110.5 1001.74,-110.5 1001.74,-129.75"/>
 <text xml:space="preserve" text-anchor="middle" x="968.99" y="-116.25" font-family="Helvetica,sans-Serif" font-size="10.00">woz_diag.h</text>
 </a>

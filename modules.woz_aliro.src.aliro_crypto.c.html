@@ -16,8 +16,8 @@
 <aside class="side" data-active="modules.woz_aliro.src.aliro_crypto.c">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -31,7 +31,7 @@
 <a class="gh-chip" data-repo="asxeem/openaliro" href="https://github.com/asxeem/openaliro" target="_blank" rel="noopener" aria-label="asxeem/openaliro on GitHub"><svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="gh-name">asxeem/openaliro</span><span class="gh-stat"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.8l1.9 3.85 4.25.62-3.08 3 .73 4.23L8 11.5l-3.8 2 .73-4.23-3.08-3 4.25-.62z"/></svg><b data-gh="stars"></b></span><span class="gh-stat"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="4" cy="3.5" r="1.7"/><circle cx="12" cy="3.5" r="1.7"/><circle cx="8" cy="12.5" r="1.7"/><path d="M4 5.2v.8a2.2 2.2 0 0 0 2.2 2.2h3.6A2.2 2.2 0 0 0 12 6V5.2M8 8.2v2.6"/></svg><b data-gh="forks"></b></span></a>
 <button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
 </header>
-<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_crypto.c</h1><p class="lede">Aliro cryptographic primitives: key derivation (KDF/HKDF), key-block splitting, AES-GCM secure…</p><div class="metarow"><span><code>modules/woz_aliro/src/aliro_crypto.c</code></span><span>15 documented symbols</span></div></div></header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_crypto.c</h1><p class="lede">Aliro cryptographic primitives: key derivation (KDF/HKDF), key-block splitting, AES-GCM secure…</p><div class="metarow"><span><code>modules/woz_aliro/src/aliro_crypto.c</code></span><span>16 documented symbols</span></div></div></header>
 <div class="mid">
 <main class="doc ">
 <h2>Overview</h2>
@@ -86,16 +86,24 @@ with_c selects which pair of 32-byte segments become enc_key/dec_key: nonzero us
 (base offset 0), zero uses S1/S2 (base offset 32); this corresponds to the &quot;derive shared key C&quot;
 config flag. ursk is always taken from the fixed S4 segment (offset 128) regardless of with_c.</p>
 </section>
+<section class="api-entry" id="aliro_crypto_verify_cryptogram">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_crypto_verify_cryptogram</b>(const uint8_t cryptogram_sk[ALIRO_SESSION_KEY_LEN], const uint8_t *cryptogram, size_t cryptogram_len, uint8_t *plain_payload)</code></h3>
+<div class="src">modules/woz_aliro/src/aliro_crypto.c:99</div>
+<p>Verify an AUTH0 fast-phase cryptogram (Aliro §8.3.1.11): AES-256-GCM open of the
+encrypted_payload || 16-byte tag under CryptogramSK with a 12-byte zero IV and no AAD.
+Returns 0 (and writes cryptogram_len-16 plaintext bytes) on a tag match; &lt;0 on a mismatch
+(short input, or the tag does not verify under this CryptogramSK).</p>
+</section>
 <section class="api-entry" id="aliro_secchan_init">
 <h3><span class="kindb" title="function">F</span><code>void <b>aliro_secchan_init</b>(struct aliro_secchan *sc, const uint8_t enc_key[ALIRO_SESSION_KEY_LEN], const uint8_t dec_key[ALIRO_SESSION_KEY_LEN])</code></h3>
-<div class="src">modules/woz_aliro/src/aliro_crypto.c:97</div>
+<div class="src">modules/woz_aliro/src/aliro_crypto.c:122</div>
 <p>Initializes a secure channel with the given per-direction encrypt/decrypt keys and sets both
 message counters to 1. Per Aliro §8.3.1 both enc_ctr and dec_ctr start at 1, not 0 (unlike the
 HomeKey channel), so the first inbound decrypt must use device_counter=1.</p>
 </section>
 <section class="api-entry" id="aliro_crypto_gcm_nonce">
 <h3><span class="kindb" title="function">F</span><code>void <b>aliro_crypto_gcm_nonce</b>(uint64_t direction, uint32_t counter, uint8_t nonce[ALIRO_GCM_NONCE_LEN])</code></h3>
-<div class="src">modules/woz_aliro/src/aliro_crypto.c:112</div>
+<div class="src">modules/woz_aliro/src/aliro_crypto.c:137</div>
 <p>Builds a 12-byte AES-GCM nonce as an 8-byte big-endian direction value followed by a 4-byte
 big-endian counter. direction distinguishes the two traffic directions of a secure channel;
 counter is the per-message sequence number that must be incremented by the caller between
@@ -104,7 +112,7 @@ messages to avoid nonce reuse.</p>
 </section>
 <section class="api-entry" id="aliro_secchan_seal">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_secchan_seal</b>(struct aliro_secchan *sc, const uint8_t *aad, size_t aad_len, const uint8_t *pt, size_t pt_len, uint8_t *ct, uint8_t tag[ALIRO_GCM_TAG_LEN])</code></h3>
-<div class="src">modules/woz_aliro/src/aliro_crypto.c:130</div>
+<div class="src">modules/woz_aliro/src/aliro_crypto.c:155</div>
 <p>Encrypt and authenticate plaintext with the secure channel&#x27;s outbound (enc) key and counter.
 Builds the nonce from direction 0 and the current enc_ctr, writes ciphertext to ct and the GCM
 tag to tag, and advances enc_ctr only on success. Returns -1 without encrypting if enc_ctr has
@@ -114,7 +122,7 @@ success.</p>
 </section>
 <section class="api-entry" id="aliro_secchan_open">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_secchan_open</b>(struct aliro_secchan *sc, const uint8_t *aad, size_t aad_len, const uint8_t *ct, size_t ct_len, const uint8_t tag[ALIRO_GCM_TAG_LEN], uint8_t *pt)</code></h3>
-<div class="src">modules/woz_aliro/src/aliro_crypto.c:154</div>
+<div class="src">modules/woz_aliro/src/aliro_crypto.c:179</div>
 <p>Decrypt and authenticate a ciphertext with the secure channel&#x27;s inbound (dec) key and counter.
 Builds the nonce from direction 1 and the current dec_ctr, verifies tag against aad/ct, and
 writes the plaintext to pt on success. Advances dec_ctr only on successful authentication.
@@ -124,7 +132,7 @@ wraparound), or if decryption/authentication fails; returns 0 on success.</p>
 </section>
 <section class="api-entry" id="aliro_crypto_derive_ble_keys">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_crypto_derive_ble_keys</b>(const uint8_t block[ALIRO_KEY_BLOCK_LEN], const uint8_t *salt, size_t salt_len, uint8_t ble_reader[ALIRO_SESSION_KEY_LEN], uint8_t ble_device[ALIRO_SESSION_KEY_LEN])</code></h3>
-<div class="src">modules/woz_aliro/src/aliro_crypto.c:180</div>
+<div class="src">modules/woz_aliro/src/aliro_crypto.c:205</div>
 <p>Derives the two directional BLE ranging-channel session keys (BleSKReader, BleSKDevice) from the
 BleSK segment of a derived key block via HKDF. salt/salt_len is the caller-built ranging-channel
 salt (protocol versions + selected version); ble_sk is read from a fixed offset within block.
@@ -133,7 +141,7 @@ the second derivation for ble_device fails).</p>
 </section>
 <section class="api-entry" id="aliro_msg_seal">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_msg_seal</b>(struct aliro_secchan *sc, const uint8_t *plain, size_t plain_len, uint8_t *wire, size_t wire_cap, size_t *wire_len)</code></h3>
-<div class="src">modules/woz_aliro/src/aliro_crypto.c:203</div>
+<div class="src">modules/woz_aliro/src/aliro_crypto.c:228</div>
 <p>Seal an engine-plaintext message (4-byte header + payload) into a framed, encrypted wire SDU.
 The header&#x27;s 2-byte big-endian length field (plain[2..3]) must equal the payload length
 (plain_len - 4); mismatches are rejected. Copies the header&#x27;s first two bytes unchanged into the
@@ -145,14 +153,14 @@ or if the underlying seal fails, 0 on success with *wire_len set.</p>
 </section>
 <section class="api-entry" id="aliro_msg_open">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_msg_open</b>(struct aliro_secchan *sc, const uint8_t *wire, size_t wire_len, uint8_t *plain, size_t plain_cap, size_t *plain_len)</code></h3>
-<div class="src">modules/woz_aliro/src/aliro_crypto.c:236</div>
+<div class="src">modules/woz_aliro/src/aliro_crypto.c:261</div>
 <p>Represents a secure Aliro communication channel: a pair of AES-GCM session keys and per-direction
 message counters, used to seal/open messages exchanged with the device.</p>
 <div class="xref">calls <code>aliro_secchan_open</code></div>
 </section>
 <section class="api-entry" id="append">
 <h3><span class="kindb" title="function">F</span><code>static int <b>append</b>(uint8_t *out, size_t *pos, size_t cap, const void *src, size_t n)</code></h3>
-<div class="src">modules/woz_aliro/src/aliro_crypto.c:275</div>
+<div class="src">modules/woz_aliro/src/aliro_crypto.c:300</div>
 <p>Appends n bytes from src into out at *pos, bounds-checked against cap.
 Returns 0 on success and advances *pos by n; returns -1 without writing or advancing *pos if the
 append would exceed cap.</p>
@@ -160,7 +168,7 @@ append would exceed cap.</p>
 </section>
 <section class="api-entry" id="aliro_salt_build">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_salt_build</b>(enum aliro_salt_type type, const uint8_t txid[ALIRO_TXID_LEN], const uint8_t span_s1[ALIRO_EC_PUBX_LEN], const uint8_t reader_value[ALIRO_EC_PUBX_LEN], const uint8_t reader_id[32], uint8_t interface_byte, uint16_t proto_version, uint8_t exp_phase_type, uint8_t user_auth_policy, const uint8_t s3opt[ALIRO_EC_PUBX_LEN], const uint8_t *a5_tlv, size_t a5_tlv_len, uint8_t *out, size_t *out_len)</code></h3>
-<div class="src">modules/woz_aliro/src/aliro_crypto.c:292</div>
+<div class="src">modules/woz_aliro/src/aliro_crypto.c:317</div>
 <p>Build the Aliro §8.3.1.13 salt_volatile byte string for HKDF derivation from its component
 fields. Appends, in fixed order: span_s1, a type-specific 12-byte label, reader_id, the interface
 byte (0xC3 BLE / 0x5E NFC), a fixed salt constant, the big-endian protocol version, reader_value,

@@ -179,10 +179,12 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('fira__session_
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#define FIRA_RANGE_SPREAD_CM 50 </span><span class="comment">/* max block-to-block delta to stay agreed */</span><span class="preprocessor"></span></div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span></div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keywordtype">bool</span> fira_session_range_trusted(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#endif </span><span class="comment">/* CONFIG_WOZ_ALIRO */</span><span class="preprocessor"></span></div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">#endif </span><span class="comment">/* WOZ_UWB_FIRA_SESSION_H_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="afira__session_8h_html_a079ce99353818e8139b306cf0625f14c"><div class="ttname"><a href="fira__session_8h.html#a079ce99353818e8139b306cf0625f14c">fira_session_last_range</a></div><div class="ttdeci">bool fira_session_last_range(int32_t *cm_out, uint16_t *addr_out, uint8_t *nlos_out, uint32_t *block_out, int64_t *age_ms_out)</div><div class="ttdoc">Fetch the most recent valid DS-TWR range; out-params optional (NULL to skip).</div><div class="ttdef"><b>Definition</b> fira_session.c:52</div></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="keywordtype">void</span> fira_session_set_range_listener(<span class="keywordtype">void</span> (*cb)(<span class="keywordtype">void</span>));</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#endif </span><span class="comment">/* CONFIG_WOZ_ALIRO */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">#endif </span><span class="comment">/* WOZ_UWB_FIRA_SESSION_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="afira__session_8h_html_a079ce99353818e8139b306cf0625f14c"><div class="ttname"><a href="fira__session_8h.html#a079ce99353818e8139b306cf0625f14c">fira_session_last_range</a></div><div class="ttdeci">bool fira_session_last_range(int32_t *cm_out, uint16_t *addr_out, uint8_t *nlos_out, uint32_t *block_out, int64_t *age_ms_out)</div><div class="ttdoc">Fetch the most recent valid DS-TWR range; out-params optional (NULL to skip).</div><div class="ttdef"><b>Definition</b> fira_session.c:57</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

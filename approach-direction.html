@@ -16,8 +16,8 @@
 <aside class="side" data-active="approach-direction">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -88,7 +88,7 @@ credential key NOT trusted (not in trust store); rejecting</code></pre>
 <p><strong>VERIFIED.</strong> Nothing gates an unlock on the stored value. Measuring which direction a phone approaches from requires angle of arrival, which needs a dual-antenna UWB part. The DW3110 used on the DWM3000EVB has a single antenna and cannot produce it.</p>
 <p>The attribute is stored, reported, and round-trips correctly to the app. The behaviour behind it is not implemented, and on this hardware cannot be.</p>
 <h2>9. Port coverage</h2>
-<table><thead><tr><th>Port</th><th>Status</th></tr></thead><tbody><tr><td><code>ports/esp32-matter</code></td><td><strong>implemented</strong> — runtime <code>cluster::create()</code> in <code>app_main.cpp</code></td></tr><tr><td>nRF5340 door lock app</td><td><strong>implemented</strong> — static tables, <code>ports/nrf5340dk/patches/approach-direction-cluster.patch</code></td></tr></tbody></table>
+<table><thead><tr><th>Port</th><th>Status</th></tr></thead><tbody><tr><td><code>ports/esp32/apps/matter-lock</code></td><td><strong>implemented</strong>: runtime <code>cluster::create()</code> in <code>app_main.cpp</code></td></tr><tr><td>nRF5340 door lock app</td><td><strong>implemented</strong>: static tables, <code>ports/nrf5340dk/patches/approach-direction-cluster.patch</code></td></tr></tbody></table>
 <p>The two ports build their data models differently. The ESP32 port constructs endpoints at runtime, so the cluster is a few lines of C++. The nRF app&#x27;s is a set of static tables compiled into the image.</p>
 <h3>9.1 The nRF data model is not regenerated at build time</h3>
 <p><strong>VERIFIED.</strong> It is tempting to assume the <code>.zap</code> file is the source of truth and edit it. It is not, on this build. <code>ncs_configure_data_model</code> passes <code>BYPASS_IDL</code> to <code>chip_configure_data_model</code>, which takes the branch that *skips* the <code>chip_zapgen</code> target entirely and instead adds the checked-in <code>zap-generated/</code> directory as an include path. <code>endpoint_config.h</code> appears nowhere in <code>build.ninja</code> as a build rule. Editing <code>lock.zap</code> alone changes nothing in the image.</p>

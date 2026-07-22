@@ -24,7 +24,7 @@
 <area shape="poly" id="edge24_Node000001_Node000013" title=" " alt="" coords="515,44,535,81,530,80,513,49"/>
 <area shape="rect" id="Node000014" href="$uwb__min_8h.html" title="— Minimal DW3110 (DWM3000EVB) hardware bring&#45;up driver." alt="" coords="622,94,706,120"/>
 <area shape="poly" id="edge27_Node000001_Node000014" title=" " alt="" coords="543,44,628,87,623,87,543,49"/>
-<area shape="rect" id="Node000015" href="$woz__diag_8h.html" title="— DIAGK(): compile&#45;time gate for verbose UWB bring&#45;up diagnostics." alt="" coords="1254,94,1341,120"/>
+<area shape="rect" id="Node000015" href="$woz__diag_8h.html" title="— DIAGK(): gate for verbose UWB bring&#45;up diagnostics." alt="" coords="1254,94,1341,120"/>
 <area shape="poly" id="edge30_Node000001_Node000015" title=" " alt="" coords="579,28,865,49,1049,67,1241,93,1235,94,1049,72,865,54,579,34"/>
 <area shape="rect" id="Node000017" href="$uwb__rxdiag_8h.html" title="— Read&#45;side accessors for the RX event tallies + log stream." alt="" coords="731,94,829,120"/>
 <area shape="poly" id="edge32_Node000001_Node000017" title=" " alt="" coords="572,44,725,89,720,90,572,49"/>

@@ -16,8 +16,8 @@
 <aside class="side" data-active="modules.woz_uwb.src.ccc.ccc_shim_rx.c">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -46,70 +46,70 @@ CCC STS on each RX-arm; target only.</p>
 <div class="api">
 <section class="api-entry" id="ccc_rx_cur_cand">
 <h3><span class="kindb" title="function">F</span><code>static uint32_t <b>ccc_rx_cur_cand</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:201</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:204</div>
 <p>Current candidate index: the latched lock, or the live sweep value.</p>
 <div class="xref">called by <code>__wrap_dwt_rxenable</code></div>
 </section>
 <section class="api-entry" id="ccc_shim_rx_log_reset">
 <h3><span class="kindb" title="function">F</span><code>void <b>ccc_shim_rx_log_reset</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:211</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:214</div>
 <p>Reset all Per-POLL state: arm count, index tracking, STS warm cache, and optional lock-sweep diagnostic counters; called on entry to a new Pre-POLL listen.</p>
 <div class="xref">called by <code>ccc_prepoll_listen</code></div>
 </section>
 <section class="api-entry" id="ccc_shim_rx_awaiting_poll">
 <h3><span class="kindb" title="function">F</span><code>bool <b>ccc_shim_rx_awaiting_poll</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:249</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:252</div>
 <p>Returns true if the responder is awaiting the POLL frame after a successful Pre-POLL decode.</p>
 <dl class="params"><dt>returns</dt><dd>true if awaiting POLL, false otherwise.</dd></dl>
 </section>
 <section class="api-entry" id="ccc_shim_rx_notify_rx">
 <h3><span class="kindb" title="function">F</span><code>void <b>ccc_shim_rx_notify_rx</b>(uint32_t status)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:260</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:263</div>
 <p>Log one RX event for the optional lock-sweep diagnostic (CONFIG_CCC_RX_LOCK_SWEEP); tracks CPER (STS correlation fail flag) and dwells candidate indices until lock achieved or full cycle exhausted.</p>
 <dl class="params"><dt><code>status</code></dt><dd>DW3000 status register value.</dd></dl>
 </section>
 <section class="api-entry" id="prepoll_decode">
 <h3><span class="kindb" title="function">F</span><code>static void <b>prepoll_decode</b>(const uint8_t *frame, uint16_t datalength)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:311</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:314</div>
 <p>Decode a received Pre-POLL frame: verify MHR and message ID, decrypt SP0 payload, cache UAD-derived keys, extract Poll_STS_Index and stride, and pre-warm the next block&#x27;s STS triplet (POLL, Response_0, Final) to eliminate KDF latency from the critical path.</p>
 <dl class="params"><dt><code>frame</code></dt><dd>Pointer to the received frame buffer.</dd><dt><code>datalength</code></dt><dd>Length of the frame in bytes.</dd></dl>
 <div class="xref">called by <code>ccc_shim_rx_try_prepoll</code>, <code>prepoll_rx_rearm</code>, <code>resp_tx_done</code></div>
 </section>
 <section class="api-entry" id="ts5_to_u64">
 <h3><span class="kindb" title="function">F</span><code>static uint64_t <b>ts5_to_u64</b>(const uint8_t t[5])</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:424</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:427</div>
 <p>Assemble a 5-byte DW3000 (40-bit) timestamp into a uint64 (DTU ticks).</p>
 <div class="xref">called by <code>final_data_decode</code>, <code>prepoll_rx_rearm</code>, <code>resp_tx_done</code></div>
 </section>
 <section class="api-entry" id="final_data_decode">
 <h3><span class="kindb" title="function">F</span><code>static void <b>final_data_decode</b>(const uint8_t *frame, uint16_t datalength)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:453</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:456</div>
 <p>Decode a received Final_Data (SP0, msg_id=02): dUDSK-decrypt and parse the initiator&#x27;s ranging timestamps; not time-critical.</p>
 <dl class="params"><dt><code>frame</code></dt><dd>Pointer to the received frame buffer.</dd><dt><code>datalength</code></dt><dd>Length of the frame in bytes.</dd></dl>
 <div class="xref">called by <code>ccc_shim_rx_try_prepoll</code> &nbsp;·&nbsp; calls <code>ts5_to_u64</code></div>
 </section>
 <section class="api-entry" id="ccc_shim_rx_try_prepoll">
 <h3><span class="kindb" title="function">F</span><code>void <b>ccc_shim_rx_try_prepoll</b>(uint16_t datalength)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:628</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:631</div>
 <p>Pre-POLL RX entry (from the RX-good shim): stash the frame and DEFER its ~2 ms decrypt+derive off the Pre-POLL-&gt;POLL critical path. The decode only feeds the NEXT block&#x27;s warm (the SP3 arm keys on the pre-warmed prediction, not this block&#x27;s fresh index), so it has the ~190 ms idle to run in.  Running it inline — on the single DW3000 workqueue, ahead of the queued POLL RX-OK callback — pushed the Response TX arm past its slot (dx-now &lt; 0 =&gt; HPDWARN).  So read the bytes now (cheap SPI), then: - bootstrap (no warm yet): decode inline to seed the first arm&#x27;s STS — this block is not armed, so blocking its POLL is harmless; - steady state: mark pending; @ref prepoll_rx_rearm runs @ref prepoll_decode after the Response TX is armed.  A pending decode orphaned by a missed POLL is flushed on the next Pre-POLL so the warm never goes more than one block stale.</p>
 <div class="xref">calls <code>final_data_decode</code>, <code>prepoll_decode</code></div>
 </section>
 <section class="api-entry" id="pack_key">
 <h3><span class="kindb" title="function">F</span><code>static void <b>pack_key</b>(dwt_sts_cp_key_t *out, const uint8_t dursk[CCC_DURSK_LEN])</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:658</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:661</div>
 <p>Pack a 16-byte <code>dURSK</code> into the DW3000 STS-key image (whole-16 reverse).</p>
 <div class="xref">called by <code>__wrap_dwt_rxenable</code>, <code>ccc_pack_selftest</code>, <code>sts_key_load</code></div>
 </section>
 <section class="api-entry" id="pack_iv">
 <h3><span class="kindb" title="function">F</span><code>static void <b>pack_iv</b>(dwt_sts_cp_iv_t *out, const uint8_t sts_v[CCC_STS_V_LEN])</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:677</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:680</div>
 <p>Pack a 16-byte STS-V into the DW3000 STS-IV image (whole-16 reverse then per-word LE, same as pack_key).</p>
 <dl class="params"><dt><code>out</code></dt><dd>Pointer to the DW3000 STS-IV register image.</dd><dt><code>sts_v</code></dt><dd>16-byte STS vector to pack.</dd></dl>
 <div class="xref">called by <code>__wrap_dwt_rxenable</code>, <code>arm_final_sp3</code>, <code>arm_poll_sp3</code>, <code>ccc_pack_selftest</code>, <code>tx_response_sp3</code></div>
 </section>
 <section class="api-entry" id="sts_key_load">
 <h3><span class="kindb" title="function">F</span><code>static void <b>sts_key_load</b>(const uint8_t dursk[CCC_DURSK_LEN])</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:698</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:701</div>
 <p>The STS key (dURSK) is per ranging CYCLE — POLL, Response, Final and every block in the cycle
 share it — but each arm re-wrote all four STS_KEY registers: ~258 us of SPI on the critical path,
 ~40% of the arm latency that misses the ~1836 us slot deadline. Cache the loaded
@@ -122,51 +122,51 @@ them.)</p>
 </section>
 <section class="api-entry" id="pack_iv_rev">
 <h3><span class="kindb" title="function">F</span><code>static void <b>pack_iv_rev</b>(dwt_sts_cp_iv_t *out, const uint8_t v[CCC_STS_V_LEN])</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:734</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:737</div>
 <p>Pack a 16-byte V whole-16-reversed then word-LE (the <code>pack_key</code>/blob convention).</p>
 <div class="xref">called by <code>ccc_pack_selftest</code></div>
 </section>
 <section class="api-entry" id="ccc_pack_selftest">
 <h3><span class="kindb" title="function">F</span><code>static void <b>ccc_pack_selftest</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:748</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:751</div>
 <p>One-shot: dump STS register lanes for the KAT V under three packings.</p>
 <div class="xref">called by <code>__wrap_dwt_rxenable</code> &nbsp;·&nbsp; calls <code>pack_iv</code>, <code>pack_iv_rev</code>, <code>pack_key</code></div>
 </section>
 <section class="api-entry" id="__wrap_dwt_rxenable">
 <h3><span class="kindb" title="function">F</span><code>int32_t <b>__wrap_dwt_rxenable</b>(int32_t mode)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:791</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:794</div>
 <p>Program the CCC STS for the current ranging slot, then arm RX.</p>
 <div class="xref">calls <code>ccc_pack_selftest</code>, <code>ccc_rx_cur_cand</code>, <code>pack_iv</code>, <code>pack_key</code></div>
 </section>
 <section class="api-entry" id="gated_rxenable">
 <h3><span class="kindb" title="function">F</span><code>static int32_t <b>gated_rxenable</b>(int32_t mode)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:913</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:916</div>
 <p>Gate-checked RX arm for every self-rearm site below; refuses once the listen-gate is closed.</p>
 <div class="xref">called by <code>arm_final_sp3</code>, <code>arm_poll_sp3</code>, <code>prepoll_rx_rearm</code>, <code>revert_to_sp0_listen</code></div>
 </section>
 <section class="api-entry" id="arm_poll_sp3">
 <h3><span class="kindb" title="function">F</span><code>static int <b>arm_poll_sp3</b>(uint32_t prepoll_ip)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:923</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:926</div>
 <p>Flip to SP3/ND, load the pre-warmed CCC STS (g_warm_index), and arm a delayed RX to catch the
 POLL that follows the Pre-POLL.</p>
 <div class="xref">called by <code>prepoll_rx_rearm</code> &nbsp;·&nbsp; calls <code>gated_rxenable</code>, <code>pack_iv</code>, <code>sts_key_load</code></div>
 </section>
 <section class="api-entry" id="revert_to_sp0_listen">
 <h3><span class="kindb" title="function">F</span><code>static void <b>revert_to_sp0_listen</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:980</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:983</div>
 <p>Revert SP3/ND -&gt; SP0 and re-arm the permanent Pre-POLL listen (no timeout).</p>
 <div class="xref">called by <code>prepoll_rx_rearm</code>, <code>resp_tx_done</code> &nbsp;·&nbsp; calls <code>gated_rxenable</code></div>
 </section>
 <section class="api-entry" id="tx_response_sp3">
 <h3><span class="kindb" title="function">F</span><code>static int <b>tx_response_sp3</b>(uint32_t poll_ip, uint32_t resp_idx)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:994</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:997</div>
 <p>Delayed-TX the responder&#x27;s Response_0 (SP3-ND) one slot after the POLL, at STS index
 Poll_STS_Index + 1 (same dURSK, STS-V advances).</p>
 <div class="xref">called by <code>prepoll_rx_rearm</code> &nbsp;·&nbsp; calls <code>pack_iv</code>, <code>sts_key_load</code></div>
 </section>
 <section class="api-entry" id="arm_final_sp3">
 <h3><span class="kindb" title="function">F</span><code>static int <b>arm_final_sp3</b>(uint32_t poll_ip)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:1033</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:1036</div>
 <p>Arm the delayed SP3-ND RX for the phone&#x27;s Final at STS index
 Poll_STS_Index+ALIRO_FINAL_SLOT_OFFSET, packing the g_armed_final_* STS (no KDF).
 EXPERIMENT-2RESP: the 1:1 baseline uses POLL + 2 slots / index+2; a 2-responder round puts the
@@ -175,20 +175,20 @@ Final at POLL + 3 (responder 1&#x27;s silent slot sits at POLL + 2).</p>
 </section>
 <section class="api-entry" id="resp_tx_done">
 <h3><span class="kindb" title="function">F</span><code>static void <b>resp_tx_done</b>(const dwt_cb_data_t *cb)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:1065</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:1068</div>
 <p>TX-done (TXFRS) callback: our Response_0 left the antenna, so arm the Final RX one slot later,
 then run the block&#x27;s deferred Pre-POLL decode in the idle.</p>
 <div class="xref">calls <code>arm_final_sp3</code>, <code>prepoll_decode</code>, <code>revert_to_sp0_listen</code>, <code>ts5_to_u64</code></div>
 </section>
 <section class="api-entry" id="prepoll_rx_rearm">
 <h3><span class="kindb" title="function">F</span><code>static void <b>prepoll_rx_rearm</b>(const dwt_cb_data_t *cb)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:1109</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:1112</div>
 <p>RX callback for Pre-POLL listen and POLL/Final results. Re-arms SP0 by default, or arms SP3/ND for POLL if a warmed index is ready, or fires the delayed-TX Response_0 and Final RX arm on valid POLL CPER; logs free-running timing and optionally defers Pre-POLL decode to warm the next block.</p>
 <div class="xref">calls <code>arm_final_sp3</code>, <code>arm_poll_sp3</code>, <code>gated_rxenable</code>, <code>prepoll_decode</code>, <code>revert_to_sp0_listen</code>, <code>ts5_to_u64</code>, <code>tx_response_sp3</code></div>
 </section>
 <section class="api-entry" id="ccc_prepoll_listen">
 <h3><span class="kindb" title="function">F</span><code>int <b>ccc_prepoll_listen</b>(uint8_t channel, uint8_t preamble_code)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:1329</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:1332</div>
 <p>Initialize the DW3000 radio for permanent SP0 Pre-POLL listen: configure PHY (6.8 Mbps, preamble
 length 64, SFD 4a, no STS), install RX callbacks that self-rearm on every frame outcome, and
 enable all RX/TX interrupts; returns 0 on success.</p>
@@ -196,7 +196,7 @@ enable all RX/TX interrupts; returns 0 on success.</p>
 </section>
 <section class="api-entry" id="ccc_prepoll_stop">
 <h3><span class="kindb" title="function">F</span><code>void <b>ccc_prepoll_stop</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:1394</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim_rx.c:1397</div>
 <p>Stop the permanent Pre-POLL listener: close the listen-gate (every self-rearm
 site checks it via gated_rxenable), then force the radio out of RX/TX.  The
 DW3000 callbacks run on the dedicated coop (-11) isr workqueue with

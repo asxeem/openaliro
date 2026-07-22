@@ -16,8 +16,8 @@
 <aside class="side" data-active="esp32-gotchas">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -50,7 +50,7 @@
 <h3>1.3 <code>make flash</code> port-holder guard</h3>
 <p><code>make flash</code> refuses if another process holds the port (a stuck <code>monitor</code>), with a clear message. Override with <code>FORCE=1</code> only after confirming no other session owns the port. (commit <code>8ce132a</code>)</p>
 <h3>1.4 Host tests are the target&#x27;s proof</h3>
-<p>The crypto core (<code>aliro_hash.c</code>) compiles <strong>host == target</strong> so host KATs pin target behaviour. Run <code>ports/esp32/test/run.sh</code> before believing any crypto change. A compact AES-256-GCM host double (<code>aliro_prim_host.c</code>) lets the KATs run without PSA. Build success is not proof — the wire/crypto bugs below all built cleanly. The shared <code>modules/woz_uwb</code> logic has a second host harness, <code>tests/host/run.sh</code> (558 tests), which compiles the shim <strong>without</strong> <code>ESP_PLATFORM</code> — that is the proof an ESP-only guard didn&#x27;t regress the nRF path.</p>
+<p>The crypto core (<code>aliro_hash.c</code>) compiles <strong>host == target</strong> so host KATs pin target behaviour. Run <code>ports/esp32/test/run.sh</code> before believing any crypto change. A compact AES-256-GCM host double (<code>aliro_prim_host.c</code>) lets the KATs run without PSA. Build success is not proof — the wire/crypto bugs below all built cleanly. The shared <code>modules/woz_uwb</code> logic has a second host harness, <code>tests/host/run.sh</code> (<code>make test</code>, 578 assertions), which compiles the shared sources <strong>without</strong> <code>ESP_PLATFORM</code>: that is the proof an ESP-only guard didn&#x27;t regress the nRF path.</p>
 <p>---</p>
 <h2>2. Hardware bring-up</h2>
 <h3>2.1 DWM3000 EVB power jumper (the multi-day one)</h3>

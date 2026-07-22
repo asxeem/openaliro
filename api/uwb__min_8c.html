@@ -141,9 +141,8 @@ Include dependency graph for uwb_min.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a237e14c0ae68ebbd0db01ce985448637" id="r_a237e14c0ae68ebbd0db01ce985448637"><td class="memItemLeft"><a id="a237e14c0ae68ebbd0db01ce985448637" name="a237e14c0ae68ebbd0db01ce985448637"></a>
-static int&#160;</td><td class="memItemRight"><b>uwb_probe_ensure</b> (void)</td></tr>
-<tr class="memdesc:a237e14c0ae68ebbd0db01ce985448637"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bring the SDK up to "probed" state on first call; no-op afterwards. <br /></td></tr>
+<tr class="memitem:a237e14c0ae68ebbd0db01ce985448637" id="r_a237e14c0ae68ebbd0db01ce985448637"><td class="memItemLeft">static int&#160;</td><td class="memItemRight"><a class="el" href="#a237e14c0ae68ebbd0db01ce985448637">uwb_probe_ensure</a> (void)</td></tr>
+<tr class="memdesc:a237e14c0ae68ebbd0db01ce985448637"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bring the SDK up to "probed" state on first call; no-op afterwards.  <br /></td></tr>
 <tr class="memitem:a19d26081dbcb6f9a8c4252dfb939c0e5" id="r_a19d26081dbcb6f9a8c4252dfb939c0e5"><td class="memItemLeft"><a id="a19d26081dbcb6f9a8c4252dfb939c0e5" name="a19d26081dbcb6f9a8c4252dfb939c0e5"></a>
 static int&#160;</td><td class="memItemRight"><b>uwb_radio_ensure_init</b> (void)</td></tr>
 <tr class="memdesc:a19d26081dbcb6f9a8c4252dfb939c0e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bring the SDK up to "radio configured + LEDs on" state. <br /></td></tr>
@@ -183,7 +182,36 @@ static const uint8_t&#160;</td><td class="memItemRight"><b>g_partner_sts_key</b>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>— DW3110 bring-up driver (implementation). </p>
-</div></div><!-- contents -->
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="a237e14c0ae68ebbd0db01ce985448637" name="a237e14c0ae68ebbd0db01ce985448637"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a237e14c0ae68ebbd0db01ce985448637">&#9670;&#160;</a></span>uwb_probe_ensure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int uwb_probe_ensure </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Bring the SDK up to "probed" state on first call; no-op afterwards. </p>
+<p>The whole reset -&gt; wake -&gt; probe sequence is retried: transient SPI/power glitches (bench-seen as a burst of dwt_probe -1 during post-commissioning Wi-Fi traffic, self-recovering on the caller's next attempt) clear on a fresh chip reset, so retrying here turns a failed session start into a slightly slower one. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
 <div id="page-nav-resize-handle"></div>

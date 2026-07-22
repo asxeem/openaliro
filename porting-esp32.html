@@ -16,8 +16,8 @@
 <aside class="side" data-active="porting-esp32">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -61,7 +61,7 @@
 <p>The decision held. Everything the plan expected from ESP-IDF was there: NimBLE&#x27;s L2CAP CoC carried the transaction, mbedTLS-PSA covered the crypto, NVS covered storage, and core-pinning mattered for the ranging task.</p>
 <h3>Toolchain</h3>
 <ul><li>Use the ESP-IDF version esp-matter recommends, and install esp-matter on top of that</li></ul>
-<p>same tree. The two ports share one toolchain. <strong>Nothing in this repository pins a version</strong>: the Makefiles pin only paths (<code>IDF_EXPORT</code>, <code>ESP_MATTER_PATH</code>) and check that the export scripts exist. CI never builds either port, so no toolchain is pinned there either. Treat the pair of installs as an external prerequisite you manage.</p>
+<p>same tree. The two apps share one toolchain. Locally, the Makefiles pin only paths (<code>IDF_EXPORT</code>, <code>ESP_MATTER_PATH</code>) and check that the export scripts exist: treat the pair of installs as an external prerequisite you manage. CI pins its own copy (an ESP-IDF container digest plus a bench-validated esp-matter revision, in <code>.github/workflows/firmware-builds.yml</code> and <code>release.yml</code>).</p>
 <ul><li>Stage the install if disk is tight: plain ESP-IDF with the <code>esp32s3</code> target is enough</li></ul>
 <p>for the bench reader app (a few GB). The matter-lock app additionally needs esp-matter, which is much larger because connectedhomeip is heavy.</p>
 <h2>4. Engine port surface (Phase 1, concrete)</h2>

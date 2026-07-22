@@ -16,8 +16,8 @@
 <aside class="side" data-active="chipset-memory">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -34,7 +34,7 @@
 <header class="hero-band"><div class="hero-in"><div class="eyebrow">Deep dives</div><h1>Memory usage</h1></div></header>
 <div class="mid">
 <main class="doc reading">
-<p>Scope: the primary nRF5340 DK image only. The ESP32-S3 ports have their own budgets and partition layout (<code>ports/esp32-*/partitions.csv</code>) and are not measured here.</p>
+<p>Scope: the primary nRF5340 DK image only. The ESP32-S3 apps have their own budgets and partition layout (<code>ports/esp32/apps/*/partitions.csv</code>) and are not measured here.</p>
 <p>Snapshot measured 2026-07-19 from the build artifacts of 2026-07-17 19:55 in <code>build/</code> (repo HEAD <code>56df8df</code> at measurement time). <code>ports/nrf5340dk/overlays/woz-aliro.conf</code> and several <code>modules/woz_uwb</code> sources are newer than these artifacts, so expect small shifts on the next <code>make build</code>.</p>
 <h2>Hardware budgets</h2>
 <p>nRF5340 (app core + net core) plus the DK&#x27;s on-board MX25R64 QSPI NOR.</p>

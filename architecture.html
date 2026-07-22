@@ -16,8 +16,8 @@
 <aside class="side" data-active="architecture">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -34,12 +34,22 @@
 <header class="hero-band"><div class="hero-in"><div class="eyebrow">openaliro</div><h1>Architecture</h1><p class="lede">Every subsystem on one page, in reading order: entry points (nothing imports them) first, then the machinery they drive. Each heading links to the full per-module reference.</p></div></header>
 <div class="mid">
 <main class="doc ">
+<div class="gv3d" id="gv-3d"><div>
+<b>Fly through the whole surface</b>
+<span>Every file the docs cover, in one 3D graph — orbit it, filter it, click a node for what it does.</span></div>
+<a class="btn btn-primary" href="graph3d.html">Open the 3D view</a></div>
+<style>.gv3d{display:flex;align-items:center;gap:1.2rem;justify-content:space-between;flex-wrap:wrap;
+margin:1.4rem 0 1.9rem;padding:1.05rem 1.25rem;border:1px solid var(--hairline);border-radius:16px;
+background:linear-gradient(135deg,var(--tint),transparent 65%)}
+.gv3d b{display:block;font-weight:650;color:var(--strong)}
+.gv3d span{font-size:.88rem;color:var(--muted)}
+.gv3d .btn{flex:none}</style>
 <script type="application/json" id="gv-slots">{"woz_aliro": 0, "woz_port": 1, "woz_uwb/aliro": 2, "woz_uwb/ccc": 3, "woz_uwb/facade": 4}</script>
 <style>:root{--gv0:#2a78d6;--gv1:#eb6834;--gv2:#1baf7a;--gv3:#eda100;--gv4:#e87ba4}
 :root[data-theme="dark"]{--gv0:#3987e5;--gv1:#d95926;--gv2:#199e70;--gv3:#c98500;--gv4:#d55181}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--gv0:#3987e5;--gv1:#d95926;--gv2:#199e70;--gv3:#c98500;--gv4:#d55181}}
 .gv-dot{display:inline-block;width:.55em;height:.55em;border-radius:50%;background:var(--c);margin-right:.4em}
-.graph-shell .node[id*="-aliro_apdu-"] rect,.graph-shell .node[id*="-aliro_ble-"] rect,.graph-shell .node[id*="-aliro_crypto-"] rect,.graph-shell .node[id*="-aliro_hash-"] rect,.graph-shell .node[id*="-aliro_prim-"] rect,.graph-shell .node[id*="-aliro_prim_psa-"] rect,.graph-shell .node[id*="-aliro_prov-"] rect,.graph-shell .node[id*="-aliro_ranging-"] rect,.graph-shell .node[id*="-aliro_reader-"] rect,.graph-shell .node[id*="-gvn0-"] rect{stroke:var(--gv0)!important;fill:color-mix(in srgb,var(--gv0) 10%,transparent)!important}
+.graph-shell .node[id*="-aliro_apdu-"] rect,.graph-shell .node[id*="-aliro_ble-"] rect,.graph-shell .node[id*="-aliro_crypto-"] rect,.graph-shell .node[id*="-aliro_hash-"] rect,.graph-shell .node[id*="-aliro_lat-"] rect,.graph-shell .node[id*="-aliro_prim-"] rect,.graph-shell .node[id*="-aliro_prim_psa-"] rect,.graph-shell .node[id*="-aliro_prov-"] rect,.graph-shell .node[id*="-aliro_ranging-"] rect,.graph-shell .node[id*="-aliro_reader-"] rect,.graph-shell .node[id*="-gvn0-"] rect{stroke:var(--gv0)!important;fill:color-mix(in srgb,var(--gv0) 10%,transparent)!important}
 .graph-shell .cluster[id*="gvc0"] rect{stroke:color-mix(in srgb,var(--gv0) 45%,transparent)!important;fill:color-mix(in srgb,var(--gv0) 6%,transparent)!important}
 .graph-shell .node[id*="-woz_log-"] rect,.graph-shell .node[id*="-woz_port-"] rect,.graph-shell .node[id*="-gvn1-"] rect{stroke:var(--gv1)!important;fill:color-mix(in srgb,var(--gv1) 10%,transparent)!important}
 .graph-shell .cluster[id*="gvc1"] rect{stroke:color-mix(in srgb,var(--gv1) 45%,transparent)!important;fill:color-mix(in srgb,var(--gv1) 6%,transparent)!important}
@@ -62,12 +72,13 @@
   gvn2 --&gt; gvn3
   gvn2 --&gt; gvn4</pre></div>
 <figcaption>Subsystem-level view of the module graph below: each box is a source directory, each arrow an import dependency between them. The colors follow each directory through the detail graph and the sections below.</figcaption></figure>
-<figure class="graph-wrap" data-gv-home="aliro_reader"><div class="graph-shell"><pre class="mermaid">flowchart LR
+<figure class="graph-wrap" data-gv-home="aliro_uwb_msg"><div class="graph-shell"><pre class="mermaid">flowchart LR
   subgraph gvc0["woz_aliro"]
     aliro_apdu
     aliro_ble
     aliro_crypto
     aliro_hash
+    aliro_lat
     aliro_prim
     aliro_prim_psa
     aliro_prov
@@ -99,9 +110,12 @@
   end
   aliro_crypto --&gt; aliro_prim
   aliro_crypto --&gt; aliro_hash
+  aliro_lat --&gt; woz_log
+  aliro_lat --&gt; woz_port
   aliro_prim_psa --&gt; aliro_prim
   aliro_ranging --&gt; aliro_ble
   aliro_ranging --&gt; aliro_crypto
+  aliro_ranging --&gt; aliro_lat
   aliro_ranging --&gt; woz_log
   aliro_ranging --&gt; aliro_uwb_adapter
   aliro_ranging --&gt; aliro_uwb_session
@@ -110,6 +124,7 @@
   aliro_ranging --&gt; woz_uwb_facade
   aliro_reader --&gt; aliro_ble
   aliro_reader --&gt; aliro_crypto
+  aliro_reader --&gt; aliro_lat
   aliro_reader --&gt; aliro_prim
   aliro_reader --&gt; aliro_prov
   aliro_reader --&gt; aliro_apdu
@@ -141,11 +156,7 @@
   aliro_uwb_msg_parser --&gt; aliro_uwb_msg_spec
   aliro_uwb_msg_parser --&gt; aliro_uwb_session
   aliro_uwb_session --&gt; woz_log
-  aliro_uwb_session --&gt; aliro_uwb_internal
-  aliro_uwb_session --&gt; aliro_uwb_msg
-  aliro_uwb_session --&gt; aliro_uwb_msg_spec
-  aliro_uwb_session --&gt; cherry_ccc
-  aliro_uwb_session --&gt; woz_alloc</pre></div>
+  aliro_uwb_session --&gt; aliro_uwb_internal</pre></div>
 <figcaption>Every module and its imports, grouped and color-keyed by directory. Opens on the entry point; drag to pan, &#8984;&#8202;scroll or pinch to zoom, &#10530; for full screen, or use the per-module sections below.</figcaption></figure>
 <div class="arch">
 <style>
@@ -166,7 +177,7 @@
 .arch-grp .row-desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 </style>
 <div class="section-h"><h2>Modules</h2><span class="rule"></span></div>
-<details class="arch-grp" open><summary><i class="gv-dot" style="--c:var(--gv0)"></i><span class="ag-name">woz_aliro</span><span class="ag-dir">modules/woz_aliro</span><span class="ag-n">15 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
+<details class="arch-grp"><summary><i class="gv-dot" style="--c:var(--gv0)"></i><span class="ag-name">woz_aliro</span><span class="ag-dir">modules/woz_aliro</span><span class="ag-n">17 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
 <li><a href="modules.woz_aliro.src.aliro_ranging.c.html" title="modules/woz_aliro/src/aliro_ranging.c"><span class="row-name"><code>aliro_ranging.c</code></span><span class="row-desc">UWB ranging bring-up and lifecycle for the Aliro reader: initializes the reader&#x27;s UWB
 adapter and Cherry CCC context once, then arms, feeds, and tears down per-connection ranging
 sessions driven by the M1-M4 setup exchanged over the peer&#x27;s L2CAP channel.
@@ -184,6 +195,7 @@ channels, and wire message framing built on a pluggable crypto backend (aliro_pr
 Implements the Aliro key-derivation chain (ECDH shared secret -&gt; z -&gt; 160-byte key block -&gt; split
 session keys / URSK / BLE ranging keys), per-direction AES-256-GCM secure channels with monotonic
 message counters, and the seal/open framing used to carry engine plaintext over the wire.</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_lat.c.html" title="modules/woz_aliro/src/aliro_lat.c"><span class="row-name"><code>aliro_lat.c</code></span><span class="row-desc">Walk-up latency trace: first-hit phase timestamps + the consolidated budget line.</span></a></li>
 <li><a href="modules.woz_aliro.src.aliro_apdu.c.html" title="modules/woz_aliro/src/aliro_apdu.c"><span class="row-name"><code>aliro_apdu.c</code></span><span class="row-desc">Aliro APDU TLV codec: builds command payloads (AUTH0, AUTH1, AuthData, EXCHANGE) and parses
 response APDUs, plus BLE envelope framing/unframing and ISO7816 APDU wrap/status-word stripping.
 Provides a minimal BER-TLV writer (aliro_tlv_w_init/put/finish) used to assemble command
@@ -206,6 +218,7 @@ payload without touching NimBLE), then register the GATT service returned by
 aliro_ble_service_def with the host&#x27;s combined service table.</span></a></li>
 <li><a href="modules.woz_aliro.include.aliro_crypto.h.html" title="modules/woz_aliro/include/aliro_crypto.h"><span class="row-name"><code>aliro_crypto.h</code></span><span class="row-desc">Aliro crypto public API: key derivation, AES-GCM secure channels, and wire message
 seal/open framing shared by the reader and device sides of an Aliro session.</span></a></li>
+<li><a href="modules.woz_aliro.include.aliro_lat.h.html" title="modules/woz_aliro/include/aliro_lat.h"><span class="row-name"><code>aliro_lat.h</code></span><span class="row-desc"><em>No module docstring. First commit: "Cut ESP32 walk-up unlock latency: instrument, unblock, and precompute".</em></span></a></li>
 <li><a href="modules.woz_aliro.src.aliro_ranging.h.html" title="modules/woz_aliro/src/aliro_ranging.h"><span class="row-name"><code>aliro_ranging.h</code></span><span class="row-desc">Aliro M1-M4 ranging-setup interface: negotiates UWB ranging parameters with the device and
 produces the BLE ranging-control secure channel used to carry the M1-M4 exchange.</span></a></li>
 <li><a href="modules.woz_aliro.include.aliro_prim.h.html" title="modules/woz_aliro/include/aliro_prim.h"><span class="row-name"><code>aliro_prim.h</code></span><span class="row-desc"></span></a></li>
@@ -226,7 +239,7 @@ calls.</span></a></li>
 <li><a href="modules.woz_port.include.woz_log.h.html" title="modules/woz_port/include/woz_log.h"><span class="row-name"><code>woz_log.h</code></span><span class="row-desc"><em>No module docstring. First commit: "modules: promote the platform contract to modules/woz_port".</em></span></a></li>
 <li><a href="modules.woz_port.include.woz_port.h.html" title="modules/woz_port/include/woz_port.h"><span class="row-name"><code>woz_port.h</code></span><span class="row-desc"><em>No module docstring. First commit: "modules: promote the platform contract to modules/woz_port".</em></span></a></li>
 </ul></div></details>
-<details class="arch-grp"><summary><i class="gv-dot" style="--c:var(--gv2)"></i><span class="ag-name">woz_uwb/aliro</span><span class="ag-dir">modules/woz_uwb/src/aliro</span><span class="ag-n">16 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
+<details class="arch-grp" open><summary><i class="gv-dot" style="--c:var(--gv2)"></i><span class="ag-name">woz_uwb/aliro</span><span class="ag-dir">modules/woz_uwb/src/aliro</span><span class="ag-n">16 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
 <li><a href="modules.woz_uwb.src.aliro.aliro_uwb_msg.c.html" title="modules/woz_uwb/src/aliro/aliro_uwb_msg.c"><span class="row-name"><code>aliro_uwb_msg.c</code></span><span class="row-desc">setup/notification message codec.</span></a></li>
 <li><a href="modules.woz_uwb.src.aliro.aliro_uwb_session.c.html" title="modules/woz_uwb/src/aliro/aliro_uwb_session.c"><span class="row-name"><code>aliro_uwb_session.c</code></span><span class="row-desc">per-session lifecycle and state machine.</span></a></li>
 <li><a href="modules.woz_uwb.src.aliro.aliro_uwb_adapter.c.html" title="modules/woz_uwb/src/aliro/aliro_uwb_adapter.c"><span class="row-name"><code>aliro_uwb_adapter.c</code></span><span class="row-desc">reader-context lifecycle.</span></a></li>
@@ -237,10 +250,10 @@ calls.</span></a></li>
 <li><a href="modules.woz_uwb.src.aliro.aliro_uwb_msg_parser.h.html" title="modules/woz_uwb/src/aliro/aliro_uwb_msg_parser.h"><span class="row-name"><code>aliro_uwb_msg_parser.h</code></span><span class="row-desc">TLV attribute iteration and big-endian reads.</span></a></li>
 <li><a href="modules.woz_uwb.src.aliro.aliro_uwb_msg_spec.h.html" title="modules/woz_uwb/src/aliro/aliro_uwb_msg_spec.h"><span class="row-name"><code>aliro_uwb_msg_spec.h</code></span><span class="row-desc">UWB ranging-service framing constants.</span></a></li>
 <li><a href="modules.woz_uwb.src.aliro.include.aliro_uwb_adapter.aliro_uwb_adapter.h.html" title="modules/woz_uwb/src/aliro/include/aliro_uwb_adapter/aliro_uwb_adapter.h"><span class="row-name"><code>aliro_uwb_adapter.h</code></span><span class="row-desc">reader-device public interface.</span></a></li>
-<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_internal.h.html" title="modules/woz_uwb/src/aliro/aliro_uwb_internal.h"><span class="row-name"><code>aliro_uwb_internal.h</code></span><span class="row-desc">private context types and shared helpers.</span></a></li>
 <li><a href="modules.woz_uwb.src.aliro.include.aliro_uwb_adapter.aliro_uwb_session.h.html" title="modules/woz_uwb/src/aliro/include/aliro_uwb_adapter/aliro_uwb_session.h"><span class="row-name"><code>aliro_uwb_session.h</code></span><span class="row-desc">per-session public interface.</span></a></li>
-<li><a href="modules.woz_uwb.src.aliro.include.cherry.cherry_ccc.h.html" title="modules/woz_uwb/src/aliro/include/cherry/cherry_ccc.h"><span class="row-name"><code>cherry_ccc.h</code></span><span class="row-desc">CCC/Aliro-session interface (seam the adapter drives).</span></a></li>
 <li><a href="modules.woz_uwb.src.aliro.include.cherry.cherry.h.html" title="modules/woz_uwb/src/aliro/include/cherry/cherry.h"><span class="row-name"><code>cherry.h</code></span><span class="row-desc">Cherry core (context + device-capabilities) interface.</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.include.cherry.cherry_ccc.h.html" title="modules/woz_uwb/src/aliro/include/cherry/cherry_ccc.h"><span class="row-name"><code>cherry_ccc.h</code></span><span class="row-desc">CCC/Aliro-session interface (seam the adapter drives).</span></a></li>
+<li><a href="modules.woz_uwb.src.aliro.aliro_uwb_internal.h.html" title="modules/woz_uwb/src/aliro/aliro_uwb_internal.h"><span class="row-name"><code>aliro_uwb_internal.h</code></span><span class="row-desc">private context types and shared helpers.</span></a></li>
 <li><a href="modules.woz_uwb.src.aliro.include.cherry.cherry_session.h.html" title="modules/woz_uwb/src/aliro/include/cherry/cherry_session.h"><span class="row-name"><code>cherry_session.h</code></span><span class="row-desc">generic base-session interface.</span></a></li>
 <li><a href="modules.woz_uwb.src.aliro.include.cherry.cherry_common.h.html" title="modules/woz_uwb/src/aliro/include/cherry/cherry_common.h"><span class="row-name"><code>cherry_common.h</code></span><span class="row-desc">diagnostics config struct and report forward decl.</span></a></li>
 </ul></div></details>
@@ -279,7 +292,7 @@ qrtc_get_us returns monotonic microseconds since boot.</span></a></li>
 <li><a href="modules.woz_uwb.src.facade.woz_uwb_facade.h.html" title="modules/woz_uwb/src/facade/woz_uwb_facade.h"><span class="row-name"><code>woz_uwb_facade.h</code></span><span class="row-desc">Public header for UWB facade: exposes Aliro DS-TWR responder lifecycle and range query; the CCC
 engine is bound and unbound via internal ursk and stop calls.</span></a></li>
 <li><a href="modules.woz_uwb.src.facade.woz_bytes.h.html" title="modules/woz_uwb/src/facade/woz_bytes.h"><span class="row-name"><code>woz_bytes.h</code></span><span class="row-desc"><em>No module docstring. First commit: "port: replace the Zephyr compat shims with a neutral woz_port.h contract".</em></span></a></li>
-<li><a href="modules.woz_uwb.src.facade.woz_diag.h.html" title="modules/woz_uwb/src/facade/woz_diag.h"><span class="row-name"><code>woz_diag.h</code></span><span class="row-desc">DIAGK(): compile-time gate for verbose UWB bring-up diagnostics.</span></a></li>
+<li><a href="modules.woz_uwb.src.facade.woz_diag.h.html" title="modules/woz_uwb/src/facade/woz_diag.h"><span class="row-name"><code>woz_diag.h</code></span><span class="row-desc">DIAGK(): gate for verbose UWB bring-up diagnostics.</span></a></li>
 <li><a href="modules.woz_uwb.src.facade.trace.h.html" title="modules/woz_uwb/src/facade/trace.h"><span class="row-name"><code>trace.h</code></span><span class="row-desc">Structured [WOZ_TRACE] emit helpers, gated on CONFIG_WOZ_E2E_TRACE.</span></a></li>
 <li><a href="modules.woz_uwb.src.facade.woz_logfmt.c.html" title="modules/woz_uwb/src/facade/woz_logfmt.c"><span class="row-name"><code>woz_logfmt.c</code></span><span class="row-desc">PRETTY-gated high-res timestamp + compact colored log line.</span></a></li>
 <li><a href="modules.woz_uwb.src.facade.woz_logquiet.c.html" title="modules/woz_uwb/src/facade/woz_logquiet.c"><span class="row-name"><code>woz_logquiet.c</code></span><span class="row-desc">PRETTY-gated runtime muting of benign upstream error spam.
@@ -383,7 +396,15 @@ g_warm_valid stays false, and the responder receives Pre-POLLs but never
 replies.  Re-create only the essential chain here (no k_work, no diagnostics).
 Also keeps the dwt_configurestsmode pass-through the essential RX path needs.</span></a></li>
 </ul></div></details>
-<details class="arch-grp"><summary><span class="ag-name">scripts</span><span class="ag-dir">scripts</span><span class="ag-n">5 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
+<details class="arch-grp"><summary><span class="ag-name">release</span><span class="ag-dir">release</span><span class="ag-n">2 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
+<li><a href="release.esp32-matter-lock.flash.sh.html" title="release/esp32-matter-lock/flash.sh"><span class="row-name"><code>flash.sh</code></span><span class="row-desc">flash.sh — program the openaliro ESP32-S3 Matter lock (single merged image at
+offset 0x0) with esptool. See FLASH.md for wiring and first run.
+Usage:  bash flash.sh [PORT]       e.g.  bash flash.sh /dev/ttyACM0</span></a></li>
+<li><a href="release.nrf5340dk.flash.sh.html" title="release/nrf5340dk/flash.sh"><span class="row-name"><code>flash.sh</code></span><span class="row-desc">flash.sh — program the openaliro nRF5340 DK firmware (both cores) over the
+DK&#x27;s on-board J-Link, using nrfutil. See FLASH.md for setup and first run.
+Usage:  bash flash.sh [JLINK_SERIAL_NUMBER]</span></a></li>
+</ul></div></details>
+<details class="arch-grp"><summary><span class="ag-name">scripts</span><span class="ag-dir">scripts</span><span class="ag-n">6 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
 <li><a href="scripts.bootstrap.sh.html" title="scripts/bootstrap.sh"><span class="row-name"><code>bootstrap.sh</code></span><span class="row-desc">bootstrap.sh — build a self-contained west workspace, PRISTINE from upstream.
 Fetches everything the build needs from public GitHub into ./workspace
 (git-ignored), then applies our integration patches on top. It never reads from
@@ -433,6 +454,7 @@ then a link pass rewrites cross-document links so the published site has no
 dead ends, and the freshness gate confirms the committed docs/ tree matches
 the source. Run it through <code>make docs</code>.
 Nothing here needs the NCS toolchain or hardware.</span></a></li>
+<li><a href="scripts.flash_html.html" title="scripts/flash_html.py"><span class="row-name"><code>flash_html.py</code></span><span class="row-desc">Render a release FLASH.md into a self-contained FLASH.html.</span></a></li>
 <li><a href="scripts.ws-seed.sh.html" title="scripts/ws-seed.sh"><span class="row-name"><code>ws-seed.sh</code></span><span class="row-desc">ws-seed.sh — give this git worktree its own NCS workspace, cheaply.
 Frequent branch-bouncing over a single shared workspace is a trap: the tree
 holds one patch state at a time (last bootstrap wins), so a build from the
@@ -444,7 +466,8 @@ every block with the primary and costs ~0 extra disk until a patched file
 diverges. Cleanup is automatic — the workspace lives inside the worktree, so
 deleting the worktree deletes it (see <code>make ws-clean</code>).</span></a></li>
 </ul></div></details>
-<details class="arch-grp"><summary><span class="ag-name">tools</span><span class="ag-dir">tools</span><span class="ag-n">9 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
+<details class="arch-grp"><summary><span class="ag-name">tools</span><span class="ag-dir">tools</span><span class="ag-n">11 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
+<li><a href="tools.docs_3d.html" title="tools/docs_3d.py"><span class="row-name"><code>docs_3d.py</code></span><span class="row-desc">Render the whole code surface as a flyable 3D graph: site/graph3d.html.</span></a></li>
 <li><a href="tools.docs_api.html" title="tools/docs_api.py"><span class="row-name"><code>docs_api.py</code></span><span class="row-desc">Fill the reference pages the page generator leaves bare.</span></a></li>
 <li><a href="tools.docs_cmds.html" title="tools/docs_cmds.py"><span class="row-name"><code>docs_cmds.py</code></span><span class="row-desc">Render runnable command blocks as one copy chip per command.</span></a></li>
 <li><a href="tools.docs_github.html" title="tools/docs_github.py"><span class="row-name"><code>docs_github.py</code></span><span class="row-desc">Point the rendered site back at its GitHub repository.</span></a></li>
@@ -453,6 +476,7 @@ deleting the worktree deletes it (see <code>make ws-clean</code>).</span></a></l
 <li><a href="tools.docs_media.html" title="tools/docs_media.py"><span class="row-name"><code>docs_media.py</code></span><span class="row-desc">Add the repo&#x27;s imagery to the rendered site: demo screenshots and a share card.</span></a></li>
 <li><a href="tools.docs_nav.html" title="tools/docs_nav.py"><span class="row-name"><code>docs_nav.py</code></span><span class="row-desc">Give the rendered site one curated reading order.</span></a></li>
 <li><a href="tools.docs_start.html" title="tools/docs_start.py"><span class="row-name"><code>docs_start.py</code></span><span class="row-desc">Give the rendered site a real &quot;Get started&quot; landing.</span></a></li>
+<li><a href="tools.docs_theme.html" title="tools/docs_theme.py"><span class="row-name"><code>docs_theme.py</code></span><span class="row-desc">Retheme the rendered site: warm paper surfaces, serif display headings.</span></a></li>
 <li><a href="tools.docs_title.html" title="tools/docs_title.py"><span class="row-name"><code>docs_title.py</code></span><span class="row-desc">Title the generated pages after the repository, not after the checkout directory.</span></a></li>
 </ul></div></details>
 <details class="arch-grp"><summary><span class="ag-name">woz_aliro_ecp</span><span class="ag-dir">modules/woz_aliro_ecp/src</span><span class="ag-n">1 module</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">

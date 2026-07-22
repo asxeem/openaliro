@@ -16,8 +16,8 @@
 <aside class="side" data-active="modules.woz_uwb.src.driver.uwb_min.c">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>614/661 · 92%</b></div>
-<div class="cov-bar"><span style="width:92%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>633/694 · 91%</b></div>
+<div class="cov-bar"><span style="width:91%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -41,54 +41,54 @@
 <div class="api">
 <section class="api-entry" id="uwb_probe_ensure">
 <h3><span class="kindb" title="function">F</span><code>static int <b>uwb_probe_ensure</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:23</div>
-<p>Bring the SDK up to &quot;probed&quot; state on first call; no-op afterwards.</p>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:29</div>
+<p>Bring the SDK up to &quot;probed&quot; state on first call; no-op afterwards. The whole reset -&gt; wake -&gt; probe sequence is retried: transient SPI/power glitches (bench-seen as a burst of dwt_probe -1 during post-commissioning Wi-Fi traffic, self-recovering on the caller&#x27;s next attempt) clear on a fresh chip reset, so retrying here turns a failed session start into a slightly slower one.</p>
 <div class="xref">called by <code>uwb_min_read_chipid</code>, <code>uwb_radio_ensure_init</code></div>
 </section>
 <section class="api-entry" id="uwb_radio_ensure_init">
 <h3><span class="kindb" title="function">F</span><code>static int <b>uwb_radio_ensure_init</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:101</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:114</div>
 <p>Bring the SDK up to &quot;radio configured + LEDs on&quot; state.</p>
 <div class="xref">called by <code>uwb_min_radio_init</code>, <code>uwb_min_selftest</code>, <code>uwb_min_twr_prep</code> &nbsp;·&nbsp; calls <code>uwb_probe_ensure</code></div>
 </section>
 <section class="api-entry" id="uwb_min_radio_init">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_radio_init</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:139</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:152</div>
 <p>Ensure the DW3110 is fully initialised (probe + initialise + configure + LEDs).</p>
 <div class="xref">calls <code>uwb_radio_ensure_init</code></div>
 </section>
 <section class="api-entry" id="uwb_min_hw_reset">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_hw_reset</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:144</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:157</div>
 <p>Pulse the DW3110 RST line low to force a hardware reset.</p>
 </section>
 <section class="api-entry" id="uwb_min_read_chipid">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_read_chipid</b>(uint32_t *id_out)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:156</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:169</div>
 <p>Read the DW3000-family DEV_ID register over SPI.</p>
 <div class="xref">calls <code>uwb_probe_ensure</code></div>
 </section>
 <section class="api-entry" id="uwb_min_selftest">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_selftest</b>(struct uwb_selftest_result *out)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:181</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:194</div>
 <p>Radio self-test: configure, TX one frame, then arm RX.</p>
 <div class="xref">calls <code>uwb_radio_ensure_init</code></div>
 </section>
 <section class="api-entry" id="uwb_min_twr_prep">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_twr_prep</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:275</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:288</div>
 <p>Configure the radio for the raw SS-TWR loopback (SP3-ND, ch9, code11); no STS.</p>
 <div class="xref">called by <code>uwb_min_twr_poll</code> &nbsp;·&nbsp; calls <code>uwb_radio_ensure_init</code></div>
 </section>
 <section class="api-entry" id="uwb_min_twr_exchange">
 <h3><span class="kindb" title="function">F</span><code>void <b>uwb_min_twr_exchange</b>(struct uwb_twr_frame *f)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:296</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:309</div>
 <p>Run one POLL/RESP exchange; the STS must already be programmed.</p>
 <div class="xref">called by <code>uwb_min_twr_poll</code></div>
 </section>
 <section class="api-entry" id="uwb_min_twr_poll">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_twr_poll</b>(uint32_t n, uint32_t period_ms, struct uwb_twr_result *out)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:349</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:362</div>
 <p>Raw static-STS SS-TWR initiator burst (bench probe).</p>
 <div class="xref">calls <code>uwb_min_twr_exchange</code>, <code>uwb_min_twr_prep</code></div>
 </section>

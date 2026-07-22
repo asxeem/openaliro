@@ -165,7 +165,7 @@
 <!-- Node13 -->
 <g id="Node000013" class="node">
 <title>Node13</title>
-<g id="a_Node000013"><a xlink:href="woz__diag_8h.html" target="_top" xlink:title="— DIAGK(): compile&#45;time gate for verbose UWB bring&#45;up diagnostics.">
+<g id="a_Node000013"><a xlink:href="woz__diag_8h.html" target="_top" xlink:title="— DIAGK(): gate for verbose UWB bring&#45;up diagnostics.">
 <polygon fill="white" stroke="#666666" points="862.99,-129.75 797.49,-129.75 797.49,-110.5 862.99,-110.5 862.99,-129.75"/>
 <text xml:space="preserve" text-anchor="middle" x="830.24" y="-116.25" font-family="Helvetica,sans-Serif" font-size="10.00">woz_diag.h</text>
 </a>
