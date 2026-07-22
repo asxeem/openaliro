@@ -466,3 +466,6 @@ p code,li code,.chips code,.xref code,dd code{padding:.12em .38em;border-radius:
 pre,.t-body{scrollbar-width:thin;scrollbar-color:rgba(250,249,245,.18) transparent}
 pre::-webkit-scrollbar,.t-body::-webkit-scrollbar{height:8px}
 pre::-webkit-scrollbar-thumb,.t-body::-webkit-scrollbar-thumb{background:rgba(250,249,245,.16);border-radius:9px}
+
+/* flash-page */
+.qs-flash{margin:1.4rem 0 2.4rem}
