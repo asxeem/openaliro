@@ -13,6 +13,8 @@ SHIM="$ROOT/tests/host/shim"
 HOST="$ROOT/tests/host"
 
 UNIT_SRCS=(
+	"$ROOT/modules/woz_nfc/src/pn532.c"
+	"$ROOT/modules/woz_nfc/src/pn532_apdu.c"
 	"$SRC/ccc/ccc_kdf.c"
 	"$SRC/ccc/ccc_mac.c"
 	"$SRC/ccc/ccc_session.c"
@@ -33,6 +35,7 @@ TEST_SRCS=(
 	"$HOST/aes_ref.c"
 	"$HOST/test.c"
 	"$HOST/test_main.c"
+	"$HOST/test_pn532.c"
 	"$HOST/test_ccc_kdf.c"
 	"$HOST/test_ccc_mac.c"
 	"$HOST/test_ccc_sts.c"
@@ -60,6 +63,7 @@ SHIM_SRCS=(
 INCS=(
 	-I"$SHIM"
 	-I"$HOST"
+	-I"$ROOT/modules/woz_nfc/src"
 	-I"$SRC/ccc"
 	-I"$SRC/driver"
 	-I"$SRC/aliro"
