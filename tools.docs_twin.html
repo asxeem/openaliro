@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="openaliro">
-<meta property="og:title" content="scripts/docs-publish.sh">
+<meta property="og:title" content="tools/docs_twin.py">
 <meta property="og:image" content="https://asxeem.github.io/openaliro/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
-<title>scripts/docs-publish.sh</title>
+<title>tools/docs_twin.py</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="app">
-<aside class="side" data-active="scripts.docs-publish.sh">
+<aside class="side" data-active="tools.docs_twin">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
 <div class="cov"><div class="cov-row"><span>coverage</span><b>634/700 · 90%</b></div>
@@ -25,33 +25,31 @@
 <div class="content">
 <header class="topbar">
 <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
-<div class="crumb"><span>scripts</span><span class="sep">/</span><b>docs-publish.sh</b></div>
+<div class="crumb"><span>tools</span><span class="sep">/</span><b>docs_twin.py</b></div>
 <div class="spacer"></div>
 <button class="icon-btn js-search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
 <a class="gh-chip" data-repo="asxeem/openaliro" href="https://github.com/asxeem/openaliro" target="_blank" rel="noopener" aria-label="asxeem/openaliro on GitHub"><svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="gh-name">asxeem/openaliro</span><span class="gh-stat"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.8l1.9 3.85 4.25.62-3.08 3 .73 4.23L8 11.5l-3.8 2 .73-4.23-3.08-3 4.25-.62z"/></svg><b data-gh="stars"></b></span><span class="gh-stat"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="4" cy="3.5" r="1.7"/><circle cx="12" cy="3.5" r="1.7"/><circle cx="8" cy="12.5" r="1.7"/><path d="M4 5.2v.8a2.2 2.2 0 0 0 2.2 2.2h3.6A2.2 2.2 0 0 0 12 6V5.2M8 8.2v2.6"/></svg><b data-gh="forks"></b></span></a>
 <button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
 </header>
-<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">docs-publish.sh</h1><p class="lede">docs-publish.sh — snapshot the rendered site/ onto the local gh-pages branch.</p><div class="metarow"><span><code>scripts/docs-publish.sh</code></span></div></div></header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">docs_twin.py</h1><p class="lede">Fold the interactive walk-up digital twin into the rendered site.</p><div class="metarow"><span><code>tools/docs_twin.py</code></span></div></div></header>
 <div class="mid">
 <main class="doc ">
 <h2>Overview</h2>
-<p>docs-publish.sh — snapshot the rendered site/ onto the local gh-pages branch.
-The site is a build artifact and never lives on main; what gets published is a
-snapshot branch that holds site/&#x27;s contents at its root. This script only moves
-the LOCAL gh-pages ref — pushing it (<code>git push origin gh-pages</code>) stays a human
-step on purpose. Run it through <code>make docs-publish</code>, which rebuilds the site
-first so a stale or partial tree can never be snapshotted.
-Guards, in order:
-- site/index.html and site/.nojekyll must exist (the build completed);
-- docs/ must be clean: if the rebuild just changed the committed pages, they
-must be committed first, so every snapshot corresponds to a commit;
-- an existing gh-pages branch is reused only when it is one of our
-snapshots (&quot;docs site …&quot;) — a real branch by that name is never eaten;
-- the snapshot must actually contain index.html and .nojekyll;
-- each snapshot chains to the previous one, so the push fast-forwards.
-Nothing here checks out a branch or touches the working tree: the snapshot is
-built through a throwaway index, so it is safe to run from any worktree, with
-any branch checked out, dirty or not.</p>
+<p>Fold the interactive walk-up digital twin into the rendered site.</p>
+<p>The page generator renders prose, navigation and reference pages; it does not
+know about the standalone twin. This repo ships one:</p>
+<pre>  * web-twin/index.html — a self-contained page (inline JS/CSS, no network) that
+    drives the reader&#x27;s real unlock decision logic as a visitor walks a phone up
+    to a door. It is themed off the same tokens as the site, so it drops in as
+    site/twin.html and reads as the same product.</pre>
+<p>This pass copies that page in and adds one call-to-action on the landing page,
+linking to it, anchored on the same explore-card list docs_media uses. The link
+pass that runs later then validates site/twin.html resolves.</p>
+<p>Idempotent on purpose: when the page generator is not configured, earlier passes
+run over a site/ kept from a previous build, so the landing page may already
+carry the CTA. Run from the repo root, after the generators and before the link
+pass.</p>
+<details><summary>Undocumented (1)</summary><p><code>main</code></p></details>
 </main>
 <aside class="toc-rail" id="toc" aria-label="On this page"></aside>
 </div>
