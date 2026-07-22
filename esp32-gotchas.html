@@ -16,8 +16,8 @@
 <aside class="side" data-active="esp32-gotchas">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>635/702 · 90%</b></div>
-<div class="cov-bar"><span style="width:90%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>672/826 · 81%</b></div>
+<div class="cov-bar"><span style="width:81%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -74,7 +74,7 @@
 <h3>3.3 The Aliro transaction must stay on the nimble_host task</h3>
 <p><strong>VERIFIED.</strong> Driving the Aliro APDU exchange from another task races the host. The whole credential-auth + ranging lifecycle (create / feed / teardown + the engine&#x27;s transmit &amp; event callbacks) runs <strong>synchronously on the BLE-host task</strong>, so no locking is needed there. Provisioning state shared with the REPL task (<code>s_trust</code>, <code>s_last_cred</code>) is the one thing guarded by a FreeRTOS mutex. (commit <code>04bd8cc</code>)</p>
 <h3>3.4 Advertising service data</h3>
-<p>The reader advertises the Aliro 0xFFF2 service with a dynamic tag for phone approach-connect. Note the separate <code>DYNAMIC_TAG</code> staleness trap: approach-unlock dies when the clock is valid but far behind real time (advertisement expiry tag), fixed on the nRF side by disabling the dynamic tag — watch for the analogue here. (commit <code>5a4e6c4</code>)</p>
+<p>The reader advertises the Aliro 0xFFF2 service with a dynamic tag for phone approach-connect. Note the separate <code>DYNAMIC_TAG</code> staleness trap: approach-unlock dies when the clock is valid but far behind real time (advertisement expiry tag), first hit on the nRF side. The analogue is handled here: the tag expiry is live (SNTP-fed wall clock, <code>now + 900 s</code>), re-derived at half the window and immediately on a time step, with the spec&#x27;s &quot;expiry unavailable&quot; form as the no-clock fallback. (commit <code>5a4e6c4</code>)</p>
 <p>---</p>
 <h2>4. Aliro credential-auth crypto &amp; key schedule</h2>
 <p>These were resolved by decompiling <code>libaliro_ble.a</code> (Cortex-M33) and cross-checking a readable reference <code>crypto.cpp</code>, then pinning with host KATs. <strong>Clean-room: facts only, no decompiled source enters the repo.</strong></p>

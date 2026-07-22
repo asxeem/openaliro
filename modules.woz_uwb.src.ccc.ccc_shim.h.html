@@ -16,8 +16,8 @@
 <aside class="side" data-active="modules.woz_uwb.src.ccc.ccc_shim.h">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>635/702 · 90%</b></div>
-<div class="cov-bar"><span style="width:90%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>672/826 · 81%</b></div>
+<div class="cov-bar"><span style="width:81%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -135,14 +135,19 @@ loads.</p>
 <div class="src">modules/woz_uwb/src/ccc/ccc_shim.h:74</div>
 <p>BENCH: bring up a raw continuous SP0 receiver for the CCC Pre-POLL (target only).</p>
 </section>
+<section class="api-entry" id="ccc_prepoll_prewarm">
+<h3><span class="kindb" title="function">F</span><code>int <b>ccc_prepoll_prewarm</b>(uint8_t channel, uint8_t preamble_code)</code></h3>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim.h:78</div>
+<p>Pre-apply the expected session PHY (radio configured, TRX off, RX not armed) so a following ccc_prepoll_listen() with the same params skips the dwt_configure long pole.</p>
+</section>
 <section class="api-entry" id="ccc_prepoll_stop">
 <h3><span class="kindb" title="function">F</span><code>void <b>ccc_prepoll_stop</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim.h:78</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim.h:82</div>
 <p>Stop the Pre-POLL listener: close the self-rearm listen-gate, then force the radio off (target only).</p>
 </section>
 <section class="api-entry" id="ccc_shim_sts_index0">
 <h3><span class="kindb" title="function">F</span><code>uint32_t <b>ccc_shim_sts_index0</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/ccc/ccc_shim.h:81</div>
+<div class="src">modules/woz_uwb/src/ccc/ccc_shim.h:85</div>
 <p>The bound session's <code>STS_Index0</code> (for UAD/Pre-POLL derivation); 0 if unbound.</p>
 </section>
 </div>

@@ -16,8 +16,8 @@
 <aside class="side" data-active="modules.woz_uwb.src.driver.uwb_min.c">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>635/702 · 90%</b></div>
-<div class="cov-bar"><span style="width:90%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>672/826 · 81%</b></div>
+<div class="cov-bar"><span style="width:81%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -31,7 +31,7 @@
 <a class="gh-chip" data-repo="asxeem/openaliro" href="https://github.com/asxeem/openaliro" target="_blank" rel="noopener" aria-label="asxeem/openaliro on GitHub"><svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="gh-name">asxeem/openaliro</span><span class="gh-stat"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.8l1.9 3.85 4.25.62-3.08 3 .73 4.23L8 11.5l-3.8 2 .73-4.23-3.08-3 4.25-.62z"/></svg><b data-gh="stars"></b></span><span class="gh-stat"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="4" cy="3.5" r="1.7"/><circle cx="12" cy="3.5" r="1.7"/><circle cx="8" cy="12.5" r="1.7"/><path d="M4 5.2v.8a2.2 2.2 0 0 0 2.2 2.2h3.6A2.2 2.2 0 0 0 12 6V5.2M8 8.2v2.6"/></svg><b data-gh="forks"></b></span></a>
 <button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
 </header>
-<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">uwb_min.c</h1><p class="lede">DW3110 bring-up driver (implementation).</p><div class="metarow"><span><code>modules/woz_uwb/src/driver/uwb_min.c</code></span><span>9 documented symbols</span></div></div></header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">uwb_min.c</h1><p class="lede">DW3110 bring-up driver (implementation).</p><div class="metarow"><span><code>modules/woz_uwb/src/driver/uwb_min.c</code></span><span>10 documented symbols</span></div></div></header>
 <div class="mid">
 <main class="doc ">
 <h2>Overview</h2>
@@ -41,54 +41,59 @@
 <div class="api">
 <section class="api-entry" id="uwb_probe_ensure">
 <h3><span class="kindb" title="function">F</span><code>static int <b>uwb_probe_ensure</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:29</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:32</div>
 <p>Bring the SDK up to &quot;probed&quot; state on first call; no-op afterwards. The whole reset -&gt; wake -&gt; probe sequence is retried: transient SPI/power glitches (bench-seen as a burst of dwt_probe -1 during post-commissioning Wi-Fi traffic, self-recovering on the caller&#x27;s next attempt) clear on a fresh chip reset, so retrying here turns a failed session start into a slightly slower one.</p>
 <div class="xref">called by <code>uwb_min_read_chipid</code>, <code>uwb_radio_ensure_init</code></div>
 </section>
 <section class="api-entry" id="uwb_radio_ensure_init">
 <h3><span class="kindb" title="function">F</span><code>static int <b>uwb_radio_ensure_init</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:114</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:117</div>
 <p>Bring the SDK up to &quot;radio configured + LEDs on&quot; state.</p>
 <div class="xref">called by <code>uwb_min_radio_init</code>, <code>uwb_min_selftest</code>, <code>uwb_min_twr_prep</code> &nbsp;·&nbsp; calls <code>uwb_probe_ensure</code></div>
 </section>
 <section class="api-entry" id="uwb_min_radio_init">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_radio_init</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:152</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:156</div>
 <p>Ensure the DW3110 is fully initialised (probe + initialise + configure + LEDs).</p>
 <div class="xref">calls <code>uwb_radio_ensure_init</code></div>
 </section>
+<section class="api-entry" id="uwb_min_radio_generation">
+<h3><span class="kindb" title="function">F</span><code>uint32_t <b>uwb_min_radio_generation</b>(void)</code></h3>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:161</div>
+<p>Count of fresh radio inits; changes whenever the base config was re-applied.</p>
+</section>
 <section class="api-entry" id="uwb_min_hw_reset">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_hw_reset</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:157</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:166</div>
 <p>Pulse the DW3110 RST line low to force a hardware reset.</p>
 </section>
 <section class="api-entry" id="uwb_min_read_chipid">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_read_chipid</b>(uint32_t *id_out)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:169</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:178</div>
 <p>Read the DW3000-family DEV_ID register over SPI.</p>
 <div class="xref">calls <code>uwb_probe_ensure</code></div>
 </section>
 <section class="api-entry" id="uwb_min_selftest">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_selftest</b>(struct uwb_selftest_result *out)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:194</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:203</div>
 <p>Radio self-test: configure, TX one frame, then arm RX.</p>
 <div class="xref">calls <code>uwb_radio_ensure_init</code></div>
 </section>
 <section class="api-entry" id="uwb_min_twr_prep">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_twr_prep</b>(void)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:288</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:297</div>
 <p>Configure the radio for the raw SS-TWR loopback (SP3-ND, ch9, code11); no STS.</p>
 <div class="xref">called by <code>uwb_min_twr_poll</code> &nbsp;·&nbsp; calls <code>uwb_radio_ensure_init</code></div>
 </section>
 <section class="api-entry" id="uwb_min_twr_exchange">
 <h3><span class="kindb" title="function">F</span><code>void <b>uwb_min_twr_exchange</b>(struct uwb_twr_frame *f)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:309</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:318</div>
 <p>Run one POLL/RESP exchange; the STS must already be programmed.</p>
 <div class="xref">called by <code>uwb_min_twr_poll</code></div>
 </section>
 <section class="api-entry" id="uwb_min_twr_poll">
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_twr_poll</b>(uint32_t n, uint32_t period_ms, struct uwb_twr_result *out)</code></h3>
-<div class="src">modules/woz_uwb/src/driver/uwb_min.c:362</div>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.c:371</div>
 <p>Raw static-STS SS-TWR initiator burst (bench probe).</p>
 <div class="xref">calls <code>uwb_min_twr_exchange</code>, <code>uwb_min_twr_prep</code></div>
 </section>

@@ -1,6 +1,7 @@
 var uwb__min_8c =
 [
     [ "uwb_min_hw_reset", "uwb__min_8c.html#a3e934f834bd2b4bd4911935fdfce5ab0", null ],
+    [ "uwb_min_radio_generation", "uwb__min_8c.html#a1f45e0a581956507dc3ac4ae15e12ecd", null ],
     [ "uwb_min_radio_init", "uwb__min_8c.html#ac2eb190c40f2bc1a14fe100e60084d05", null ],
     [ "uwb_min_read_chipid", "uwb__min_8c.html#a2d062b6d12b74de9afec3e3a0affcd25", null ],
     [ "uwb_min_selftest", "uwb__min_8c.html#adf8dbefe99e8dd2f07516d785894a63e", null ],

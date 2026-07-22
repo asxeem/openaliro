@@ -16,8 +16,8 @@
 <aside class="side" data-active="modules.woz_aliro.include.aliro_prim.h">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>635/702 · 90%</b></div>
-<div class="cov-bar"><span style="width:90%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>672/826 · 81%</b></div>
+<div class="cov-bar"><span style="width:81%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -34,7 +34,7 @@
 <header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_prim.h</h1><div class="metarow"><span><code>modules/woz_aliro/include/aliro_prim.h</code></span></div></div></header>
 <div class="mid">
 <main class="doc ">
-<p class="chips">used by <a href="modules.woz_aliro.src.aliro_crypto.c.html" title="modules/woz_aliro/src/aliro_crypto.c"><code>aliro_crypto.c</code></a> <a href="modules.woz_aliro.src.aliro_prim_psa.c.html" title="modules/woz_aliro/src/aliro_prim_psa.c"><code>aliro_prim_psa.c</code></a> <a href="modules.woz_aliro.src.aliro_reader.c.html" title="modules/woz_aliro/src/aliro_reader.c"><code>aliro_reader.c</code></a></p>
+<p class="chips">used by <a href="modules.woz_aliro.src.aliro_advtag.c.html" title="modules/woz_aliro/src/aliro_advtag.c"><code>aliro_advtag.c</code></a> <a href="modules.woz_aliro.src.aliro_crypto.c.html" title="modules/woz_aliro/src/aliro_crypto.c"><code>aliro_crypto.c</code></a> <a href="modules.woz_aliro.src.aliro_prim_psa.c.html" title="modules/woz_aliro/src/aliro_prim_psa.c"><code>aliro_prim_psa.c</code></a> <a href="modules.woz_aliro.src.aliro_reader.c.html" title="modules/woz_aliro/src/aliro_reader.c"><code>aliro_reader.c</code></a></p>
 <div class="section-h"><h2>API</h2><span class="rule"></span></div>
 <div class="api">
 <section class="api-entry" id="ALIRO_P256_SCALAR">
@@ -69,25 +69,29 @@
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_aes256_gcm_decrypt</b>(const uint8_t key[32], const uint8_t *nonce, size_t nonce_len, const uint8_t *aad, size_t aad_len, const uint8_t *ct, size_t ct_len, const uint8_t *tag, size_t tag_len, uint8_t *pt)</code></h3>
 <div class="src">modules/woz_aliro/include/aliro_prim.h:38</div>
 </section>
+<section class="api-entry" id="aliro_aes128_ecb_encrypt">
+<h3><span class="kindb" title="function">F</span><code>int <b>aliro_aes128_ecb_encrypt</b>(const uint8_t key[16], const uint8_t in[16], uint8_t out[16])</code></h3>
+<div class="src">modules/woz_aliro/include/aliro_prim.h:43</div>
+</section>
 <section class="api-entry" id="aliro_ec_p256_keygen">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_ec_p256_keygen</b>(uint8_t priv[ALIRO_P256_SCALAR], uint8_t pub[ALIRO_P256_POINT])</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prim.h:43</div>
+<div class="src">modules/woz_aliro/include/aliro_prim.h:46</div>
 </section>
 <section class="api-entry" id="aliro_ec_p256_pub_from_priv">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_ec_p256_pub_from_priv</b>(const uint8_t priv[ALIRO_P256_SCALAR], uint8_t pub[ALIRO_P256_POINT])</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prim.h:48</div>
+<div class="src">modules/woz_aliro/include/aliro_prim.h:51</div>
 </section>
 <section class="api-entry" id="aliro_ecdh_p256">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_ecdh_p256</b>(const uint8_t priv[ALIRO_P256_SCALAR], const uint8_t peer_pub[ALIRO_P256_POINT], uint8_t shared_x[ALIRO_P256_SCALAR])</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prim.h:52</div>
+<div class="src">modules/woz_aliro/include/aliro_prim.h:55</div>
 </section>
 <section class="api-entry" id="aliro_ecdsa_p256_sign">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_ecdsa_p256_sign</b>(const uint8_t priv[ALIRO_P256_SCALAR], const uint8_t *msg, size_t msg_len, uint8_t sig[ALIRO_P256_SIG])</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prim.h:56</div>
+<div class="src">modules/woz_aliro/include/aliro_prim.h:59</div>
 </section>
 <section class="api-entry" id="aliro_ecdsa_p256_verify">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_ecdsa_p256_verify</b>(const uint8_t pub[ALIRO_P256_POINT], const uint8_t *msg, size_t msg_len, const uint8_t sig[ALIRO_P256_SIG])</code></h3>
-<div class="src">modules/woz_aliro/include/aliro_prim.h:58</div>
+<div class="src">modules/woz_aliro/include/aliro_prim.h:61</div>
 </section>
 </div>
 </main>

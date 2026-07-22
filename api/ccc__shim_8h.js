@@ -2,6 +2,7 @@ var ccc__shim_8h =
 [
     [ "WOZ_CCC_PREPOLL_LISTEN", "ccc__shim_8h.html#aac28a74583015511a83689065421807e", null ],
     [ "ccc_prepoll_listen", "ccc__shim_8h.html#a511a201f0f2b502329a7d47dfd0dca07", null ],
+    [ "ccc_prepoll_prewarm", "ccc__shim_8h.html#a572015895c5c2238a76e36f1e2300501", null ],
     [ "ccc_prepoll_stop", "ccc__shim_8h.html#a22a2e2e890d8c34d3e477566b2495841", null ],
     [ "ccc_shim_active", "ccc__shim_8h.html#a029c4e6e4ad724757b0b9dfd2dd13256", null ],
     [ "ccc_shim_bind", "ccc__shim_8h.html#aaf41f1c00513e0578be2bda88c8dbcb7", null ],

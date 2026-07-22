@@ -16,8 +16,8 @@
 <aside class="side" data-active="architecture">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>635/702 · 90%</b></div>
-<div class="cov-bar"><span style="width:90%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>672/826 · 81%</b></div>
+<div class="cov-bar"><span style="width:81%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -49,7 +49,7 @@ background:linear-gradient(135deg,var(--tint),transparent 65%)}
 :root[data-theme="dark"]{--gv0:#3987e5;--gv1:#d95926;--gv2:#199e70;--gv3:#c98500;--gv4:#d55181}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--gv0:#3987e5;--gv1:#d95926;--gv2:#199e70;--gv3:#c98500;--gv4:#d55181}}
 .gv-dot{display:inline-block;width:.55em;height:.55em;border-radius:50%;background:var(--c);margin-right:.4em}
-.graph-shell .node[id*="-aliro_apdu-"] rect,.graph-shell .node[id*="-aliro_ble-"] rect,.graph-shell .node[id*="-aliro_crypto-"] rect,.graph-shell .node[id*="-aliro_hash-"] rect,.graph-shell .node[id*="-aliro_lat-"] rect,.graph-shell .node[id*="-aliro_prim-"] rect,.graph-shell .node[id*="-aliro_prim_psa-"] rect,.graph-shell .node[id*="-aliro_prov-"] rect,.graph-shell .node[id*="-aliro_ranging-"] rect,.graph-shell .node[id*="-aliro_reader-"] rect,.graph-shell .node[id*="-gvn0-"] rect{stroke:var(--gv0)!important;fill:color-mix(in srgb,var(--gv0) 10%,transparent)!important}
+.graph-shell .node[id*="-aliro_advtag-"] rect,.graph-shell .node[id*="-aliro_apdu-"] rect,.graph-shell .node[id*="-aliro_ble-"] rect,.graph-shell .node[id*="-aliro_crypto-"] rect,.graph-shell .node[id*="-aliro_hash-"] rect,.graph-shell .node[id*="-aliro_lab-"] rect,.graph-shell .node[id*="-aliro_lat-"] rect,.graph-shell .node[id*="-aliro_prim-"] rect,.graph-shell .node[id*="-aliro_prim_psa-"] rect,.graph-shell .node[id*="-aliro_prov-"] rect,.graph-shell .node[id*="-aliro_ranging-"] rect,.graph-shell .node[id*="-aliro_reader-"] rect,.graph-shell .node[id*="-aliro_stepup-"] rect,.graph-shell .node[id*="-aliro_stepup_parse-"] rect,.graph-shell .node[id*="-gvn0-"] rect{stroke:var(--gv0)!important;fill:color-mix(in srgb,var(--gv0) 10%,transparent)!important}
 .graph-shell .cluster[id*="gvc0"] rect{stroke:color-mix(in srgb,var(--gv0) 45%,transparent)!important;fill:color-mix(in srgb,var(--gv0) 6%,transparent)!important}
 .graph-shell .node[id*="-woz_log-"] rect,.graph-shell .node[id*="-woz_port-"] rect,.graph-shell .node[id*="-gvn1-"] rect{stroke:var(--gv1)!important;fill:color-mix(in srgb,var(--gv1) 10%,transparent)!important}
 .graph-shell .cluster[id*="gvc1"] rect{stroke:color-mix(in srgb,var(--gv1) 45%,transparent)!important;fill:color-mix(in srgb,var(--gv1) 6%,transparent)!important}
@@ -72,18 +72,22 @@ background:linear-gradient(135deg,var(--tint),transparent 65%)}
   gvn2 --&gt; gvn3
   gvn2 --&gt; gvn4</pre></div>
 <figcaption>Subsystem-level view of the module graph below: each box is a source directory, each arrow an import dependency between them. The colors follow each directory through the detail graph and the sections below.</figcaption></figure>
-<figure class="graph-wrap" data-gv-home="aliro_uwb_msg"><div class="graph-shell"><pre class="mermaid">flowchart LR
+<figure class="graph-wrap" data-gv-home="aliro_reader"><div class="graph-shell"><pre class="mermaid">flowchart LR
   subgraph gvc0["woz_aliro"]
+    aliro_advtag
     aliro_apdu
     aliro_ble
     aliro_crypto
     aliro_hash
+    aliro_lab
     aliro_lat
     aliro_prim
     aliro_prim_psa
     aliro_prov
     aliro_ranging
     aliro_reader
+    aliro_stepup
+    aliro_stepup_parse
   end
   subgraph gvc1["woz_port"]
     woz_log
@@ -108,13 +112,17 @@ background:linear-gradient(135deg,var(--tint),transparent 65%)}
     woz_util
     woz_uwb_facade
   end
+  aliro_stepup --&gt; aliro_crypto
+  aliro_advtag --&gt; aliro_prim
   aliro_crypto --&gt; aliro_prim
   aliro_crypto --&gt; aliro_hash
+  aliro_lat --&gt; aliro_lab
   aliro_lat --&gt; woz_log
   aliro_lat --&gt; woz_port
   aliro_prim_psa --&gt; aliro_prim
   aliro_ranging --&gt; aliro_ble
   aliro_ranging --&gt; aliro_crypto
+  aliro_ranging --&gt; aliro_lab
   aliro_ranging --&gt; aliro_lat
   aliro_ranging --&gt; woz_log
   aliro_ranging --&gt; aliro_uwb_adapter
@@ -124,13 +132,18 @@ background:linear-gradient(135deg,var(--tint),transparent 65%)}
   aliro_ranging --&gt; woz_uwb_facade
   aliro_reader --&gt; aliro_ble
   aliro_reader --&gt; aliro_crypto
+  aliro_reader --&gt; aliro_lab
   aliro_reader --&gt; aliro_lat
   aliro_reader --&gt; aliro_prim
   aliro_reader --&gt; aliro_prov
+  aliro_reader --&gt; aliro_stepup
   aliro_reader --&gt; aliro_apdu
   aliro_reader --&gt; aliro_ranging
   aliro_reader --&gt; woz_log
   aliro_reader --&gt; woz_port
+  aliro_stepup --&gt; aliro_crypto
+  aliro_stepup --&gt; aliro_hash
+  aliro_stepup_parse --&gt; aliro_stepup
   aliro_uwb_adapter --&gt; woz_log
   aliro_uwb_adapter --&gt; aliro_uwb_internal
   aliro_uwb_adapter --&gt; cherry_ccc
@@ -147,16 +160,7 @@ background:linear-gradient(135deg,var(--tint),transparent 65%)}
   aliro_uwb_msg --&gt; aliro_round_config
   aliro_uwb_msg --&gt; woz_alloc
   aliro_uwb_msg --&gt; woz_util
-  aliro_uwb_msg --&gt; aliro_uwb_internal
-  aliro_uwb_msg --&gt; aliro_uwb_session
-  aliro_uwb_msg_builder --&gt; woz_alloc
-  aliro_uwb_msg_builder --&gt; aliro_uwb_msg_spec
-  aliro_uwb_msg_builder --&gt; aliro_uwb_session
-  aliro_uwb_msg_parser --&gt; woz_log
-  aliro_uwb_msg_parser --&gt; aliro_uwb_msg_spec
-  aliro_uwb_msg_parser --&gt; aliro_uwb_session
-  aliro_uwb_session --&gt; woz_log
-  aliro_uwb_session --&gt; aliro_uwb_internal</pre></div>
+  aliro_uwb_msg --&gt; aliro_uwb_internal</pre></div>
 <figcaption>Every module and its imports, grouped and color-keyed by directory. Opens on the entry point; drag to pan, &#8984;&#8202;scroll or pinch to zoom, &#10530; for full screen, or use the per-module sections below.</figcaption></figure>
 <div class="arch">
 <style>
@@ -177,7 +181,7 @@ background:linear-gradient(135deg,var(--tint),transparent 65%)}
 .arch-grp .row-desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 </style>
 <div class="section-h"><h2>Modules</h2><span class="rule"></span></div>
-<details class="arch-grp"><summary><i class="gv-dot" style="--c:var(--gv0)"></i><span class="ag-name">woz_aliro</span><span class="ag-dir">modules/woz_aliro</span><span class="ag-n">17 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
+<details class="arch-grp" open><summary><i class="gv-dot" style="--c:var(--gv0)"></i><span class="ag-name">woz_aliro</span><span class="ag-dir">modules/woz_aliro</span><span class="ag-n">23 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
 <li><a href="modules.woz_aliro.src.aliro_ranging.c.html" title="modules/woz_aliro/src/aliro_ranging.c"><span class="row-name"><code>aliro_ranging.c</code></span><span class="row-desc">UWB ranging bring-up and lifecycle for the Aliro reader: initializes the reader&#x27;s UWB
 adapter and Cherry CCC context once, then arms, feeds, and tears down per-connection ranging
 sessions driven by the M1-M4 setup exchanged over the peer&#x27;s L2CAP channel.
@@ -190,12 +194,22 @@ a session is authenticated. Maintains a fixed-size table of per-connection sessi
 transaction phase and secure-channel state, and exposes start/attach entry points for both
 standalone and Matter-attached BLE transports, plus provisioning and diagnostic APIs used by
 Matter commissioning and the bench console.</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_lat.c.html" title="modules/woz_aliro/src/aliro_lat.c"><span class="row-name"><code>aliro_lat.c</code></span><span class="row-desc">Walk-up latency trace: first-hit phase timestamps + the consolidated budget line.</span></a></li>
 <li><a href="modules.woz_aliro.src.aliro_crypto.c.html" title="modules/woz_aliro/src/aliro_crypto.c"><span class="row-name"><code>aliro_crypto.c</code></span><span class="row-desc">Aliro cryptographic primitives: key derivation (KDF/HKDF), key-block splitting, AES-GCM secure
 channels, and wire message framing built on a pluggable crypto backend (aliro_prim_*).
 Implements the Aliro key-derivation chain (ECDH shared secret -&gt; z -&gt; 160-byte key block -&gt; split
 session keys / URSK / BLE ranging keys), per-direction AES-256-GCM secure channels with monotonic
 message counters, and the seal/open framing used to carry engine plaintext over the wire.</span></a></li>
-<li><a href="modules.woz_aliro.src.aliro_lat.c.html" title="modules/woz_aliro/src/aliro_lat.c"><span class="row-name"><code>aliro_lat.c</code></span><span class="row-desc">Walk-up latency trace: first-hit phase timestamps + the consolidated budget line.</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_stepup.c.html" title="modules/woz_aliro/src/aliro_stepup.c"><span class="row-name"><code>aliro_stepup.c</code></span><span class="row-desc">Aliro step-up phase codec + verifier: derives the StepUpSK SessionData keys, builds the mdoc
+DeviceRequest and its ENVELOPE/GET RESPONSE APDUs, seals/opens SessionData over the aliro_secchan
+AES-256-GCM channel, and runs the six-step Access Document verification of spec 7.4. The ES256
+primitive is injected (verify ctx) so this unit carries no elliptic-curve dependency.</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_advtag.c.html" title="modules/woz_aliro/src/aliro_advtag.c"><span class="row-name"><code>aliro_advtag.c</code></span><span class="row-desc">Aliro BLE advertisement Dynamic Tag derivation (Aliro 1.0 section 11.3.1), shared by the
+BLE transport (live advertising) and the host KAT suite (spec section 20 worked examples).</span></a></li>
+<li><a href="modules.woz_aliro.src.aliro_stepup_parse.c.html" title="modules/woz_aliro/src/aliro_stepup_parse.c"><span class="row-name"><code>aliro_stepup_parse.c</code></span><span class="row-desc">DeviceResponse structural decoder for the Aliro step-up phase: a minimal, bounds-checked,
+depth-limited CBOR reader (definite-length core-deterministic only) plus the Table 8-22/7-1/7-2
+field walk. No crypto and no allocation; every parsed field is a slice of the caller&#x27;s buffer.
+This is the wire-facing attack surface and is fuzzed on its own (tests/host/fuzz/fuzz_stepup.c).</span></a></li>
 <li><a href="modules.woz_aliro.src.aliro_apdu.c.html" title="modules/woz_aliro/src/aliro_apdu.c"><span class="row-name"><code>aliro_apdu.c</code></span><span class="row-desc">Aliro APDU TLV codec: builds command payloads (AUTH0, AUTH1, AuthData, EXCHANGE) and parses
 response APDUs, plus BLE envelope framing/unframing and ISO7816 APDU wrap/status-word stripping.
 Provides a minimal BER-TLV writer (aliro_tlv_w_init/put/finish) used to assemble command
@@ -218,6 +232,12 @@ payload without touching NimBLE), then register the GATT service returned by
 aliro_ble_service_def with the host&#x27;s combined service table.</span></a></li>
 <li><a href="modules.woz_aliro.include.aliro_crypto.h.html" title="modules/woz_aliro/include/aliro_crypto.h"><span class="row-name"><code>aliro_crypto.h</code></span><span class="row-desc">Aliro crypto public API: key derivation, AES-GCM secure channels, and wire message
 seal/open framing shared by the reader and device sides of an Aliro session.</span></a></li>
+<li><a href="modules.woz_aliro.include.aliro_lab.h.html" title="modules/woz_aliro/include/aliro_lab.h"><span class="row-name"><code>aliro_lab.h</code></span><span class="row-desc">Aliro Lab trace: structured &quot;[ALAB]&quot; lines at transaction phase boundaries,
+parsed by tools/aliro_lab.py into a scored walk-up report. Ships in every Aliro
+build (CONFIG_WOZ_ALIRO_LAB defaults y, like the sibling uwbdiag trace) but is
+OFF at boot and toggled at runtime by the <code>lab on</code>/<code>lab off</code> console command, so
+any firmware profiles on demand with no reflash. Set CONFIG_WOZ_ALIRO_LAB=n to
+strip it from a hardened production image.</span></a></li>
 <li><a href="modules.woz_aliro.include.aliro_lat.h.html" title="modules/woz_aliro/include/aliro_lat.h"><span class="row-name"><code>aliro_lat.h</code></span><span class="row-desc"><em>No module docstring. First commit: "Cut ESP32 walk-up unlock latency: instrument, unblock, and precompute".</em></span></a></li>
 <li><a href="modules.woz_aliro.src.aliro_ranging.h.html" title="modules/woz_aliro/src/aliro_ranging.h"><span class="row-name"><code>aliro_ranging.h</code></span><span class="row-desc">Aliro M1-M4 ranging-setup interface: negotiates UWB ranging parameters with the device and
 produces the BLE ranging-control secure channel used to carry the M1-M4 exchange.</span></a></li>
@@ -228,18 +248,24 @@ Declares aliro_prov_store for committing an identity/trust pair to NVS, and stru
 aliro_trust_store, the set of trusted credential public keys against which a presented
 credential is authenticated.</span></a></li>
 <li><a href="modules.woz_aliro.include.aliro_reader.h.html" title="modules/woz_aliro/include/aliro_reader.h"><span class="row-name"><code>aliro_reader.h</code></span><span class="row-desc"></span></a></li>
+<li><a href="modules.woz_aliro.include.aliro_stepup.h.html" title="modules/woz_aliro/include/aliro_stepup.h"><span class="row-name"><code>aliro_stepup.h</code></span><span class="row-desc">Aliro step-up (Access Document) phase: builds the mdoc DeviceRequest, unwraps and decrypts the
+SessionData DeviceResponse, decodes the CBOR document per spec 7.2/8.4.2, and runs the six-step
+Access Document verification of spec 7.4. Reference-completeness codec + verifier; the verdict is
+logged and stored, never gates the unlock (the provisioned trust store remains the sole gate).</span></a></li>
 <li><a href="modules.woz_aliro.src.aliro_apdu.h.html" title="modules/woz_aliro/src/aliro_apdu.h"><span class="row-name"><code>aliro_apdu.h</code></span><span class="row-desc">APDU framing and parsing for the Aliro Access Protocol: builds outbound command APDUs via a
 TLV writer and parses the AUTH0/AUTH1 response APDUs exchanged during the reader-device
 handshake.</span></a></li>
 <li><a href="modules.woz_aliro.src.aliro_hash.h.html" title="modules/woz_aliro/src/aliro_hash.h"><span class="row-name"><code>aliro_hash.h</code></span><span class="row-desc">Streaming SHA-256 (FIPS 180-4) implementation used by the Aliro crypto layer.
 Declares struct aliro_sha256, the incremental hash context used across init/update/finish
 calls.</span></a></li>
+<li><a href="modules.woz_aliro.include.aliro_advtag.h.html" title="modules/woz_aliro/include/aliro_advtag.h"><span class="row-name"><code>aliro_advtag.h</code></span><span class="row-desc">Aliro BLE advertisement Dynamic Tag derivation (Aliro 1.0 section 11.3.1): the 7-byte
+GroupResolvingKey-resolvable tag the phone recomputes to identify a reader of interest.</span></a></li>
 </ul></div></details>
 <details class="arch-grp"><summary><i class="gv-dot" style="--c:var(--gv1)"></i><span class="ag-name">woz_port</span><span class="ag-dir">modules/woz_port/include</span><span class="ag-n">2 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
 <li><a href="modules.woz_port.include.woz_log.h.html" title="modules/woz_port/include/woz_log.h"><span class="row-name"><code>woz_log.h</code></span><span class="row-desc"><em>No module docstring. First commit: "modules: promote the platform contract to modules/woz_port".</em></span></a></li>
 <li><a href="modules.woz_port.include.woz_port.h.html" title="modules/woz_port/include/woz_port.h"><span class="row-name"><code>woz_port.h</code></span><span class="row-desc"><em>No module docstring. First commit: "modules: promote the platform contract to modules/woz_port".</em></span></a></li>
 </ul></div></details>
-<details class="arch-grp" open><summary><i class="gv-dot" style="--c:var(--gv2)"></i><span class="ag-name">woz_uwb/aliro</span><span class="ag-dir">modules/woz_uwb/src/aliro</span><span class="ag-n">16 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
+<details class="arch-grp"><summary><i class="gv-dot" style="--c:var(--gv2)"></i><span class="ag-name">woz_uwb/aliro</span><span class="ag-dir">modules/woz_uwb/src/aliro</span><span class="ag-n">16 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
 <li><a href="modules.woz_uwb.src.aliro.aliro_uwb_msg.c.html" title="modules/woz_uwb/src/aliro/aliro_uwb_msg.c"><span class="row-name"><code>aliro_uwb_msg.c</code></span><span class="row-desc">setup/notification message codec.</span></a></li>
 <li><a href="modules.woz_uwb.src.aliro.aliro_uwb_session.c.html" title="modules/woz_uwb/src/aliro/aliro_uwb_session.c"><span class="row-name"><code>aliro_uwb_session.c</code></span><span class="row-desc">per-session lifecycle and state machine.</span></a></li>
 <li><a href="modules.woz_uwb.src.aliro.aliro_uwb_adapter.c.html" title="modules/woz_uwb/src/aliro/aliro_uwb_adapter.c"><span class="row-name"><code>aliro_uwb_adapter.c</code></span><span class="row-desc">reader-context lifecycle.</span></a></li>
@@ -314,7 +340,7 @@ CONFIG_LOG_RUNTIME_FILTERING=y (set in ports/nrf5340dk/overlays/woz-pretty.conf)
 <details class="arch-grp"><summary><span class="ag-name">integration</span><span class="ag-dir">integration/homeassistant</span><span class="ag-n">1 module</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
 <li><a href="integration.homeassistant.aliro_mqtt_bridge.html" title="integration/homeassistant/aliro_mqtt_bridge.py"><span class="row-name"><code>aliro_mqtt_bridge.py</code></span><span class="row-desc">Republish the lock&#x27;s console log to MQTT as Home Assistant entities.</span></a></li>
 </ul></div></details>
-<details class="arch-grp"><summary><span class="ag-name">ports</span><span class="ag-dir">ports/esp32</span><span class="ag-n">21 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
+<details class="arch-grp"><summary><span class="ag-name">ports</span><span class="ag-dir">ports/esp32</span><span class="ag-n">22 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
 <li><a href="ports.esp32.apps.matter-lock.main.app_main.cpp.html" title="ports/esp32/apps/matter-lock/main/app_main.cpp"><span class="row-name"><code>app_main.cpp</code></span><span class="row-desc">Matter application main: door lock endpoint setup, Matter lifecycle event handling, and (when
 CONFIG_ENABLE_ALIRO_BLE_UWB is set) startup/coexistence wiring for the Aliro BLE+UWB reader
 alongside the Matter BLE commissioning transport.
@@ -370,9 +396,9 @@ attributes at init time.</span></a></li>
 <li><a href="ports.esp32.apps.matter-lock.main.lock_led.h.html" title="ports/esp32/apps/matter-lock/main/lock_led.h"><span class="row-name"><code>lock_led.h</code></span><span class="row-desc">Lock status LED color mapping: derives the RGB color for the lock indicator from the
 current locked and Aliro-ranging state.</span></a></li>
 <li><a href="ports.esp32.apps.reader.main.app_shell.h.html" title="ports/esp32/apps/reader/main/app_shell.h"><span class="row-name"><code>app_shell.h</code></span><span class="row-desc"></span></a></li>
-<li><a href="ports.esp32.components.woz_uwb.port.board_pins.h.html" title="ports/esp32/components/woz_uwb/port/board_pins.h"><span class="row-name"><code>board_pins.h</code></span><span class="row-desc">DW3000 (DWM3000EVB) wiring on ESP32-S3, SPI2/FSPI. Source of truth for the
-wiring table in docs/esp32-bringup.md. Change to match how the DWM3000EVB is
-soldered to your board.</span></a></li>
+<li><a href="ports.esp32.components.woz_uwb.port.board_pins.h.html" title="ports/esp32/components/woz_uwb/port/board_pins.h"><span class="row-name"><code>board_pins.h</code></span><span class="row-desc">DW3000 (DWM3000EVB) wiring per ESP32 target, SPI2/FSPI. Source of truth for
+the wiring table in docs/esp32-bringup.md. Change to match how the DWM3000EVB
+is soldered to your board.</span></a></li>
 <li><a href="ports.esp32.components.aliro_ble.aliro_ble.c.html" title="ports/esp32/components/aliro_ble/aliro_ble.c"><span class="row-name"><code>aliro_ble.c</code></span><span class="row-desc">NimBLE-backed BLE transport for the Aliro reader: GAP advertising, the Aliro GATT service,
 and an L2CAP connection-oriented channel (CoC) used to carry Aliro protocol messages.
 Supports two bring-up modes: a standalone NimBLE host (aliro_ble_start) and attachment to a
@@ -383,6 +409,7 @@ reader.</span></a></li>
 <li><a href="ports.esp32.components.aliro_reader.aliro_prov_nvs.c.html" title="ports/esp32/components/aliro_reader/aliro_prov_nvs.c"><span class="row-name"><code>aliro_prov_nvs.c</code></span><span class="row-desc">NVS-backed persistence for Aliro reader provisioning: loads and stores the serialized reader
 identity and trust store built by aliro_prov.c.
 Lazily initializes NVS on first use; safe to call alongside aliro_ble&#x27;s own nvs_flash_init.</span></a></li>
+<li><a href="ports.esp32.components.aliro_reader.aliro_stepup_worker.c.html" title="ports/esp32/components/aliro_reader/aliro_stepup_worker.c"><span class="row-name"><code>aliro_stepup_worker.c</code></span><span class="row-desc"><em>No module docstring. First commit: "esp32: add the Aliro step-up (Access Document) phase".</em></span></a></li>
 <li><a href="ports.esp32.components.woz_uwb.port.woz_wrap_stubs.c.html" title="ports/esp32/components/woz_uwb/port/woz_wrap_stubs.c"><span class="row-name"><code>woz_wrap_stubs.c</code></span><span class="row-desc">Minimal ESP-IDF port of the essential RX-callback shim.
 The Nordic build routes DW3000 RX events through uwb_rxdiag.c&#x27;s
 __wrap_dwt_setcallbacks -&gt; shim_rxok, which (after the blob&#x27;s own
@@ -466,7 +493,8 @@ every block with the primary and costs ~0 extra disk until a patched file
 diverges. Cleanup is automatic — the workspace lives inside the worktree, so
 deleting the worktree deletes it (see <code>make ws-clean</code>).</span></a></li>
 </ul></div></details>
-<details class="arch-grp"><summary><span class="ag-name">tools</span><span class="ag-dir">tools</span><span class="ag-n">13 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
+<details class="arch-grp"><summary><span class="ag-name">tools</span><span class="ag-dir">tools</span><span class="ag-n">14 modules</span><span class="ag-chev">&#8964;</span></summary><div class="ag-body"><ul class="rows">
+<li><a href="tools.aliro_lab.html" title="tools/aliro_lab.py"><span class="row-name"><code>aliro_lab.py</code></span><span class="row-desc">Aliro Lab: score a captured reader serial log.</span></a></li>
 <li><a href="tools.docs_3d.html" title="tools/docs_3d.py"><span class="row-name"><code>docs_3d.py</code></span><span class="row-desc">Render the whole code surface as a flyable 3D graph: site/graph3d.html.</span></a></li>
 <li><a href="tools.docs_api.html" title="tools/docs_api.py"><span class="row-name"><code>docs_api.py</code></span><span class="row-desc">Fill the reference pages the page generator leaves bare.</span></a></li>
 <li><a href="tools.docs_cmds.html" title="tools/docs_cmds.py"><span class="row-name"><code>docs_cmds.py</code></span><span class="row-desc">Render runnable command blocks as one copy chip per command.</span></a></li>

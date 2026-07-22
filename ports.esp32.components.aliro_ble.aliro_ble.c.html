@@ -16,8 +16,8 @@
 <aside class="side" data-active="ports.esp32.components.aliro_ble.aliro_ble.c">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>635/702 · 90%</b></div>
-<div class="cov-bar"><span style="width:90%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>672/826 · 81%</b></div>
+<div class="cov-bar"><span style="width:81%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -31,7 +31,7 @@
 <a class="gh-chip" data-repo="asxeem/openaliro" href="https://github.com/asxeem/openaliro" target="_blank" rel="noopener" aria-label="asxeem/openaliro on GitHub"><svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="gh-name">asxeem/openaliro</span><span class="gh-stat"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.8l1.9 3.85 4.25.62-3.08 3 .73 4.23L8 11.5l-3.8 2 .73-4.23-3.08-3 4.25-.62z"/></svg><b data-gh="stars"></b></span><span class="gh-stat"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="4" cy="3.5" r="1.7"/><circle cx="12" cy="3.5" r="1.7"/><circle cx="8" cy="12.5" r="1.7"/><path d="M4 5.2v.8a2.2 2.2 0 0 0 2.2 2.2h3.6A2.2 2.2 0 0 0 12 6V5.2M8 8.2v2.6"/></svg><b data-gh="forks"></b></span></a>
 <button class="icon-btn" id="themeBtn" aria-label="Toggle theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2m20 0h-2M5 5 3.5 3.5M20.5 20.5 19 19M19 5l1.5-1.5M3.5 20.5 5 19"/></svg></button>
 </header>
-<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_ble.c</h1><p class="lede">NimBLE-backed BLE transport for the Aliro reader: GAP advertising, the Aliro GATT service…</p><div class="metarow"><span><code>ports/esp32/components/aliro_ble/aliro_ble.c</code></span><span>27 documented symbols</span></div></div></header>
+<header class="hero-band"><div class="hero-in"><div class="eyebrow">Module</div><h1 class="mono">aliro_ble.c</h1><p class="lede">NimBLE-backed BLE transport for the Aliro reader: GAP advertising, the Aliro GATT service…</p><div class="metarow"><span><code>ports/esp32/components/aliro_ble/aliro_ble.c</code></span><span>31 documented symbols</span></div></div></header>
 <div class="mid">
 <main class="doc ">
 <h2>Overview</h2>
@@ -43,59 +43,59 @@ aliro_ble_start_attached). Tracks CoC channels per connection handle in a fixed-
 and exposes send/receive plus reader-status notification helpers to the rest of the Aliro
 reader.</p>
 <figure class="graph-wrap"><div class="graph-shell"><pre class="mermaid">flowchart TD
-  aliro_advertise --&gt; build_aliro_svc_data</pre></div></figure>
+  adv_refresh_ev --&gt; aliro_advertise</pre></div></figure>
 <div class="section-h"><h2>API</h2><span class="rule"></span></div>
 <div class="api">
 <section class="api-entry" id="coc_track">
 <h3><span class="kindb" title="function">F</span><code>static void <b>coc_track</b>(uint16_t conn_handle, struct ble_l2cap_chan *chan)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:111</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:126</div>
 <p>Record a newly established L2CAP CoC channel against its connection handle in the first free tracking slot.
 Silently does nothing if all CONFIG_BT_NIMBLE_L2CAP_COC_MAX_NUM slots are already active.</p>
 <div class="xref">called by <code>l2cap_event_cb</code></div>
 </section>
 <section class="api-entry" id="coc_untrack">
 <h3><span class="kindb" title="function">F</span><code>static void <b>coc_untrack</b>(const struct ble_l2cap_chan *chan)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:125</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:140</div>
 <p>Remove the tracking entry for a given L2CAP CoC channel, freeing its slot.
 No-op if chan is not found among the active tracked entries.</p>
 <div class="xref">called by <code>l2cap_event_cb</code></div>
 </section>
 <section class="api-entry" id="coc_chan_for">
 <h3><span class="kindb" title="function">F</span><code>static struct ble_l2cap_chan *<b>coc_chan_for</b>(uint16_t conn_handle)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:137</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:152</div>
 <p>Look up the tracked L2CAP CoC channel for a given connection handle.
 Returns the channel pointer if an active tracked entry matches conn_handle, otherwise NULL.</p>
 <div class="xref">called by <code>aliro_ble_send</code></div>
 </section>
 <section class="api-entry" id="coc_arm_rx">
 <h3><span class="kindb" title="function">F</span><code>static int <b>coc_arm_rx</b>(struct ble_l2cap_chan *chan)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:148</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:163</div>
 <p>Give the stack a fresh receive buffer so the next SDU can be assembled.</p>
 <div class="xref">called by <code>l2cap_event_cb</code></div>
 </section>
 <section class="api-entry" id="l2cap_event_cb">
 <h3><span class="kindb" title="function">F</span><code>static int <b>l2cap_event_cb</b>(struct ble_l2cap_event *event, void *arg)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:159</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:174</div>
 <p>NimBLE L2CAP event callback that tracks connection-oriented channel (CoC) lifecycle events (connect, disconnect, data) for the Aliro L2CAP server.</p>
 <div class="xref">calls <code>coc_arm_rx</code>, <code>coc_track</code>, <code>coc_untrack</code></div>
 </section>
 <section class="api-entry" id="l2cap_init">
 <h3><span class="kindb" title="function">F</span><code>static void <b>l2cap_init</b>(void)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:211</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:227</div>
 <p>Initialize the L2CAP connection-oriented channel (CoC) server used for Aliro&#x27;s BLE transport.
 Sets up the CoC mbuf memory pool and registers an L2CAP server on the Aliro SPSM with the given MTU. Logs an error and returns early if the mempool init, mbuf pool init, or ble_l2cap_create_server call fails, leaving the CoC server unavailable.</p>
 <div class="xref">called by <code>aliro_ble_start</code>, <code>aliro_ble_start_attached</code></div>
 </section>
 <section class="api-entry" id="encode_features">
 <h3><span class="kindb" title="function">F</span><code>static uint8_t <b>encode_features</b>(const struct aliro_ble_features *f)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:236</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:252</div>
 <p>Pack an aliro_ble_features struct into a single bitmask byte for advertising/READ payloads.
 Bit 0 = timesync_procedure_0, bit 1 = timesync_procedure_1, bit 2 = le_coded_phy.</p>
 <div class="xref">called by <code>build_read_payload</code></div>
 </section>
 <section class="api-entry" id="build_read_payload">
 <h3><span class="kindb" title="function">F</span><code>static void <b>build_read_payload</b>(const struct aliro_ble_config *cfg)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:254</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:270</div>
 <p>Build the GATT READ payload advertising the L2CAP SPSM, supported protocol versions, and
 supported features, writing it into s_read_payload and recording its length in
 s_read_payload_len.</p>
@@ -103,23 +103,46 @@ s_read_payload_len.</p>
 </section>
 <section class="api-entry" id="reader_spsm_access">
 <h3><span class="kindb" title="function">F</span><code>static int <b>reader_spsm_access</b>(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:274</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:290</div>
 <p>READ: hand back the prebuilt SPSM/versions/features buffer.</p>
 </section>
 <section class="api-entry" id="device_ver_access">
 <h3><span class="kindb" title="function">F</span><code>static int <b>device_ver_access</b>(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:285</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:302</div>
 <p>WRITE: [version be16][featLen u8][features]. Validate + log the negotiated version.</p>
+</section>
+<section class="api-entry" id="conn_upd_schedule_retry">
+<h3><span class="kindb" title="function">F</span><code>static void <b>conn_upd_schedule_retry</b>(uint16_t conn_handle)</code></h3>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:413</div>
+<p>Arm one retry unless the interval is already acceptable or the budget is
+spent. Called from GAP events only (host task). W-level logs on every exit
+so one bench line always states the interval the transaction will run at.</p>
+<div class="xref">called by <code>gap_event</code></div>
 </section>
 <section class="api-entry" id="gap_event">
 <h3><span class="kindb" title="function">F</span><code>static int <b>gap_event</b>(struct ble_gap_event *event, void *arg)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:343</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:441</div>
 <p>NimBLE GAP event callback that handles connection, disconnection, and advertising-related events for the Aliro BLE service.</p>
+<div class="xref">calls <code>aliro_advertise</code>, <code>conn_upd_schedule_retry</code>, <code>request_fast_conn</code></div>
+</section>
+<section class="api-entry" id="adv_refresh_ev">
+<h3><span class="kindb" title="function">F</span><code>static void <b>adv_refresh_ev</b>(struct ble_npl_event *ev)</code></h3>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:494</div>
+<p>Re-derive + re-emit the advertisement on the host task. Runs only while the
+advertiser is actually up: if a connection paused advertising, the next
+aliro_advertise() (GAP disconnect / adv-complete) re-derives anyway.</p>
 <div class="xref">calls <code>aliro_advertise</code></div>
+</section>
+<section class="api-entry" id="adv_tag_schedule_refresh">
+<h3><span class="kindb" title="function">F</span><code>static void <b>adv_tag_schedule_refresh</b>(void)</code></h3>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:506</div>
+<p>Arm (or re-arm) the periodic dynamic-tag refresh. Host task only. The chain
+self-sustains: every aliro_advertise() with a valid clock lands back here.</p>
+<div class="xref">called by <code>build_aliro_svc_data</code></div>
 </section>
 <section class="api-entry" id="build_aliro_svc_data">
 <h3><span class="kindb" title="function">F</span><code>static bool <b>build_aliro_svc_data</b>(uint8_t out[26])</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:414</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:532</div>
 <p>Assemble the 0xFFF2 service data (26 B = 2-byte UUID + 24-byte payload) with the
 GroupResolvingKey dynamic tag. Payload layout (bytes 0..23):
 [0]      flags: bit7 = BLE+UWB supported, bits2:0 = version (0)
@@ -128,21 +151,25 @@ GroupResolvingKey dynamic tag. Payload layout (bytes 0..23):
 [10..11] truncated reader group sub id (2) = reader_id[16..17]
 [12..15] dynamic-tag expiry, big-endian (0xFFFFFFFF = no clock)
 [16]     reserved (0)
-[17..23] dynamic tag = AES-128(GRK, 00*6 ‖ reverse(AdvA) ‖ BE32(expiry))[0..6]
-Reverse-engineered from libaliro_ble.a (AliroStack::GenerateAdvertisingData +
-BleDynamicTag::Generate). AdvA orientation is the top bench-tunable.</p>
-<div class="xref">called by <code>aliro_advertise</code></div>
+[17..23] dynamic tag (aliro_advtag.c; KAT&#x27;d against the spec sect. 20 vectors)
+Layout also cross-checked against libaliro_ble.a (AliroStack::
+GenerateAdvertisingData + BleDynamicTag::Generate); NimBLE hands out AdvA
+LSB-first, the derivation wants it MSB-first.
+With a valid wall clock the expiry is live (now + window) and the periodic
+re-derivation is armed; phones silently ignore an expiry in their past, so a
+clock that cannot be trusted must advertise the &quot;unavailable&quot; form instead.</p>
+<div class="xref">called by <code>aliro_advertise</code> &nbsp;·&nbsp; calls <code>adv_tag_schedule_refresh</code></div>
 </section>
 <section class="api-entry" id="aliro_advertise">
 <h3><span class="kindb" title="function">F</span><code>static void <b>aliro_advertise</b>(void)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:466</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:590</div>
 <p>Configure and start BLE advertising for Aliro discovery.
 Advertises full Aliro service data (0xFFF2, 26 bytes) built by build_aliro_svc_data when adv is enabled and a GRK is configured; otherwise falls back to a bare service UUID plus device name for the unprovisioned/no-GRK case. Logs and returns without starting advertising if either ble_gap_adv_set_fields or ble_gap_adv_start fails.</p>
-<div class="xref">called by <code>aliro_ble_readvertise</code>, <code>aliro_ble_start_attached</code>, <code>gap_event</code>, <code>on_sync</code> &nbsp;·&nbsp; calls <code>build_aliro_svc_data</code></div>
+<div class="xref">called by <code>adv_refresh_ev</code>, <code>aliro_ble_readvertise</code>, <code>aliro_ble_start_attached</code>, <code>gap_event</code>, <code>on_sync</code> &nbsp;·&nbsp; calls <code>build_aliro_svc_data</code></div>
 </section>
 <section class="api-entry" id="on_sync">
 <h3><span class="kindb" title="function">F</span><code>static void <b>on_sync</b>(void)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:511</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:635</div>
 <p>NimBLE host sync callback: ensures a device address exists, infers the own address type,
 and starts Aliro advertising. Logs and returns early without advertising if either step
 fails.</p>
@@ -150,25 +177,25 @@ fails.</p>
 </section>
 <section class="api-entry" id="on_reset">
 <h3><span class="kindb" title="function">F</span><code>static void <b>on_reset</b>(int reason)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:529</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:653</div>
 <p>NimBLE host reset callback; logs the reset reason.</p>
 </section>
 <section class="api-entry" id="host_task">
 <h3><span class="kindb" title="function">F</span><code>static void <b>host_task</b>(void *param)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:536</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:660</div>
 <p>FreeRTOS task entry point that runs the NimBLE host until stopped.
 Blocks in nimble_port_run() until nimble_port_stop() is called, then deinitializes the NimBLE FreeRTOS port; param is unused.</p>
 </section>
 <section class="api-entry" id="capture_cfg">
 <h3><span class="kindb" title="function">F</span><code>static int <b>capture_cfg</b>(const struct aliro_ble_config *cfg)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:545</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:669</div>
 <p>Capture the config into the module statics (versions, callbacks, READ payload).
 Shared by aliro_ble_start (owns the host) and aliro_ble_prepare (attach mode).</p>
 <div class="xref">called by <code>aliro_ble_prepare</code>, <code>aliro_ble_start</code> &nbsp;·&nbsp; calls <code>build_read_payload</code></div>
 </section>
 <section class="api-entry" id="aliro_ble_start">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_ble_start</b>(const struct aliro_ble_config *cfg)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:566</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:690</div>
 <p>Bring up the Aliro BLE service as a standalone NimBLE host: init NVS, init the NimBLE port,
 register the GAP/GATT services and the Aliro L2CAP CoC server, and start the host task.
 Captures cfg first; returns -1 if that fails. Returns -1 on any NVS, NimBLE port, or GATT
@@ -178,19 +205,19 @@ handled no-free-pages/new-version cases). Returns 0 on success.</p>
 </section>
 <section class="api-entry" id="aliro_ble_prepare">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_ble_prepare</b>(const struct aliro_ble_config *cfg)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:617</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:741</div>
 <p>Capture the Aliro BLE configuration for later use by the service.
 Returns whatever capture_cfg returns; does not itself start advertising or the GATT service.</p>
 <div class="xref">calls <code>capture_cfg</code></div>
 </section>
 <section class="api-entry" id="aliro_ble_service_def">
 <h3><span class="kindb" title="function">F</span><code>const struct ble_gatt_svc_def *<b>aliro_ble_service_def</b>(void)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:623</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:747</div>
 <p>Return the Aliro GATT service definition table for registration with the NimBLE host.</p>
 </section>
 <section class="api-entry" id="aliro_ble_start_attached">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_ble_start_attached</b>(void)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:633</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:757</div>
 <p>Bring up the Aliro BLE service on a host already initialized and synced by the owning stack
 (e.g. esp-matter), instead of starting a private NimBLE host.
 Only starts the L2CAP CoC server and advertising; the GATT service must already be
@@ -200,7 +227,7 @@ own advertiser first. Returns -1 if address inference fails, otherwise 0.</p>
 </section>
 <section class="api-entry" id="aliro_ble_readvertise">
 <h3><span class="kindb" title="function">F</span><code>void <b>aliro_ble_readvertise</b>(void)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:659</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:783</div>
 <p>Re-emit the BLE advertisement with the current advertising parameters.
 Used when provisioning (the GRK) lands after the advertiser is already up: Apple sends
 SetAliroReaderConfig post-commissioning, so the reader initially advertised only the bare
@@ -211,18 +238,18 @@ advertise with the current params once it runs).</p>
 </section>
 <section class="api-entry" id="aliro_ble_set_adv_params">
 <h3><span class="kindb" title="function">F</span><code>void <b>aliro_ble_set_adv_params</b>(const uint8_t group_id8[8], const uint8_t sub_id2[2], const uint8_t grk[16], int8_t tx_power)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:674</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:798</div>
 <p>Set the Aliro advertising identity (group ID, sub ID, GRK) and TX power, and enable full Aliro service-data advertising.
 Copies group_id8, sub_id2, and grk into module statics; after this call, aliro_advertise will build and advertise full Aliro service data instead of the fallback bare-UUID form.</p>
 </section>
 <section class="api-entry" id="aliro_ble_spsm">
 <h3><span class="kindb" title="function">F</span><code>uint16_t <b>aliro_ble_spsm</b>(void)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:685</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:809</div>
 <p>Return the L2CAP SPSM (simplified protocol/service multiplexer) value used for the Aliro CoC channel.</p>
 </section>
 <section class="api-entry" id="aliro_ble_send">
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_ble_send</b>(uint16_t conn_handle, const uint8_t *data, size_t len)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:695</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:819</div>
 <p>Send data to a connected peer over its Aliro L2CAP CoC channel.
 Returns 0 on success (queued or sent), -1 if data is NULL, len is 0, no CoC channel exists
 for conn_handle, mbuf allocation/append fails, or ble_l2cap_send fails for any reason other
@@ -232,16 +259,26 @@ On success the stack takes ownership of the sdu buffer; on failure it is freed h
 </section>
 <section class="api-entry" id="reader_status_ev_cb">
 <h3><span class="kindb" title="function">F</span><code>static void <b>reader_status_ev_cb</b>(struct ble_npl_event *ev)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:734</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:858</div>
 <p>NimBLE portable event-queue event type used to defer reader-status callback execution onto the host task.</p>
 </section>
 <section class="api-entry" id="aliro_ble_post_reader_status">
 <h3><span class="kindb" title="function">F</span><code>void <b>aliro_ble_post_reader_status</b>(void (*cb)(bool unsecured), bool unsecured)</code></h3>
-<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:744</div>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:868</div>
 <p>Queue a reader-status callback to run on the NimBLE host task.
 Stores cb and unsecured in module statics and posts an event to the default NimBLE event queue; the callback fires later from reader_status_ev_cb, not synchronously. Runs on the host task so it serializes with every other sc_ble seal operation and keeps the BleSK counter monotonic; callers must not rely on immediate execution and must not post a second call before the first has been drained if ordering matters.</p>
 </section>
+<section class="api-entry" id="aliro_ble_time_updated">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_ble_time_updated</b>(void)</code></h3>
+<div class="src">ports/esp32/components/aliro_ble/aliro_ble.c:889</div>
+<p>Notify the transport that the wall clock just stepped (e.g. SNTP first sync), so the
+dynamic advertisement tag is re-derived immediately instead of waiting out the refresh
+period. Safe from any task (marshaled onto the host task via the default event queue).
+No-op before aliro_ble_start_attached(): the attach path derives with the then-current
+clock, and the queue may not exist yet while the owning stack is still booting.</p>
+</section>
 </div>
+<details><summary>Undocumented (2)</summary><p><code>request_fast_conn</code>, <code>conn_upd_retry_ev</code></p></details>
 </main>
 <aside class="toc-rail" id="toc" aria-label="On this page"></aside>
 </div>

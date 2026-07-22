@@ -184,6 +184,9 @@ void&#160;</td><td class="memItemRight"><b>ccc_shim_unpin</b> (void)</td></tr>
 <tr class="memitem:a511a201f0f2b502329a7d47dfd0dca07" id="r_a511a201f0f2b502329a7d47dfd0dca07"><td class="memItemLeft"><a id="a511a201f0f2b502329a7d47dfd0dca07" name="a511a201f0f2b502329a7d47dfd0dca07"></a>
 int&#160;</td><td class="memItemRight"><b>ccc_prepoll_listen</b> (uint8_t channel, uint8_t preamble_code)</td></tr>
 <tr class="memdesc:a511a201f0f2b502329a7d47dfd0dca07"><td class="mdescLeft">&#160;</td><td class="mdescRight">BENCH: bring up a raw continuous SP0 receiver for the CCC Pre-POLL (target only). <br /></td></tr>
+<tr class="memitem:a572015895c5c2238a76e36f1e2300501" id="r_a572015895c5c2238a76e36f1e2300501"><td class="memItemLeft"><a id="a572015895c5c2238a76e36f1e2300501" name="a572015895c5c2238a76e36f1e2300501"></a>
+int&#160;</td><td class="memItemRight"><b>ccc_prepoll_prewarm</b> (uint8_t channel, uint8_t preamble_code)</td></tr>
+<tr class="memdesc:a572015895c5c2238a76e36f1e2300501"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pre-apply the expected session PHY (radio configured, TRX off, RX not armed) so a following <a class="el" href="#a511a201f0f2b502329a7d47dfd0dca07" title="BENCH: bring up a raw continuous SP0 receiver for the CCC Pre-POLL (target only).">ccc_prepoll_listen()</a> with the same params skips the dwt_configure long pole. <br /></td></tr>
 <tr class="memitem:a22a2e2e890d8c34d3e477566b2495841" id="r_a22a2e2e890d8c34d3e477566b2495841"><td class="memItemLeft"><a id="a22a2e2e890d8c34d3e477566b2495841" name="a22a2e2e890d8c34d3e477566b2495841"></a>
 void&#160;</td><td class="memItemRight"><b>ccc_prepoll_stop</b> (void)</td></tr>
 <tr class="memdesc:a22a2e2e890d8c34d3e477566b2495841"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the Pre-POLL listener: close the self-rearm listen-gate, then force the radio off (target only). <br /></td></tr>

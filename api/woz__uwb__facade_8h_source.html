@@ -157,17 +157,19 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('woz__uwb__faca
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span></div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keywordtype">int</span> woz_uwb_start_aliro(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structwoz__uwb__aliro__cfg.html">woz_uwb_aliro_cfg</a> *cfg);</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keywordtype">void</span> woz_uwb_stop(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keywordtype">bool</span> woz_uwb_last_range_cm(int32_t *cm_out);</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keywordtype">bool</span> woz_uwb_trusted_range_cm(int32_t *cm_out);</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="keywordtype">void</span> woz_uwb_set_range_listener(<span class="keywordtype">void</span> (*cb)(<span class="keywordtype">void</span>));</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>}</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keywordtype">int</span> woz_uwb_prewarm(uint8_t channel, uint8_t sync_code_index);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keywordtype">void</span> woz_uwb_stop(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keywordtype">bool</span> woz_uwb_last_range_cm(int32_t *cm_out);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="keywordtype">bool</span> woz_uwb_trusted_range_cm(int32_t *cm_out);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="keywordtype">void</span> woz_uwb_set_range_listener(<span class="keywordtype">void</span> (*cb)(<span class="keywordtype">void</span>));</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>}</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="astructwoz__uwb__aliro__cfg_html"><div class="ttname"><a href="structwoz__uwb__aliro__cfg.html">woz_uwb_aliro_cfg</a></div><div class="ttdoc">Aliro UWB ranging parameters negotiated during M1-M4 handshake.</div><div class="ttdef"><b>Definition</b> woz_uwb_facade.h:35</div></div>
 <div class="ttc" id="astructwoz__uwb__aliro__cfg_html_a12454975af6fbe32a1bb8f6b9dc63509"><div class="ttname"><a href="structwoz__uwb__aliro__cfg.html#a12454975af6fbe32a1bb8f6b9dc63509">woz_uwb_aliro_cfg::ranging_config</a></div><div class="ttdeci">const uint8_t * ranging_config</div><div class="ttdoc">Serialized RangingConfiguration (CCC SaltedHash input), or NULL for URSK fallback.</div><div class="ttdef"><b>Definition</b> woz_uwb_facade.h:46</div></div>
 <div class="ttc" id="astructwoz__uwb__aliro__cfg_html_a17ddad1ae5a6ca9946a9c602a691c82a"><div class="ttname"><a href="structwoz__uwb__aliro__cfg.html#a17ddad1ae5a6ca9946a9c602a691c82a">woz_uwb_aliro_cfg::uwb_time_us</a></div><div class="ttdeci">uint64_t uwb_time_us</div><div class="ttdoc">UWB_Time0 initiation reference, µs.</div><div class="ttdef"><b>Definition</b> woz_uwb_facade.h:43</div></div>

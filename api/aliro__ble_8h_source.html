@@ -199,10 +199,12 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('aliro__ble_8h_
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                              <span class="keyword">const</span> uint8_t grk[16], int8_t tx_power);</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span></div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="keywordtype">void</span> aliro_ble_readvertise(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>}</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="keywordtype">void</span> aliro_ble_time_updated(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>}</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="astructaliro__ble__callbacks_html"><div class="ttname"><a href="structaliro__ble__callbacks.html">aliro_ble_callbacks</a></div><div class="ttdoc">Transport callbacks into the app / Phase-3 Aliro handler.</div><div class="ttdef"><b>Definition</b> aliro_ble.h:33</div></div>
 <div class="ttc" id="astructaliro__ble__callbacks_html_a3935c7870fe6be909d63b894e31b3c6f"><div class="ttname"><a href="structaliro__ble__callbacks.html#a3935c7870fe6be909d63b894e31b3c6f">aliro_ble_callbacks::on_connected</a></div><div class="ttdeci">void(* on_connected)(uint16_t conn_handle)</div><div class="ttdoc">L2CAP channel opened / closed for a peer (2.2+).</div><div class="ttdef"><b>Definition</b> aliro_ble.h:37</div></div>
 <div class="ttc" id="astructaliro__ble__callbacks_html_a3c7f310963f64f8c3367db685d5321b9"><div class="ttname"><a href="structaliro__ble__callbacks.html#a3c7f310963f64f8c3367db685d5321b9">aliro_ble_callbacks::on_data</a></div><div class="ttdeci">void(* on_data)(uint16_t conn_handle, const uint8_t *data, uint16_t len)</div><div class="ttdoc">An L2CAP SDU arrived from the peer (2.2+).</div><div class="ttdef"><b>Definition</b> aliro_ble.h:35</div></div>

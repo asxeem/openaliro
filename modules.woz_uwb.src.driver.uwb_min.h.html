@@ -16,8 +16,8 @@
 <aside class="side" data-active="modules.woz_uwb.src.driver.uwb_min.h">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>635/702 · 90%</b></div>
-<div class="cov-bar"><span style="width:90%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>672/826 · 81%</b></div>
+<div class="cov-bar"><span style="width:81%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -93,6 +93,11 @@
 <h3><span class="kindb" title="function">F</span><code>int <b>uwb_min_radio_init</b>(void)</code></h3>
 <div class="src">modules/woz_uwb/src/driver/uwb_min.h:57</div>
 <p>Ensure the DW3110 is fully initialised (probe + initialise + configure + LEDs).</p>
+</section>
+<section class="api-entry" id="uwb_min_radio_generation">
+<h3><span class="kindb" title="function">F</span><code>uint32_t <b>uwb_min_radio_generation</b>(void)</code></h3>
+<div class="src">modules/woz_uwb/src/driver/uwb_min.h:60</div>
+<p>Count of fresh radio inits; changes whenever the base config was re-applied.</p>
 </section>
 </div>
 </main>

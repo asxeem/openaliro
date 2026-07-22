@@ -29,6 +29,7 @@ var ccc__shim__rx_8c =
     [ "arm_final_sp3", "ccc__shim__rx_8c.html#afeae9c3b88459868707c08c27d968307", null ],
     [ "arm_poll_sp3", "ccc__shim__rx_8c.html#a3f66776d73cf23e9e154fb00ef0ca668", null ],
     [ "ccc_prepoll_listen", "ccc__shim__rx_8c.html#a511a201f0f2b502329a7d47dfd0dca07", null ],
+    [ "ccc_prepoll_prewarm", "ccc__shim__rx_8c.html#a572015895c5c2238a76e36f1e2300501", null ],
     [ "ccc_prepoll_stop", "ccc__shim__rx_8c.html#a22a2e2e890d8c34d3e477566b2495841", null ],
     [ "ccc_shim_rx_awaiting_poll", "ccc__shim__rx_8c.html#aa9d4e85c17d86938a4f7a05a3cc4cb7a", null ],
     [ "ccc_shim_rx_log_reset", "ccc__shim__rx_8c.html#a725b146504082359069384e2d820b1b7", null ],

@@ -16,8 +16,8 @@
 <aside class="side" data-active="modules.woz_aliro.include.aliro_reader.h">
 <div class="side-head">
 <a class="brand" href="index.html"><b>openaliro</b><span class="tag">docs</span></a>
-<div class="cov"><div class="cov-row"><span>coverage</span><b>635/702 · 90%</b></div>
-<div class="cov-bar"><span style="width:90%"></span></div></div>
+<div class="cov"><div class="cov-row"><span>coverage</span><b>672/826 · 81%</b></div>
+<div class="cov-bar"><span style="width:81%"></span></div></div>
 </div>
 <button class="search-btn js-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>Search docs<kbd>&#8984;K</kbd></button>
 <nav class="tree" id="tree"></nav>
@@ -94,6 +94,16 @@
 <h3><span class="kindb" title="function">F</span><code>int <b>aliro_reader_provision_clear</b>(void)</code></h3>
 <div class="src">modules/woz_aliro/include/aliro_reader.h:106</div>
 <p>Revert to the dev identity + empty trust store (Matter ClearAliroReaderConfig) and persist. Returns 0 on success, negative on an NVS error.</p>
+</section>
+<section class="api-entry" id="aliro_reader_stepup_arm">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_reader_stepup_arm</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/include/aliro_reader.h:115</div>
+<p>Arm a one-shot Access-Document request: the next transaction is forced into the standard phase and requests + verifies a document. Never per-unlock; the verdict is logged only and never gates access.</p>
+</section>
+<section class="api-entry" id="aliro_reader_stepup_status">
+<h3><span class="kindb" title="function">F</span><code>void <b>aliro_reader_stepup_status</b>(void)</code></h3>
+<div class="src">modules/woz_aliro/include/aliro_reader.h:118</div>
+<p>Print the armed state and the most recent verification verdict.</p>
 </section>
 </div>
 </main>
