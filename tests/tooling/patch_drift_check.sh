@@ -26,7 +26,7 @@ grep -q "revision: $PIN" "$ROOT/west.yml" \
 # a patch still applies upstream, not about whether this build uses it. Order
 # matters — ha-occupancy-endpoint is cut against a tree with the others applied.
 ADDON_PATCHES=(
-  "$P/custom_impl-uwb.patch"
+  "$P/custom_impl-uwb.patch" "$P/crypto-timesync-tap.patch"
   "$P/pretty-shell.patch" "$P/console-quiet-flood.patch"
   "$P/kpersistent-orphan-selfheal.patch" "$P/aliro-doc-time-ratchet.patch"
   "$P/aliro-time-persist.patch" "$P/extnvs-rollback-mirror-id.patch"
