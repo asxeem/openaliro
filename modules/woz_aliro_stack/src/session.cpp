@@ -1839,14 +1839,39 @@ void ProcessSessionData(ConnectionHandle handle, Data data)
 							plaintext.data(), plaintextLength);
 						if (timeoutControl) {
 							if (!expectedTimeoutControl) {
-								status = ALIRO_INVALID_DATA_CONTENT;
+								/* Authenticated Busy/General Error
+								 * with no outstanding reader
+								 * request: the peer is ending
+								 * ranging, not corrupting it. Close
+								 * cleanly instead of flagging a
+								 * fault. */
+								LOG_INF("Peer ended ranging via "
+									"control notification "
+									"(proto=%u id=%u); closing "
+									"session",
+									static_cast<unsigned int>(
+										message.protocol),
+									static_cast<unsigned int>(
+										message.message_id));
+								terminate = true;
 							}
 						} else {
 							forwardToUwb =
 								woz_aliro_ble_is_uwb_control_message(
 									&message);
 							if (!forwardToUwb) {
-								status = ALIRO_INVALID_DATA_CONTENT;
+								/* Authenticated but non-ranging
+								 * message during UWB ranging: the
+								 * peer is winding the session down,
+								 * not sending bad data. */
+								LOG_INF("Non-ranging BLE message "
+									"during ranging (proto=%u "
+									"id=%u); closing session",
+									static_cast<unsigned int>(
+										message.protocol),
+									static_cast<unsigned int>(
+										message.message_id));
+								terminate = true;
 							}
 						}
 					}
